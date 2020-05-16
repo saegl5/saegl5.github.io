@@ -1,0 +1,192 @@
+/* suggestion: install Markdown Pro editor and No Distraction */
+/* electron or chrome colors slightly off, so appending hex color opacity of fc (99%) */
+
+/* import custom fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;700&display=swap');
+
+/* base settings */
+:root {
+
+  /* font */
+  --sn-stylekit-monospace-font: 'Fira Code', monospace; /* includes ligatures */
+
+  /* notes-column, editor and markdown */
+  --sn-stylekit-background-color: #1e1e1efc;
+  --sn-stylekit-foreground-color: #d4d4d4fc;
+
+  /* tags-content */
+  --sn-stylekit-secondary-background-color: var(--sn-stylekit-background-color);
+  --sn-stylekit-secondary-foreground-color: var(--sn-stylekit-foreground-color);
+
+  /* notes-menu-bar and editor-menu-bar */
+  --sn-stylekit-contrast-background-color: var(--sn-stylekit-background-color);
+  --sn-stylekit-contrast-foreground-color: var(--sn-stylekit-foreground-color);
+
+  /* tags-content */
+  --sn-stylekit-secondary-contrast-background-color: var(--sn-stylekit-background-color);
+  --sn-stylekit-secondary-contrast-foreground-color: var(--sn-stylekit-foreground-color);
+
+  /* shadow */
+  --sn-stylekit-shadow-color: #000000fc;
+
+  /* borders */
+  --sn-stylekit-border-color: #414141fc;
+  --sn-stylekit-secondary-border-color: var(--sn-stylekit-border-color);
+  --sn-stylekit-contrast-border-color: var(--sn-stylekit-border-color);
+  --sn-stylekit-secondary-contrast-border-color: var(--sn-stylekit-border-color);
+
+  /* scrollbar */
+  --sn-stylekit-scrollbar-thumb-color: var(--sn-stylekit-border-color);
+
+  /* extensions info and descriptions */
+  --sn-stylekit-info-color: #569cd6fc;
+  --sn-stylekit-paragraph-text-color: #6b6b6bfc;
+
+}
+
+/* plain editor */
+.editor-content .editable {
+  font-family: var(--sn-stylekit-monospace-font) !important; /* overwrites font toggle */
+  font-size: 18px !important;
+}
+
+/* markdown */
+.CodeMirror {
+  font-family: var(--sn-stylekit-monospace-font) !important;
+  font-size: 18px !important;
+  font-weight: 300 !important;
+  padding-top: unset !important;
+}
+.CodeMirror .cm-header {
+  line-height: 2em !important; /* extra space above and below headers */
+  color: var(--sn-stylekit-info-color) !important;
+}
+.cm-strong {
+  color: #ffffffff !important;
+}
+.CodeMirror .cm-formatting-header, .CodeMirror .cm-formatting-strong, .CodeMirror .cm-formatting-em {
+  opacity: 1 !important; /* pound signs same color as headers */
+}
+.CodeMirror-scroll {
+  overflow-x: hidden !important; /* Hide horizontal scrollbar */
+}
+.CodeMirror .cm-header.CodeMirror-selectedtext {
+  background: var(--sn-stylekit-info-color) !important;
+  color: #ffffffff !important;
+  font-weight: 700 !important;
+}
+.CodeMirror-selectedtext {
+  background: var(--sn-stylekit-info-color) !important;
+  color: #ffffffff !important;
+  font-weight: 400 !important;
+}
+.CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like {
+  background: #1e1e1e !important; /* want only text highlighted, fixed color */
+}
+.cm-s-easymde .cm-link {
+  color: var(--sn-stylekit-foreground-color) !important; /* markdown incorrectly flags some strings as links */
+  text-decoration: none !important;
+}
+.CodeMirror .cm-link.cm-variable-2 {
+  color: var(--sn-stylekit-foreground-color) !important; /* markdown incorrectly flags some strings as links */
+}
+.CodeMirror .cm-link.cm-variable-2.CodeMirror-selectedtext, .CodeMirror .cm-url.cm-variable-2.CodeMirror-selectedtext {
+  background: var(--sn-stylekit-info-color) !important;
+}
+.cm-s-easymde .cm-url {
+  color: var(--sn-stylekit-info-color) !important;
+  text-decoration: underline !important;
+}
+.CodeMirror .cm-link.CodeMirror-selectedtext, .CodeMirror .cm-string.CodeMirror-selectedtext {
+  background: var(--sn-stylekit-info-color) !important;
+}
+.editor-toolbar button {
+  color: var(--sn-stylekit-foreground-color) !important;
+}
+.CodeMirror .CodeMirror-code .cm-comment {
+  color: var(--sn-stylekit-foreground-color) !important;
+}
+.cm-strikethrough {
+  color: #ffffff20 !important;
+}
+.cm-strikethrough.cm-variable-2.CodeMirror-selectedtext {
+  color: #ffffff80 !important;
+}
+.cm-strikethrough.CodeMirror-selectedtext {
+  color: #ffffff80 !important;
+}
+.cm-formatting.cm-formatting-strong.cm-strong.cm-variable-2.CodeMirror-selectedtext {
+  font-weight: 700 !important;
+}
+.cm-strong.cm-variable-2.CodeMirror-selectedtext {
+  font-weight: 700 !important;
+}
+.cm-strong.CodeMirror-selectedtext {
+  font-weight: 700 !important;
+}
+.cm-strong.cm-link.CodeMirror-selectedtext {
+  font-weight: 700 !important;
+}
+.cm-formatting.cm-formatting-strong.cm-strong.CodeMirror-selectedtext {
+  font-weight: 700 !important;
+}
+.CodeMirror .cm-formatting-list-ol {
+  font-weight: unset !important;
+}
+.cm-em {
+  color: #ffffffff !important;
+  font-weight: 700 !important;
+}
+
+/* markdown preview */
+.editor-preview-active a, .editor-preview-active-side a {
+  color: var(--sn-stylekit-foreground-color) !important;
+}
+
+/* plain editor and markdown preview */
+::selection {
+  background-color: var(--sn-stylekit-info-color) !important;
+  color: #ffffffff !important;
+  /* font-weight: 400 !important; doesn't work */
+}
+del {
+  color: #ffffff20 !important;
+}
+
+/* notes-column */
+#notes-column {
+  border-left: none !important;
+  border-right: none !important;
+}
+#notes-column .note, .notes .note {
+  border-bottom: none !important;
+}
+#notes-column .note.selected, .notes .note.selected {
+  background-color: #41414140 !important; /* subtle color */
+}
+#notes-column .filter-section .filter-bar, .notes .filter-section .filter-bar {
+  background-color: #41414140 !important; /* subtle color */
+  height: 115% !important; /* correction */
+}
+
+/* notes-column, editor and markdown */
+.sn-component .sk-app-bar.no-edges {
+  border-top: 0.25px solid var(--sn-stylekit-border-color) !important; /* subtle color */ 
+  border-bottom: none !important;
+}
+.editor-toolbar, .editor-toolbar.fullscreen {
+  border-bottom: none !important;
+}
+#footer-bar.sk-app-bar.no-edges.no-bottom-edge {
+  border-top: 0.25px solid var(--sn-stylekit-border-color) !important; /* subtle color */
+} 
+    
+/* footer-bar */
+.sn-component .sk-app-bar .sk-app-bar-item.border {
+  border: none !important;
+}
+
+/* scrollbar */
+::-webkit-scrollbar-thumb {
+  border-radius: 0px !important; /* windows style */
+}
