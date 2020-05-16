@@ -1,3 +1,5 @@
+Note: GitHub repository is mirrored from GitLab. To submit pull requests or report any issues, go to [https://gitlab.com/dark-themes/dark-themes.gitlab.io](https://gitlab.com/dark-themes/dark-themes.gitlab.io "Click here to access the repository.").
+
 ![Build Status](https://gitlab.com/pages/plain-html/badges/master/build.svg)
 
 ---
