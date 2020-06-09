@@ -132,10 +132,10 @@
 .CodeMirror .cm-formatting-list-ol {
   font-weight: unset !important;
 }
-.cm-em {
+/* .cm-em {
   color: #ffffffff !important;
   font-weight: 700 !important;
-}
+} */
 
 /* markdown preview */
 .editor-preview-active a, .editor-preview-active-side a {
