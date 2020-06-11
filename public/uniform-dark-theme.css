@@ -29,4 +29,6 @@
 
   /* scrollbar */
   --sn-stylekit-scrollbar-thumb-color: var(--sn-stylekit-border-color);
+
+  /* extensions info and descriptions */
 }
