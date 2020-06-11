@@ -29,6 +29,9 @@
 
   /* borders */
   --sn-stylekit-border-color: #414141fc;
+  --sn-stylekit-secondary-border-color: var(--sn-stylekit-border-color);
+  --sn-stylekit-contrast-border-color: var(--sn-stylekit-border-color);
+  --sn-stylekit-secondary-contrast-border-color: var(--sn-stylekit-border-color);  
 
   /* scrollbar */
   --sn-stylekit-scrollbar-thumb-color: var(--sn-stylekit-border-color);
