@@ -28,6 +28,7 @@
   --sn-stylekit-shadow-color: #000000fc;
 
   /* borders */
+  --sn-stylekit-border-color: #414141fc;
 
   /* scrollbar */
   --sn-stylekit-scrollbar-thumb-color: var(--sn-stylekit-border-color);
