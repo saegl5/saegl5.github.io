@@ -31,4 +31,5 @@
   --sn-stylekit-scrollbar-thumb-color: var(--sn-stylekit-border-color);
 
   /* extensions info and descriptions */
+  --sn-stylekit-info-color: #569cd6fc;
 }
