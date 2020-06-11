@@ -5,4 +5,10 @@
 
 /* base settings */
 :root {
+  /* font */
+  --sn-stylekit-monospace-font: 'Fira Code', monospace; /* includes ligatures */
+
+  /* notes-column, editor and markdown */
+  --sn-stylekit-background-color: #1e1e1efc;
+  --sn-stylekit-foreground-color: #d4d4d4fc;  
 }
