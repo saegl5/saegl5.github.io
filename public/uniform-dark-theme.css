@@ -29,8 +29,4 @@
 
   /* scrollbar */
   --sn-stylekit-scrollbar-thumb-color: var(--sn-stylekit-border-color);
-
-  /* extensions info and descriptions */
-  --sn-stylekit-info-color: #569cd6fc;
-  --sn-stylekit-paragraph-text-color: #6b6b6bfc;
 }
