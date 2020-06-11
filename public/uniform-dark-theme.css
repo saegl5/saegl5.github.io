@@ -5,18 +5,25 @@
 
 /* base settings */
 :root {
-    /* font */
-    --sn-stylekit-monospace-font: 'Fira Code', monospace; /* includes ligatures */
+  /* font */
+  --sn-stylekit-monospace-font: 'Fira Code', monospace; /* includes ligatures */
 
-    /* notes-column, editor and markdown */
-    --sn-stylekit-background-color: #1e1e1efc;
-    --sn-stylekit-foreground-color: #d4d4d4fc;
-  
-    /* tags-content */
-    --sn-stylekit-secondary-background-color: var(--sn-stylekit-background-color);
-    --sn-stylekit-secondary-foreground-color: var(--sn-stylekit-foreground-color);
-  
-    /* notes-menu-bar and editor-menu-bar */
-    --sn-stylekit-contrast-background-color: var(--sn-stylekit-background-color);
-    --sn-stylekit-contrast-foreground-color: var(--sn-stylekit-foreground-color);
+  /* notes-column, editor and markdown */
+  --sn-stylekit-background-color: #1e1e1efc;
+  --sn-stylekit-foreground-color: #d4d4d4fc;
+
+  /* tags-content */
+  --sn-stylekit-secondary-background-color: var(--sn-stylekit-background-color);
+  --sn-stylekit-secondary-foreground-color: var(--sn-stylekit-foreground-color);
+
+  /* notes-menu-bar and editor-menu-bar */
+  --sn-stylekit-contrast-background-color: var(--sn-stylekit-background-color);
+  --sn-stylekit-contrast-foreground-color: var(--sn-stylekit-foreground-color);
+
+  /* tags-content */
+  --sn-stylekit-secondary-contrast-background-color: var(--sn-stylekit-background-color);
+  --sn-stylekit-secondary-contrast-foreground-color: var(--sn-stylekit-foreground-color);
+
+  /* shadow */
+  --sn-stylekit-shadow-color: #000000fc;
 }
