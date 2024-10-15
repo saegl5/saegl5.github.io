@@ -2,7 +2,7 @@
 
 ## Effective Date: Oct 11, 2024
 
-Create JIAYOU Calendar ("the App") is committed to protecting your privacy. This Privacy Policy outlines how I handle information for users of the App. 
+Create 加油 ("jiā yóu") Calendar ("the App") is committed to protecting your privacy. This Privacy Policy outlines how I handle information for users of the App. 
 
 ### 1. No Collection of Personal Information
 

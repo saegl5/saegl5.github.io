@@ -2,7 +2,7 @@
 
 ## Effective Date: Oct 11, 2024
 
-Add JIAYOU Events ("the App") is committed to protecting your privacy. This Privacy Policy outlines how I handle information for users of the App. 
+Add 加油 ("jiā yóu") Events ("the App") is committed to protecting your privacy. This Privacy Policy outlines how I handle information for users of the App. 
 
 ### 1. No Collection of Personal Information
 
