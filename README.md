@@ -14,7 +14,7 @@ Google Web app for creating a calendar of recurring events that cycles the words
 
 Google Web app for creating recurring events on only certain letter days (e.g., on only "J Day's"). Without an app script, one would need to add these events manually.
 
-*Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar.* 
+*Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar\*.* 
 
 [Get App](https://github.com/saegl5/jiayou_add_events) &nbsp; &#x2022; &nbsp; [Privacy Policy](./jiayou_add_events/privacy_policy.html)
 
