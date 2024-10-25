@@ -12,7 +12,7 @@ Google Web app for creating a calendar of recurring events that cycles the words
 
 _Note: Meant for limited, internal use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar._
 
-[Get App](https://github.com/saegl5/jiayou_create_calendar) &nbsp; &#x2022; &nbsp; [Privacy Policy](./jiayou_create_calendar/privacy_policy.html)
+[Get App &#128279;](https://github.com/saegl5/jiayou_create_calendar) &nbsp; &#x2022; &nbsp; [Privacy Policy &#128279;](./jiayou_create_calendar/privacy_policy.html)
 
 ### Add 加油 ("jiā yóu") Events
 
@@ -24,6 +24,16 @@ Google Web app for creating recurring events on only certain letter days (e.g., 
 
 _Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar\*._
 
-[Get App](https://github.com/saegl5/jiayou_add_events) &nbsp; &#x2022; &nbsp; [Privacy Policy](./jiayou_add_events/privacy_policy.html)
+[Get App &#128279;](https://github.com/saegl5/jiayou_add_events) &nbsp; &#x2022; &nbsp; [Privacy Policy &#128279;](./jiayou_add_events/privacy_policy.html)
 
 <small>\* Permission is required in order to get calendar information and create event series. That is, to get all calendars, including calendar names and IDs, to get calendar events, including calendar titles, start times, full dates, years, months and days/dates, and to create event series chained by date. However, no personal information from users who interact with the Web app will be collected, stored, or processed by me; users' personal information stays with Google.</small>
+
+## Python Scripts
+
+Python script for creating a sprite. It is a starter for Python game development, based on what I learned from teaching computer science for a couple years.
+
+#### Visual Example
+
+<img src="screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500"/>
+
+[Get Script &#128279;](https://github.com/saegl5/sprite_template)
