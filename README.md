@@ -37,3 +37,14 @@ Python script for creating a sprite. It is a starter for Python game development
 <img src="screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500"/>
 
 [Get Script &#128279;](https://github.com/saegl5/sprite_template)
+
+## Learning Resources
+
+### Scratch and Python for Beginners
+
+[Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks) &#128279;](https://a.co/d/cxwZQEi)<br>
+<img src="https://m.media-amazon.com/images/I/81CcyrRYMkL._SL1500_.jpg" alt="screenshot of book titled 'Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks)' " width="200"/>
+
+### Python and Pygame for Continuing Learners
+
+[Program Arcade Games With Python And Pygame &#128279;](http://programarcadegames.com/index.php?lang=en)
