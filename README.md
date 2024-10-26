@@ -42,9 +42,10 @@ Python script for creating a sprite. It is a starter for Python game development
 
 ### Scratch and Python for Beginners
 
-[Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks) &#128279;](https://a.co/d/cxwZQEi)<br>
+[Workman Publishing. (2020). _Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook_. Workman Publishing Company. &#128279;](https://a.co/d/cxwZQEi)<br>
 <img src="https://m.media-amazon.com/images/I/81CcyrRYMkL._SL1500_.jpg" alt="screenshot of book titled 'Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks)' " width="200"/>
 
 ### Python and Pygame for Continuing Learners
 
-[Program Arcade Games With Python And Pygame &#128279;](http://programarcadegames.com/index.php?lang=en)
+Craven, P. V. (2017). _Program Arcade Games With Python And Pygame_. Programarcadegames.com. [http://programarcadegames.com/index.php?lang=en &#128279;](http://programarcadegames.com/index.php?lang=en)
+‌
