@@ -1,6 +1,12 @@
 # saegl5.dev
 
-## Web Apps
+#### Table of Contents
+
+- [Web Apps](#web_apps)
+- [Python Scripts](#python_scripts)
+- [Learning Resources](#learning_resources)
+
+## Web Apps {#web_apps}
 
 ### Create 加油 ("jiā yóu") Calendar
 
@@ -28,7 +34,7 @@ _Note: Meant for broad, external use. Requires permission to see, edit, share, a
 
 <small>\* Permission is required in order to get calendar information and create event series. That is, to get all calendars, including calendar names and IDs, to get calendar events, including calendar titles, start times, full dates, years, months and days/dates, and to create event series chained by date. However, no personal information from users who interact with the Web app will be collected, stored, or processed by me; users' personal information stays with Google.</small>
 
-## Python Scripts
+## Python Scripts {#python_scripts}
 
 Python script for creating a sprite. It is a starter for Python game development, based on what I learned from teaching computer science for a couple years.
 
@@ -38,7 +44,7 @@ Python script for creating a sprite. It is a starter for Python game development
 
 [Get Script &#128279;](https://github.com/saegl5/sprite_template)
 
-## Learning Resources
+## Learning Resources {#learning_resources}
 
 ### Scratch and Python for Beginners
 
