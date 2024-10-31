@@ -1,5 +1,9 @@
 # saegl5.dev
 
+`Hello world!` &#128075;
+
+My name is Ed.<br>I am an educator who also enjoys learning and coding.
+
 #### Table of Contents
 
 - [Web Apps](#web_apps)
