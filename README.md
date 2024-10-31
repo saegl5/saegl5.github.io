@@ -10,8 +10,8 @@ Below are some projects of mine, including fun resources, that I would like to h
 
 - [Web Apps](#web_apps)
 - [Python Scripts](#python_scripts)
-- [Learning Resources](#learning_resources)
 - [Past Projects](#past_projects)
+- [Learning Resources](#learning_resources)
 
 ## Web Apps {#web_apps}
 
@@ -53,9 +53,20 @@ Python script for creating a sprite. It is a starter for Python game development
 
 [Get Script &#128279;](https://github.com/saegl5/sprite_template)
 
+## Past Projects {#past_projects}
+
+**Python**: [Drawings, animations, and games &#128279;](https://github.com/saegl5/myprojects), [Computing errors for repaying a loan in ten years with minimum monthly payments &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/Python/Ten-Year_Minimum_Errors.py)<br>
+**Swift**: [iOS app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_ios)<br>
+**Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android)<br>
+**CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
+**_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex)<br>
+**Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)
+
+(Some additional projects are under a non-disclosure agreement.)
+
 ## Learning Resources {#learning_resources}
 
-**Disclaimer: These resources are _not_ created, written or published my me.**
+Disclaimer: These resources are _not_ created, written or published my me. I simply found these to be incredibly useful.
 
 ### Scratch and Python for Beginners
 
@@ -70,13 +81,3 @@ Craven, P. V. (2017). _Program Arcade Games With Python And Pygame_. Programarca
 
 Edabit. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com/)
 
-## Past Projects {#past_projects}
-
-**Python**: [Drawings, animations, and games &#128279;](https://github.com/saegl5/myprojects), [Computing errors for repaying a loan in ten years with minimum monthly payments &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/Python/Ten-Year_Minimum_Errors.py)<br>
-**Swift**: [iOS app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_ios)<br>
-**Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android)<br>
-**CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
-**_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex)<br>
-**Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)
-
-(Some additional projects are under a non-disclosure agreement.)
