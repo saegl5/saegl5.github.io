@@ -62,7 +62,7 @@ Python script for creating a sprite. It is a starter for Python game development
 **_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex)<br>
 **Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)
 
-(Some additional projects are under a non-disclosure agreement.)
+(Some additional projects, for example a curriculum and Wiki that I developed, are under a non-disclosure agreement.)
 
 ## Learning Resources {#learning_resources}
 
