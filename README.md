@@ -4,6 +4,8 @@
 
 My name is Ed.<br>I am an educator who also enjoys learning and coding.
 
+Below are some projects of mine, including fun resources, that I would like to highlight. Enjoy!
+
 #### Table of Contents
 
 - [Web Apps](#web_apps)
