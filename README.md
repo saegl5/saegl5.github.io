@@ -54,4 +54,7 @@ Python script for creating a sprite. It is a starter for Python game development
 ### Python and Pygame for Continuing Learners
 
 Craven, P. V. (2017). _Program Arcade Games With Python And Pygame_. Programarcadegames.com. [http://programarcadegames.com/index.php?lang=en &#128279;](http://programarcadegames.com/index.php?lang=en)
-‌
+
+### Text-Based Coding Practice for All Learners
+
+Edabit. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com/)
