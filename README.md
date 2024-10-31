@@ -55,6 +55,8 @@ Python script for creating a sprite. It is a starter for Python game development
 
 ## Learning Resources {#learning_resources}
 
+**Disclaimer: These resources are _not_ created, written or published my me.**
+
 ### Scratch and Python for Beginners
 
 [Workman Publishing. (2020). _Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook_. Workman Publishing Company. &#128279;](https://a.co/d/cxwZQEi)<br>
@@ -67,7 +69,6 @@ Craven, P. V. (2017). _Program Arcade Games With Python And Pygame_. Programarca
 ### Text-Based Coding Practice for All Learners
 
 Edabit. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com/)
-
 
 ## Past Projects {#past_projects}
 
