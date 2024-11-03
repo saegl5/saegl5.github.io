@@ -8,10 +8,10 @@ Below are some projects of mine, including fun resources, that I would like to h
 
 #### Table of Contents
 
-- [Web Apps](#web_apps)
-- [Python Scripts](#python_scripts)
-- [Past Projects](#past_projects)
-- [Learning Resources](#learning_resources)
+- [Web Apps &#x2193;](#web_apps)
+- [Python Scripts &#x2193;](#python_scripts)
+- [Past Projects &#x2193;](#past_projects)
+- [Learning Resources &#x2193;](#learning_resources)
 
 ## Web Apps {#web_apps}
 
