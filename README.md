@@ -71,7 +71,7 @@ Disclaimer: These resources are _not_ created, written or published my me. I sim
 ### Scratch and Python for Beginners
 
 [Workman Publishing. (2020). _Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook_. Workman Publishing Company. &#128279;](https://a.co/d/cxwZQEi)<br>
-<img src="https://m.media-amazon.com/images/I/81CcyrRYMkL._SL1500_.jpg" alt="screenshot of book titled 'Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks)' " width="200"/>
+<img src="https://m.media-amazon.com/images/I/81CcyrRYMkL._SL1500_.jpg" alt="screenshot of book titled 'Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks)' " width="100"/>
 
 ### Python and Pygame for Continuing Learners
 
