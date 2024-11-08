@@ -1,5 +1,3 @@
-<!-- # saegl5.dev -->
-<!--  -->
 `Hello world!` &#128075;
 
 My name is Ed.<br>I am an educator who also enjoys learning and coding.
@@ -13,15 +11,17 @@ Below are some projects of mine, including fun resources, that I would like to h
 - [Past Projects &#x2193;](#past_projects)
 - [Learning Resources &#x2193;](#learning_resources)
 
-## Web Apps {#web_apps}
+## Current Projects
+
+### Web Apps {#web_apps}
 
 Built with JavaScript and HTML
 
-### Create 加油 ("jiā yóu") Calendar
+#### Create 加油 ("jiā yóu") Calendar
 
 Google Web app for creating a calendar of recurring events that cycles the words "J Day," "I Day," "A Day," "Y Day," "O Day," and "U Day," except on weekends and holidays. Without an app script, one would need to create these events manually.
 
-#### Visual Example
+##### Visual Example
 
 <img src="screenshots/createCalendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="screenshots/createCalendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
 
@@ -29,11 +29,11 @@ _Note: Meant for limited, internal use. Requires permission to see, edit, share,
 
 [Get App &#128279;](https://github.com/saegl5/jiayou_create_calendar) &nbsp; &#x2022; &nbsp; [Privacy Policy &#128279;](./jiayou_create_calendar/privacy_policy.html)
 
-### Add 加油 ("jiā yóu") Events
+#### Add 加油 ("jiā yóu") Events
 
 Google Web app for creating recurring events on only certain letter days (e.g., on only "J Day's"). Without an app script, one would need to add these events manually.
 
-#### Visual Example
+##### Visual Example
 
 <img src="screenshots/addToCalendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="screenshots/addToCalendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
 
@@ -43,11 +43,11 @@ _Note: Meant for broad, external use. Requires permission to see, edit, share, a
 
 <small>\* Permission is required in order to get calendar information and create event series. That is, to get all calendars, including calendar names and IDs, to get calendar events, including calendar titles, start times, full dates, years, months and days/dates, and to create event series chained by date. However, no personal information from users who interact with the Web app will be collected, stored, or processed by me; users' personal information stays with Google.</small>
 
-## Python Scripts {#python_scripts}
+### Python Scripts {#python_scripts}
 
 Python script for creating a sprite. It is a starter for Python game development, based on what I learned from teaching computer science for a couple years.
 
-#### Visual Example
+##### Visual Example
 
 <img src="screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500"/>
 
