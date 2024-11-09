@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<title>Practice</title>
+
+		<!--call styles-->
+		<link rel="stylesheet" href="styles.css"></link>
+		<link rel="stylesheet" href="fonts/Open Sans/opensans.css"></link>
+		<link rel="stylesheet" href="fonts/Serif/cmun-serif.css"></link>
+		<link rel="stylesheet" href="fonts/font-awesome-4.6.3/css/font-awesome.min.css"></link>
+
+		<!--for search-->
+		<script language="JavaScript1.1" src="search.js"></script>
+
+		<!--set up MathJax overall-->
+		<script type="text/x-mathjax-config">
+			MathJax.Hub.Config
+				({
+				tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+				jax: ["input/TeX","output/SVG"],
+				SVG: {font: "TeX"},
+				showMathMenu: false,
+				});
+				MathJax.Hub.Queue(function () {document.getElementById("step").disabled = false;});
+		</script>
+		<script type="text/javascript" src="MathJax/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+
+		<!--set up MathJax dynamic steps-->
+		<script type="text/javascript">
+				(function ()
+					{
+					var n = 1;
+					window.ShowStep = function ()
+						{
+						document.getElementById("Step"+n).style.visibility = "visible"; n++;
+						if (!document.getElementById("Step"+n)) {document.getElementById("step").disabled = true}
+							document.getElementById("reset").disabled = false;
+						}
+					window.ResetSteps = function ()
+						{
+						document.getElementById("step").disabled = false;
+						document.getElementById("reset").disabled = true;
+						var i = 1, step; n = 1;
+						while (step = document.getElementById("Step"+i)) {step.style.visibility = "hidden"; i++}
+						}
+					}
+				)();
+		</script>
+
+		<!--to show/hide-->
+		<script>
+			function showDiv() {
+				document.getElementById('question').style.display = "block";
+				document.getElementById('explanation').style.display = "none";
+			}
+			function hideDiv() {
+				document.getElementById('question').style.display = "none";
+				document.getElementById('explanation').style.display = "block";
+			}
+			function showDiv2() {
+				document.getElementById('question2').style.display = "block";
+				document.getElementById('explanation2').style.display = "none";
+			}
+			function hideDiv2() {
+				document.getElementById('question2').style.display = "none";
+				document.getElementById('explanation2').style.display = "block";
+			}
+		</script>
+
+	</head>
+
+	<body bgcolor="#2F98CC" style="background-image: url(pictures/waves_background.png); background-repeat: repeat-xy;">
+		<div class="body">
+
+		<!------------------------------ page title ------------------------------>
+
+			<div id="title-block">
+				<table align="center"><tbody>
+					<tr>
+						<td class="eagle"><font size="7">Eagle&rsquo;s&nbsp;</font></td><td class="nest" style="border-left: 0px;"><font size="7">Nest</font></td>
+					</tr>
+					<!--<tr>
+						<td colspan="2" align='center' style='padding: 2px; border-bottom: solid #ffffff 2px'><font size="2" style="font-variant: small-caps">&nbsp</font></td>
+					</tr>-->
+				</tbody></table>
+			</div>
+
+			<!------------------------------ page tabs and search ------------------------------>
+
+			<ol id="toc">
+					<li><a href="index.html" id="first"><span>Latest</span></a>
+					<li><a href="succeed.html"><span>Succeed</span></a>
+					<li><a href="practice.html" class="current"><span>Practice</span></a>
+						<li><a href="discover.html"><span>Discover</span></a>
+							<li><a href="publications.html"><span>Publications</span></a>
+							<li><a href="media.html"><span>Media</span></a>
+					<li><a href="topics.html"><span>Topics</span></a>
+					<li><a href="resources.html"><span>Resources</span></a>
+			</ol>
+
+			<!------------------------------ content ------------------------------>
+
+			<div class="content">
+				<center>
+					<table class="search_box"><tbody>
+						<tr><td id="search"><font size="3"><i class="fa fa-search"></i></font></td>
+						<td id="search_for"><form class="search" id="last" onclick="location.href='search.html';">
+							<input type="text" class="tftextinput" placeholder="Search for..." size="50" onclick="location.href='search.html';" onkeypress="location.href='search.html';" autocomplete="off"><input type="button" class="tfbutton" value="Search" onClick="alert('What would you like to search for?');">
+							</form>
+						</td></tr>
+					</tbody></table>
+				</center>
+				<div align="center">
+					<font size="2">
+						<a href="#fractions">Adding and subtracting fractions</a> |
+						<a href="#more_practice">More Practice</a>
+					</font>
+				</div>
+				<br>
+				<a id="adding"></a><a id="subtracting"></a><a id="fractions"></a>
+				<a id="least"></a><a id="common"></a><a id="denominator"></a>
+				<a id="equivalent"></a><a id="simplify"></a><a id="examples"></a>
+				<a id="multiples"></a><a id="lcd"></a>
+				<A NAME="fractions"><center><font size="3" style="font-family: 'OpenSans Extra Bold'">Adding and Subtracting Fractions</font></center></a>
+				<p>
+				<div>
+					<div> <!--row-->
+						Step 1. Find Least Common Denominator (LCD)<br>
+						Step 2. Create equivalent fractions<br>
+						Step 3. Add (or subtract) fractions<br>
+						Step 4. Simplify
+						<p>
+						<input type="button" class="tfbutton" onclick="ShowStep()" value="Show Steps" id="step" disabled="true" />
+						<input type="button" class="tfbutton" onclick="ResetSteps()" value="Reset" id="reset" disabled="true" />
+					</div>
+				</div>
+				<div class="add_subtract_fractions">
+					<div style="border-top: solid 1px; border-color: #2F98CC"> <!--row-->
+						<div> <!--col-->
+							Example 1.
+							<p>
+							$\begin{align}
+							\frac{3}{4}+\frac{1}{16}
+							&\cssId{Step1}{= \frac{3}{4}\left(\frac{4}{4}\right)+\frac{1}{16}\left(\frac{1}{1}\right)}\\
+							&\cssId{Step2}{= \frac{12}{16}+\frac{1}{16}}\\
+							&\cssId{Step3}{= \frac{12+1}{16}}\\
+							&\cssId{Step4}{= \frac{13}{16}}
+							\end{align}$
+						</div>
+						<div>
+							Keep in mind:
+							<p>
+							Multiples of 4 are 4, 8, 12, 16, 20, ...<br>Multiples of 16 are 16, 32, 48, 64, 80, ...<br>Since 16 is the first multiple of each that matches, LCD = 16.<br>Also, fractions $\frac{3}{4}=\frac{12}{16}$ and $\frac{1}{16}=\frac{1}{16}$.
+						</div>
+					</div>
+					<div>
+						<div>
+							Example 2.
+							<p>
+							$\begin{align}
+							\frac{1}{6}+\frac{7}{15}
+							&\cssId{Step5}{= \frac{1}{6}\left(\frac{5}{5}\right)+\frac{7}{15}\left(\frac{2}{2}\right)}\\
+							&\cssId{Step6}{= \frac{5}{30}+\frac{14}{30}}\\
+							&\cssId{Step7}{= \frac{5+14}{30}}\\
+							&\cssId{Step8}{= \frac{19}{30}}
+							\end{align}$
+						</div>
+						<div>
+							Keep in mind:
+							<p>
+							Multiples of 6 are 6, 12, 18, 24, 30, ...<br>Multiples of 15 are 15, 30, 45, 60, 75, ...<br>Since 30 is the first multiple of each that matches, LCD = 30.<br>Also, fractions $\frac{1}{6}=\frac{5}{30}$ and $\frac{7}{15}=\frac{14}{30}$.
+						</div>
+					</div>
+					<div style="border-bottom: none">
+						<div>
+							Example 3.
+							<p>
+							$\begin{align}
+							\frac{5}{12}-\frac{3}{8}
+							&\cssId{Step9}{= \frac{5}{12}\left(\frac{2}{2}\right)-\frac{3}{8}\left(\frac{3}{3}\right)}\\
+							&\cssId{Step10}{= \frac{10}{24}-\frac{9}{24}}\\
+							&\cssId{Step11}{= \frac{10-9}{24}}\\
+							&\cssId{Step12}{= \frac{1}{24}}
+							\end{align}$
+						</div>
+						<div>
+							Keep in mind:
+							<p>
+							Multiples of 12 are 12, 24, 36, 48, 60, ...<br>Multiples of 8 are 8, 16, 24, 32, 40, ...<br>Since 24 is the first multiple of each that matches, LCD = 24.<br>Also, fractions $\frac{5}{12}=\frac{10}{24}$ and $\frac{3}{8}=\frac{9}{24}$.
+						</div>
+					</div>
+				</div>
+				<div>
+					<p style="height: 1em">
+					<a id="more"></a><a id="practice">
+					<A NAME="more_practice"><center><font size="3" style="font-family: 'OpenSans Extra Bold'">More Practice</font></center></a>
+					<p>
+          <div class="add_subtract_fractions">
+            <div style="border-bottom: none">
+              <div>
+								<table style="padding: 0; text-align: left"><tbody>
+									<tr>
+                  	<script>
+                    	(function () {
+                      	var QUEUE = MathJax.Hub.queue;  // shorthand for the queue
+                      	var math = null;  // the element jax for the math output.
+                        this.d1 = "";
+                        this.d2 = "";
+                      	window.NewExpression = function () {
+                          this.n1 = (Math.floor(Math.random() * 4) + 1); //between 1 and 4
+                          this.n2 = (Math.floor(Math.random() * 2)); //between 0 and 1
+                          this.temp1 = (Math.floor(Math.random() * 2) + 1); //between 1 and 2
+                          this.o = Math.pow(-1,temp1);
+                          this.n3 = (Math.floor(Math.random() * 4) + 1); //between 1 and 4
+                          this.n4 = (Math.floor(Math.random() * 2)); //between 0 and 1
+                        	if (o > 0) {QUEUE.Push(["Text",expression,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"} + \\frac{"+n3+"}{"+(n3+n4)+"} = "]);}
+                        	else {QUEUE.Push(["Text",expression,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"} - \\frac{"+n3+"}{"+(n3+n4)+"} = "]);}
+                          QUEUE.Push(["Text",multiple1,"\\text{Multiples of }"+(n1+n2)+"\\text{ are }"+(n1+n2)*1+"\\text{, }"+(n1+n2)*2+"\\text{, }"+(n1+n2)*3+"\\text{, }"+(n1+n2)*4+"\\text{, }"+(n1+n2)*5+"\\text{, }\\ldots"]);
+                          QUEUE.Push(["Text",multiple2,"\\text{Multiples of }"+(n3+n4)+"\\text{ are }"+(n3+n4)*1+"\\text{, }"+(n3+n4)*2+"\\text{, }"+(n3+n4)*3+"\\text{, }"+(n3+n4)*4+"\\text{, }"+(n3+n4)*5+"\\text{, }\\ldots"]);
+                          var a = (n1+n2);
+                          var b = (n3+n4);
+                          while (b != 0) {
+                            var temp2 = b;
+                            b = a%b;
+                            a = temp2;
+                          };
+                          QUEUE.Push(["Text",gcm,"\\text{Since }"+((n1+n2)*(n3+n4))/a+"\\text{ is the first multiple of each that matches, LCD = }"+((n1+n2)*(n3+n4)/a)+"\\text{.}"]); //multiplying denominators and dividing by Euclid's algorithm
+                          QUEUE.Push(["Text",equivalentfractions,"\\text{Also, fractions } \\frac{"+n1+"}{"+(n1+n2)+"} = \\frac{"+((n1+n2)*(n3+n4))/a/(n1+n2)*n1+"}{"+((n1+n2)*(n3+n4))/a+"} \\text{ and } \\frac{"+n3+"}{"+(n3+n4)+"} = \\frac{"+((n1+n2)*(n3+n4))/a/(n3+n4)*n3+"}{"+((n1+n2)*(n3+n4))/a+"}\\text{.}"]);
+                        }
+                      	window.Denominator1 = function (d1) {
+                          if (this.d1 == null) {this.d1 = "";}
+                          else {this.d1 = d1;}
+                        }
+                      	window.Denominator2 = function (d2) {
+                          if (this.d2 == null) {this.d2 = "";}
+                          else {this.d2 = d2;}
+                        }
+                      	window.LCDFractions = function() {
+                        	if (o > 0) {QUEUE.Push(["Text",mathLCD,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"}\\left(\\frac{"+this.d1+"}{"+this.d1+"}\\right) + \\frac{"+n3+"}{"+(n3+n4)+"}\\left(\\frac{"+this.d2+"}{"+this.d2+"}\\right)"]);}
+                        	else {QUEUE.Push(["Text",mathLCD,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"}\\left(\\frac{"+this.d1+"}{"+this.d1+"}\\right) - \\frac{"+n3+"}{"+(n3+n4)+"}\\left(\\frac{"+this.d2+"}{"+this.d2+"}\\right)"]);}
+                      	}
+                      	QUEUE.Push(function () {expression = MathJax.Hub.getAllJax("OutputNewExpression")[0];});
+                        QUEUE.Push(function () {multiple1 = MathJax.Hub.getAllJax("OutputMultiple1")[0];});
+                        QUEUE.Push(function () {multiple2 = MathJax.Hub.getAllJax("OutputMultiple2")[0];});
+                        QUEUE.Push(function () {gcm = MathJax.Hub.getAllJax("OutputGCM")[0];});
+                        QUEUE.Push(function () {equivalentfractions = MathJax.Hub.getAllJax("OutputEquivalentFractions")[0];});
+                      	QUEUE.Push(function () {mathLCD = MathJax.Hub.getAllJax("MathOutputNewLCD")[0];});
+                    	}) ();
+                  	</script>
+                		<td id="OutputNewExpression">${}$</td><td id="MathOutputLCD" style="border-left: none">${}$</td>
+									</tr>
+									<tr>
+										<td><button class="tfbutton" onclick="NewExpression(this.value)">Try another one!</button></td><td style="border-left: none"></td>
+									</tr>
+								</tbody></table>
+
+                                    <input size="2" type="text" id="d1" onchange="Denominator1(this.value); LCDFractions()"/>
+                                    <input size="2" type="text" id="d2" onchange="Denominator2(this.value); LCDFractions()"/>
+
+                                    <p>
+                  <!--make sure no mixed fractions, that first number is bigger, make sure all multiples shown, make sure enough variety-->
+                  <!--need to load example too on start and make sure multiples are all in first five, get font to match-->
+
+
+
+                  $\begin{align}
+                  &\cssId{Step10}{= \frac{10}{24}-\frac{9}{24}}\\
+                  &\cssId{Step11}{= \frac{10-9}{24}}\\
+                  &\cssId{Step12}{= \frac{1}{24}}
+                  \end{align}$
+                </div>
+
+
+
+                <div>
+                  Keep in mind:
+                  <p>
+                  <table><tbody>
+                    <tr>
+                      <td id="OutputMultiple1">${}$</td>
+                    </tr>
+                    <tr>
+                      <td id="OutputMultiple2">${}$</td>
+                    </tr>
+                    <tr>
+                      <td id="OutputGCM">${}$</td>
+                    </tr>
+                    <tr>
+                      <td id="OutputEquivalentFractions">${}$</td>
+                    </tr>
+                  </tbody></table>
+                </div>
+            </div>
+
+
+
+          </div>
+
+					<applet code = "Multiplication3.class" width = 400 height = 40></applet><br>
+					<applet code = "LeastCommonDenominator4.class" width = 450 height = 40></applet><br>
+					<applet code = "EqualFractionRev5.class" width = 400 height = 40></applet>
+				</div>
+			</div>
+
+		</div>
+
+    <!------------------------------ footer ------------------------------>
+		<footer>
+			<font size=2 color="white" style="font-family: 'OpenSans Regular';">
+				<a href="about.html" style="color: white; text-decoration: none">About me</a>&nbsp;&nbsp;
+				&#183;&nbsp;&nbsp;
+				Page updated: June 16, 2016&nbsp;&nbsp;
+				&#183;&nbsp;&nbsp;
+				&#169;
+				<script language="JavaScript" type="text/javascript">
+					document.write(new Date().getFullYear())
+				</script>
+				Ed Silkworth. All Rights Reserved.
+			</font>
+		</footer>
+	</body>
+</html>
