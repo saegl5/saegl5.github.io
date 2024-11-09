@@ -74,7 +74,8 @@
 
 	<!-- <body bgcolor="#2F98CC" style="background-image: url(pictures/waves_background.png); background-repeat: repeat-xy;"> -->
 	<body>
-		<div class="body">
+		<!-- <div class="body"> -->
+		<div>
 
 		<!------------------------------ page title ------------------------------>
 
@@ -137,8 +138,10 @@
 						Step 3. Add (or subtract) fractions<br>
 						Step 4. Simplify
 						<p>
-						<input type="button" class="tfbutton" onclick="ShowStep()" value="Show Steps" id="step" disabled="true" />
-						<input type="button" class="tfbutton" onclick="ResetSteps()" value="Reset" id="reset" disabled="true" />
+						<!-- <input type="button" class="tfbutton" onclick="ShowStep()" value="Show Steps" id="step" disabled="true" /> -->
+						<input type="button" onclick="ShowStep()" value="Show Steps" id="step" disabled="true" />
+						<!-- <input type="button" class="tfbutton" onclick="ResetSteps()" value="Reset" id="reset" disabled="true" /> -->
+						<input type="button" onclick="ResetSteps()" value="Reset" id="reset" disabled="true" />
 					</div>
 				</div>
 				<div class="add_subtract_fractions">
@@ -262,7 +265,8 @@
                 		<td id="OutputNewExpression">${}$</td><td id="MathOutputLCD" style="border-left: none">${}$</td>
 									</tr>
 									<tr>
-										<td><button class="tfbutton" onclick="NewExpression(this.value)">Try another one!</button></td><td style="border-left: none"></td>
+										<!-- <td><button class="tfbutton" onclick="NewExpression(this.value)">Try another one!</button></td><td style="border-left: none"></td> -->
+										<td><button onclick="NewExpression(this.value)">Try another one!</button></td><td style="border-left: none"></td>
 									</tr>
 								</tbody></table>
 
