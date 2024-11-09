@@ -7,10 +7,30 @@
 		<title>Adding and Subtracting Fractions</title>
 
 		<!--call styles-->
-		<link rel="stylesheet" href="styles.css"></link>
+		<!-- <link rel="stylesheet" href="styles.css"></link> -->
 		<!-- <link rel="stylesheet" href="fonts/Open Sans/opensans.css"></link> -->
 		<!-- <link rel="stylesheet" href="fonts/Serif/cmun-serif.css"></link> -->
 		<!-- <link rel="stylesheet" href="fonts/font-awesome-4.6.3/css/font-awesome.min.css"></link> -->
+		<style>
+			/* div */
+			div.add_subtract_fractions {
+				display: table;
+			}
+			div.add_subtract_fractions > div {
+				display: table-row;
+			}
+			div.add_subtract_fractions div > div {
+				display: table-cell;
+				padding: 5px;
+			}
+
+			/* MathJax dynamic steps */
+			#Step1, #Step2, #Step3, #Step4,
+			#Step5, #Step6, #Step7, #Step8,
+			#Step9, #Step10, #Step11, #Step12 {
+				visibility: hidden;
+			}
+		</style>
 
 		<!--for search-->
 		<!-- <script language="JavaScript1.1" src="search.js"></script> -->
