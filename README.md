@@ -59,7 +59,7 @@ Python script for creating a sprite. It is a starter for Python game development
 **Swift**: [iOS app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_ios)<br>
 **Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android)<br>
 **CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
-**_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex)<br>
+**_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex), [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html)<br>
 **Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)
 
 (Some additional projects, for example a curriculum and Wiki that I developed, are under a non-disclosure agreement.)
