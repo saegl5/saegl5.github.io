@@ -183,7 +183,10 @@
 						<div>
 							Keep in mind:
 							<p>
-							Multiples of 4 are 4, 8, 12, 16, 20, ...<br>Multiples of 16 are 16, 32, 48, 64, 80, ...<br>Since 16 is the first multiple of each that matches, LCD = 16.<br>Also, fractions $\frac{3}{4}=\frac{12}{16}$ and $\frac{1}{16}=\frac{1}{16}$.
+							$\text{Multiples of 4 are 4, 8, 12, 16, 20, ...}$<br>
+							$\text{Multiples of 16 are 16, 32, 48, 64, 80, ...}$<br>
+							$\text{Since 16 is the first multiple of each that matches, LCD = 16.}$<br>
+							$\text{Also, fractions}$ $\frac{3}{4}=\frac{12}{16}$ $\text{and}$ $\frac{1}{16}=\frac{1}{16}$.
 						</div>
 					</div>
 					<div>
@@ -201,7 +204,10 @@
 						<div>
 							Keep in mind:
 							<p>
-							Multiples of 6 are 6, 12, 18, 24, 30, ...<br>Multiples of 15 are 15, 30, 45, 60, 75, ...<br>Since 30 is the first multiple of each that matches, LCD = 30.<br>Also, fractions $\frac{1}{6}=\frac{5}{30}$ and $\frac{7}{15}=\frac{14}{30}$.
+							$\text{Multiples of 6 are 6, 12, 18, 24, 30, ...}$<br>
+							$\text{Multiples of 15 are 15, 30, 45, 60, 75, ...}$<br>
+							$\text{Since 30 is the first multiple of each that matches, LCD = 30.}$<br>
+							$\text{Also, fractions}$ $\frac{1}{6}=\frac{5}{30}$ $\text{and}$ $\frac{7}{15}=\frac{14}{30}$.
 						</div>
 					</div>
 					<!-- <div style="border-bottom: none"> -->
@@ -220,11 +226,14 @@
 						<div>
 							Keep in mind:
 							<p>
-							Multiples of 12 are 12, 24, 36, 48, 60, ...<br>Multiples of 8 are 8, 16, 24, 32, 40, ...<br>Since 24 is the first multiple of each that matches, LCD = 24.<br>Also, fractions $\frac{5}{12}=\frac{10}{24}$ and $\frac{3}{8}=\frac{9}{24}$.
+							$\text{Multiples of 12 are 12, 24, 36, 48, 60, ...}$<br>
+							$\text{Multiples of 8 are 8, 16, 24, 32, 40, ...}$<br>
+							$\text{Since 24 is the first multiple of each that matches, LCD = 24.}$<br>
+							$\text{Also, fractions}$ $\frac{5}{12}=\frac{10}{24}$ $\text{and}$ $\frac{3}{8}=\frac{9}{24}$.
 						</div>
 					</div>
 				</div>
-				<div>
+				<!-- <div> -->
 					<!-- <p style="height: 1em"> -->
 					<!-- <a id="more"></a><a id="practice"> -->
 					<!-- <A NAME="more_practice"><center><font size="3" style="font-family: 'OpenSans Extra Bold'">More Practice</font></center></a> -->
@@ -234,10 +243,10 @@
 					<p>
           <div class="add_subtract_fractions">
             <!-- <div style="border-bottom: none"> -->
-			<div>
-              <div>
-								<table style="padding: 0; text-align: left"><tbody>
-									<tr>
+			<div> <!-- row -->
+              <div> <!-- col -->
+								<!-- <table style="padding: 0; text-align: left"><tbody> -->
+									<!-- <tr> -->
                   	<script>
                     	(function () {
                       	var QUEUE = MathJax.Hub.queue;  // shorthand for the queue
@@ -285,13 +294,15 @@
                       	QUEUE.Push(function () {mathLCD = MathJax.Hub.getAllJax("MathOutputNewLCD")[0];});
                     	}) ();
                   	</script>
-                		<td id="OutputNewExpression">${}$</td><td id="MathOutputLCD" style="border-left: none">${}$</td>
-									</tr>
-									<tr>
+                		<!-- <td id="OutputNewExpression">${}$</td><td id="MathOutputLCD" style="border-left: none">${}$</td> -->
+                		<p>New problem.</p>
+						<p style="margin-left: 4px;" id="OutputNewExpression">${}$</p><p id="MathOutputLCD" style="border-left: none">${}$</p>
+									<!-- </tr> -->
+									<!-- <tr> -->
 										<!-- <td><button class="tfbutton" onclick="NewExpression(this.value)">Try another one!</button></td><td style="border-left: none"></td> -->
 										<!-- <td><button onclick="NewExpression(this.value)">Try another one!</button></td><td style="border-left: none"></td> -->
-									</tr>
-								</tbody></table>
+									<!-- </tr> -->
+								<!-- </tbody></table> -->
 
                                     <!-- <input size="2" type="text" id="d1" onchange="Denominator1(this.value); LCDFractions()"/> -->
                                     <!-- <input size="2" type="text" id="d2" onchange="Denominator2(this.value); LCDFractions()"/> -->
@@ -311,23 +322,23 @@
 
 
 
-                <div>
+                <div style="padding-left: 127px;">
                   Keep in mind:
                   <p>
-                  <table><tbody>
-                    <tr>
-                      <td id="OutputMultiple1">${}$</td>
-                    </tr>
-                    <tr>
-                      <td id="OutputMultiple2">${}$</td>
-                    </tr>
-                    <tr>
-                      <td id="OutputGCM">${}$</td>
-                    </tr>
-                    <tr>
-                      <td id="OutputEquivalentFractions">${}$</td>
-                    </tr>
-                  </tbody></table>
+                  <!-- <table><tbody> -->
+                    <!-- <tr> -->
+                      <p id="OutputMultiple1" style="margin: 0;">${}$</p>
+                    <!-- </tr> -->
+                    <!-- <tr> -->
+                      <p id="OutputMultiple2" style="margin: 0;">${}$</p>
+                    <!-- </tr> -->
+                    <!-- <tr> -->
+                      <p id="OutputGCM" style="margin: 0;">${}$</p>
+                    <!-- </tr> -->
+                    <!-- <tr> -->
+                      <p id="OutputEquivalentFractions" style="margin: 0;">${}$</p>
+                    <!-- </tr> -->
+                  <!-- </tbody></table> -->
                 </div>
             </div>
 
