@@ -251,8 +251,8 @@
                           this.o = Math.pow(-1,temp1);
                           this.n3 = (Math.floor(Math.random() * 4) + 1); //between 1 and 4
                           this.n4 = (Math.floor(Math.random() * 2)); //between 0 and 1
-                        	if (o > 0) {QUEUE.Push(["Text",expression,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"} + \\frac{"+n3+"}{"+(n3+n4)+"}" + "\\text{ = ?}"]);}
-                        	else {QUEUE.Push(["Text",expression,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"} - \\frac{"+n3+"}{"+(n3+n4)+"}" + "\\text{ = ?}"]);}
+                        	if (o > 0) {QUEUE.Push(["Text",expression,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"} + \\frac{"+n3+"}{"+(n3+n4)+"}"]);}
+                        	else {QUEUE.Push(["Text",expression,"\\displaystyle \\frac{"+n1+"}{"+(n1+n2)+"} - \\frac{"+n3+"}{"+(n3+n4)+"}"]);}
                           QUEUE.Push(["Text",multiple1,"\\text{Multiples of }"+(n1+n2)+"\\text{ are }"+(n1+n2)*1+"\\text{, }"+(n1+n2)*2+"\\text{, }"+(n1+n2)*3+"\\text{, }"+(n1+n2)*4+"\\text{, }"+(n1+n2)*5+"\\text{, }\\ldots"]);
                           QUEUE.Push(["Text",multiple2,"\\text{Multiples of }"+(n3+n4)+"\\text{ are }"+(n3+n4)*1+"\\text{, }"+(n3+n4)*2+"\\text{, }"+(n3+n4)*3+"\\text{, }"+(n3+n4)*4+"\\text{, }"+(n3+n4)*5+"\\text{, }\\ldots"]);
                           var a = (n1+n2);
