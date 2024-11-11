@@ -15,11 +15,9 @@ Below are some projects of mine, including fun resources, that I would like to h
 
 ### Web Apps
 
-Built with JavaScript and HTML
-
 #### Create 加油 ("jiā yóu") Calendar
 
-Google Web app for creating a calendar of recurring events that cycles the words "J Day," "I Day," "A Day," "Y Day," "O Day," and "U Day," except on weekends and holidays. Without an app script, one would need to create these events manually.
+Google Web app for creating a calendar of recurring events that cycles the words "J Day," "I Day," "A Day," "Y Day," "O Day," and "U Day," except on weekends and holidays. Without an app script, one would need to create these events manually. Built in JavaScript and HTML.
 
 <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
 
@@ -29,7 +27,7 @@ _Note: Meant for limited, internal use. Requires permission to see, edit, share,
 
 #### Add 加油 ("jiā yóu") Events
 
-Google Web app for creating recurring events on only certain letter days (e.g., on only "J Day's"). Without an app script, one would need to add these events manually.
+Google Web app for creating recurring events on only certain letter days (e.g., on only "J Day's"). Without an app script, one would need to add these events manually. Built in JavaScript and HTML.
 
 <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
 
