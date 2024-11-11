@@ -47,14 +47,27 @@ Python script for creating a sprite. It is a starter for Python game development
 
 [Get Script &#128279;](https://github.com/saegl5/sprite_template)
 
+## Recent Projects {#recent_projects}
+
+### Python Scripts
+
+Python scripts for creating some drawings, animations, and games. This is a compilation of scripts that I created over a couple of years while teaching computer science.
+
+<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/suburb.png" alt="screenshot of suburb drawing" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/billiards.gif" alt="screenshot of billiards animation" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/snowfall.gif" alt="screenshot of snowfall animation" width="200"><br>
+<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pictionary.gif" alt="screenshot of pictionary game" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pac_man.gif" alt="screenshot of pacman game" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/space_invaders.gif" alt="screenshot of space invaders game" width="200"><br>
+<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/mario.gif" alt="screenshot of mario game" width="200">
+
+[Get Scripts &#128279;](https://github.com/saegl5/myprojects)
+
+**CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
+**Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)
+
 ## Past Projects {#past_projects}
 
-**Python**: [Drawings, animations, and games &#128279;](https://github.com/saegl5/myprojects), [Computing errors for repaying a loan in ten years with minimum monthly payments &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/Python/Ten-Year_Minimum_Errors.py)<br>
+**Python**: [Computing errors for repaying a loan in ten years with minimum monthly payments &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/Python/Ten-Year_Minimum_Errors.py)<br>
 **Swift**: [iOS app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_ios)<br>
 **Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android)<br>
-**CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
-**_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex), [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html)<br>
-**Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)
+**_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex), [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html)
 
 (Some additional projects, for example a curriculum and Wiki that I developed, are under a non-disclosure agreement.)
 
