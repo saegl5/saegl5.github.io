@@ -23,7 +23,7 @@ Google Web app for creating a calendar of recurring events that cycles the words
 
 ##### Visual Example
 
-<img src="screenshots/createCalendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="screenshots/createCalendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
+<img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
 
 _Note: Meant for limited, internal use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar._
 
@@ -35,7 +35,7 @@ Google Web app for creating recurring events on only certain letter days (e.g., 
 
 ##### Visual Example
 
-<img src="screenshots/addToCalendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="screenshots/addToCalendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
+<img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300"/> <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top" />
 
 _Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar\*._
 
@@ -49,7 +49,7 @@ Python script for creating a sprite. It is a starter for Python game development
 
 ##### Visual Example
 
-<img src="screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500"/>
+<img src="https://github.com/saegl5/sprite_template/raw/main/screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500"/>
 
 [Get Script &#128279;](https://github.com/saegl5/sprite_template)
 
