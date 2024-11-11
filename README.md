@@ -65,6 +65,7 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 
 [Get Python Scripts &#128279;](https://github.com/saegl5/myprojects)
 
+**Web Apps**: [Update 加油 ("jiā yóu") Events &#128279;](https://github.com/saegl5/jiayou_update_events) (deprecated), [Delete 加油 ("jiā yóu") Events &#128279;](https://github.com/saegl5/jiayou_delete_events) (deprecated)<br>
 **CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
 **Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)<br>
 (Some additional projects, for example a curriculum, lesson plans, and a Wiki that I developed, are under a non-disclosure agreement.)
