@@ -79,8 +79,6 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 
 ## Learning Resources {#learning_resources}
 
-Disclaimer: These resources are _not_ created, written or published my me. I simply found these to be incredibly useful.
-
 ### Scratch and Python for Beginners
 
 [Workman Publishing. (2020). _Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook_. Workman Publishing Company. &#128279;](https://a.co/d/cxwZQEi)<br>
