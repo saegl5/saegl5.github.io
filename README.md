@@ -6,14 +6,14 @@ Below are some projects of mine, including fun resources, that I would like to h
 
 #### Table of Contents
 
-- [Web Apps &#x2193;](#web_apps)
-- [Python Scripts &#x2193;](#python_scripts)
+- [Current Projects &#x2193;](#current_projects)
+- [Recent Projects &#x2193;](#recent_projects)
 - [Past Projects &#x2193;](#past_projects)
 - [Learning Resources &#x2193;](#learning_resources)
 
-## Current Projects
+## Current Projects {#current_projects}
 
-### Web Apps {#web_apps}
+### Web Apps
 
 Built with JavaScript and HTML
 
@@ -43,7 +43,7 @@ _Note: Meant for broad, external use. Requires permission to see, edit, share, a
 
 <small>\* Permission is required in order to get calendar information and create event series. That is, to get all calendars, including calendar names and IDs, to get calendar events, including calendar titles, start times, full dates, years, months and days/dates, and to create event series chained by date. However, no personal information from users who interact with the Web app will be collected, stored, or processed by me; users' personal information stays with Google.</small>
 
-### Python Scripts {#python_scripts}
+### Python Scripts
 
 Python script for creating a sprite. It is a starter for Python game development, based on what I learned from teaching computer science for a couple years.
 
