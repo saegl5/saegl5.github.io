@@ -25,7 +25,7 @@ Google Web app for creating a calendar of recurring events that cycles the words
 
 _Note: Meant for limited, internal use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar._
 
-[Get App &#128279;](https://github.com/saegl5/jiayou_create_calendar) &nbsp; &#x2022; &nbsp; [Privacy Policy &#128279;](./jiayou_create_calendar/privacy_policy.html)
+[Get Web App &#128279;](https://github.com/saegl5/jiayou_create_calendar) &nbsp; &#x2022; &nbsp; [View Privacy Policy &#128279;](./jiayou_create_calendar/privacy_policy.html)
 
 #### Add 加油 ("jiā yóu") Events
 
@@ -35,7 +35,7 @@ Google Web app for creating recurring events on only certain letter days (e.g., 
 
 _Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar\*._
 
-[Get App &#128279;](https://github.com/saegl5/jiayou_add_events) &nbsp; &#x2022; &nbsp; [Privacy Policy &#128279;](./jiayou_add_events/privacy_policy.html)
+[Get Web App &#128279;](https://github.com/saegl5/jiayou_add_events) &nbsp; &#x2022; &nbsp; [View Privacy Policy &#128279;](./jiayou_add_events/privacy_policy.html)
 
 <small>\* Permission is required in order to get calendar information and create event series. That is, to get all calendars, including calendar names and IDs, to get calendar events, including calendar titles, start times, full dates, years, months and days/dates, and to create event series chained by date. However, no personal information from users who interact with the Web app will be collected, stored, or processed by me; users' personal information stays with Google.</small>
 
@@ -45,7 +45,7 @@ Python script for creating a sprite. It is a starter for Python game development
 
 <img src="https://github.com/saegl5/sprite_template/raw/main/screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500"/>
 
-[Get Script &#128279;](https://github.com/saegl5/sprite_template)
+[Get Python Script &#128279;](https://github.com/saegl5/sprite_template)
 
 ## Recent Projects {#recent_projects}
 
@@ -57,7 +57,7 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 <img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pictionary.gif" alt="screenshot of pictionary game" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pac_man.gif" alt="screenshot of pacman game" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/space_invaders.gif" alt="screenshot of space invaders game" width="200"><br>
 <img src="https://github.com/saegl5/myprojects/raw/main/screenshots/mario.gif" alt="screenshot of mario game" width="200">
 
-[Get Scripts &#128279;](https://github.com/saegl5/myprojects)
+[Get Python Scripts &#128279;](https://github.com/saegl5/myprojects)
 
 **CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
 **Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)
