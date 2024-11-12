@@ -74,9 +74,13 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 
 **Python**: [Computing errors for repaying a loan in ten years with minimum monthly payments &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/Python/Ten-Year_Minimum_Errors.py)<br>
 **Swift**: [iOS app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_ios)<br>
-**_L<sub>A</sub>T<sup>E</sup>X_**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex), [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html)<br>
+**LaTeX**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex), [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html)<br>
 **Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android), [Practice Multiplying Integers &#128279;](./old/Multiplication3.java) (deprecated), [Find Least Common Denominator &#128279;](./old/LeastCommonDenominator4.java) (deprecated), [Create Equivalent Fractions &#128279;](./old/EqualFractionsRev5.java) (deprecated)<br>
 (Some additional projects, for example other lesson plans, I have opted to keep private.)
+
+## Memory
+
+Borland C++, Visual Basic
 
 ## Learning Resources {#learning_resources}
 
