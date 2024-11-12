@@ -1,0 +1,256 @@
+\documentclass[12pt,letterpaper]{amsart}
+
+%Preamble----------------------------------------------
+
+\usepackage{fullpage,xcolor} %for 1in margins and color
+
+\newtheorem{theorem}{Theorem}[section] %This and [theorem] below allow decimals in numbering
+\theoremstyle{definition} %This is necessary, otherwise definitions, examples and exercises will be formatted as theorems and lemmae
+\newtheorem{definition}[theorem]{Definition} %``definition'' is input, and ``Definition'' is output
+\newtheorem{example}[theorem]{Example}
+\newtheorem{xca}[theorem]{Exercise}
+
+\begin{document}
+
+\title{How to Compute Length of Time to Repay Student Loans}
+\author{Edward A. Silkworth}
+\address{Teachers College, Columbia University, 525 West 120th Street, New York, NY 10027}
+\email{eas2156@tc.columbia.edu}
+
+\begin{abstract}If students are not charged interest on a student loan, it is very easy to find how long it will take to repay the loan: $n=P/A$. However, if students \textit{are} charged interest, it is difficult to find that length of time: $n=-\ln{(1-rP/A)}/\ln{(1+r)}$. This paper will discuss both situations by defining terms, deriving the formulae, illustrating examples and providing exercises for students to practice.\end{abstract}
+
+\maketitle
+
+%Section 1--------------------------------------
+\section{Length of time to repay loan if not charged interest}
+Let us look at an example first and generalize the process.
+
+\begin{example}If the loan amount is \$26,950 and monthly repayment is \$350, the length of time can be found by calculating the remaining balance each month:\end{example} %Need \$ otherwise LaTeX will format dollar sign as mathematics
+
+\begin{table}[h]\caption{Remaining Balance If Not Charged Interest On Loan}\begin{tabular}{l|l} %``h'' stands for ``here',' and ``l|l'' stands for two columns, each left-aligned with a line separating them
+\hline\hline
+Month			&	Remaining Balance\\
+\hline
+0				&	$26,950$\\ %''$..$'' is for inline mathematics
+1				&	$26,950-350=26,600$\\
+2				&	$26,600-350=26,250$\\
+3				&	$26,250-350=25,900$\\
+$\vdots$	&	$\vdots$\\
+$n$			&	$350-350=0$\\
+\hline
+Month			&	Alternative Method\\
+\hline
+0				&	$26,950$\\
+1				&	$26,950-350=26,600$\\
+2				&	$26,950-350\cdot 2=26,250$\\
+3				&	$26,950-350\cdot 3=25,900$\\
+$\vdots$	&	$\vdots$\\
+$n$			&	$26,950-350\cdot n=0$\\
+\hline
+\end{tabular}\end{table}
+
+\par Therefore, at month $n$ using the alternative method $26,950=350\cdot n$ and thus
+$$n=26,950/350=77$$ %``$$...$$'' is for displayed math, that is math on its own line
+
+\par This means that it will take 77 months (that is, 6 years 5 months) to repay the loan, assuming the loan is repaid consistently. Now, let us generalize more.
+
+\vfill %Fills empty space to keep text together and not spread out
+\pagebreak
+
+\begin{definition}Let the loan amount be $P$ and monthly repayment be $A$, and let us calculate the remaining balance again but using the alternative method:\end{definition}
+
+\begin{table}[ht]\caption{Remaining Balance If Not Charged Interest On Loan (Generalized More)}\begin{tabular}{l|l}%``t'' stands for ``top''
+\hline\hline
+Month			&	Remaining Balance\\
+\hline
+0				&	$P$\\
+1				&	$P-A$\\
+2				&	$P-A\cdot 2$\\
+3				&	$P-A\cdot 3$\\
+$\vdots$	&	$\vdots$\\
+$n$			& 	$P-A\cdot n=0$\\
+\hline\end{tabular}\end{table}
+
+\par At month $n$, $P=A\cdot n$ and thus
+\begin{equation}\label{eqn}\boxed{n=P/A}\end{equation} %Labels allow the equation to be referenced later
+
+\begin{example}If $P=\$20,000$ and $A=\$250$ per month, $n=20,000/250=80$, meaning that it will take 80 months (that is, 6 years 8 months) to repay the loan, assuming the loan is repaid consistently.\end{example}
+
+\begin{example}If $P=\$27,600$ and $A=\$460$ per month, $n=27,600/460=60$, meaning that it will take 60 months (that is, 5 years) to repay the loan, assuming the loan is repaid consistently.\end{example}
+
+\par Feel free to practice some problems (answers are provided on page 7):
+
+\begin{xca}\label{ex1}If $P=\$13,500$ and $A=\$180$ per month, find $n$.
+$$n=\mathrm{\rule{2in}{1pt}\ months}$$\end{xca} %\mathrm allows text within mathematics, and \rule is for a straight line 2in long and 1pt thick
+
+\begin{xca}\label{ex2}If $P=\$24,190$ and $A=\$295$ per month, find $n$.
+$$n=\mathrm{\rule{2in}{1pt}\ months}$$\end{xca}
+
+\begin{xca}\label{ex3}If $P=\$35,220$ and $A=\$320$ per month, find $n$.
+$$n=\mathrm{\rule{2in}{1pt}\ months}$$\end{xca}
+
+\par At this point, a student might be asking themself why they cannot just use equation ~(\ref{eqn}). In other words, why they cannot just divide the loan amount by the monthly repayment. Well, a student can \textit{if they are not charged interest}, but---news flash!---interest is \textit{always} charged. Note: if the value of $n$ does not come out evenly, round the value up to the nearest whole number, otherwise the student will still owe a balance. %~(\ref{}) style may require the document to be compiled twice
+
+\vfill
+\pagebreak
+
+%Section 2--------------------------------------
+\section{Length of time to repay loan if charged interest}
+Let us again look at an example and generalize the process. However, a student should study this with either an instructor or tutor because the content may prove difficult to follow. In fact, an instructor can demonstrate how the alternative method below is constructed and, on the next page, introduce the riemann sum, show how the geometric series (next page) is computed.
+
+\begin{example}\label{exr}If the loan amount is \$26,950, monthly repayment is \$509.87 and APR is 6.8\%: (note: this means that the interest rate is $6.8\%/12=0.068/12=0.005\overline{6}$)\end{example}
+
+\begin{table}[ht]\caption{Remaining Balance If Charged Interest On Loan}\begin{tabular}[center]{l|l}
+\hline\hline
+Month			&	Remaining Balance\\
+\hline
+0				&	$26,950$\\
+1				&	$26,950+26,950\cdot 0.005\overline{6}-509.87=26,592.85$\\
+2				&	$26,592.85+26,592.85\cdot 0.005\overline{6}-509.87=26,233.68$\\
+3				&	$26,233.68+26,233.68\cdot 0.005\overline{6}-509.87=25,872.47$\\
+$\vdots$	&	$\vdots$\\
+$n$			&	$507+507\cdot 0.005\overline{6}-509.87=0$\\
+\hline
+Month			&	Alternative Method\\
+\hline
+0				&	$26,950$\\
+1				&	$26,950(1+0.005\overline{6})-509.87=26,592.85$\\
+2				&	$26,950(1+0.005\overline{6})^2-509.87(1+0.005\overline{6})-509.87=26,233.68$\\
+$\vdots$	&	$\vdots$\\
+$n$			&	\small $26,950(1+0.005\overline{6})^n-509.87(1+0.005\overline{6})^{n-1}-509.87(1+0.005\overline{6})^{n-2}-\cdots -509.87=0$\\ %Text will not fit unless it was made slightly smaller
+\hline\end{tabular}\end{table}
+
+\par Therefore, at month $n$ using the alternative method
+\small $$26,950(1+0.005\overline{6})^n=509.87(1+0.005\overline{6})^{n-1}-509.87(1+0.005\overline{6})^{n-2}-\cdots -509.87$$
+
+\par \normalsize This is equivalent to $$26,950(1+0.005\overline{6})^n=509.87\left[(1+0.005\overline{6})^{n-1}+(1+0.005\overline{6})^{n-2}+\cdots +1\right]$$ %\normal resets the font size
+
+\par Not pretty at all! So, let us generalize more.
+
+\vfill
+\pagebreak
+
+\begin{definition}Let the loan amount be $P$, monthly repayment be $A$ and interest rate be $r$, and let us calculate the remaining balance using the alternative method: (recall from example ~(\ref{exr}) that $r$=APR/12)\end{definition}
+
+\begin{table}[ht]\caption{Remaining Balance If Charged Interest On Loan (Generalized More)}\begin{tabular}[center]{l|l}
+\hline\hline
+Month			&	Remaining Balance\\
+\hline
+0				&	$P$\\
+1				&	$P(1+r)-A$\\
+2				&	$P(1+r)^2-A(1+r)-A$\\
+$\vdots$	&	$\vdots$\\
+$n$			&	$P(1+r)^n-A(1+r)^{n-1}-A(1+r)^{n-2}-\cdots -1=0$\\
+\hline\end{tabular}\end{table}
+
+\par Therefore, at month $n$ using the alternative method but by factoring $A$ out
+\begin{equation}\label{eqn2}P(1+r)^n=A\left[(1+r)^{n-1}+(1+r)^{n-2}+\cdots +1\right]\end{equation}
+
+\par Things are clearing up a little, but we need to keep going. Equation ~(\ref{eqn2}) is equivalent to
+\begin{equation}\label{eqn3}P(1+r)^n=A\left[1+(1+r)+(1+r)^2+\cdots+(1+r)^{n-1}\right]\end{equation}
+
+\par Equation ~(\ref{eqn3}) is equivalent to 
+\begin{equation}\label{eqn4}P(1+r)^n=A\sum_{k=0}^{n-1}(1+r)^k\end{equation}
+
+\par The sum of the geometric series in equation ~(\ref{eqn4}) gives us
+\begin{equation}\label{eqn5}P(1+r)^n=A\frac{1-(1+r)^n}{1-(1+r)}\end{equation}
+
+\par By simplifying and performing algebra and using logarithmic identities on equation ~(\ref{eqn5})
+\begin{equation*}\boxed{n=-\frac{\ln{(1-rP/A)}}{\ln{(1+r)}}}\end{equation*}
+
+\par Therefore, if $P=\$26,950$, $A=\$509.87$ per month and APR is 6.8\% (meaning that $r=6.8\%/12=0.005\overline{6}$), then
+\begin{align*}n&=-\frac{\ln{(1-0.005\overline{6}\cdot 26,950/509.87)}}{\ln{(1+0.005\overline{6})}}\\
+&\approx-\frac{\ln{(0.7005)}}{\ln{(1.005\overline{6})}}=63\end{align*} %``*'' prevents equations from being numbered, and ``&'' aligns equations along equal sign
+
+\par This means that it will take 63 months (that is, 5 years 3 months) to repay the loan, assuming the loan is repaid consistently and the APR does not change.
+
+\vfill
+\pagebreak
+
+\begin{example}If $P=\$26,950$, $A=\$350$ per month and APR is 6.8\% (meaning that $r=6.8\%/12=0.005\overline{6}$), then
+\begin{align*}n&=-\frac{\ln{(1-0.005\overline{6}\cdot 26,950/350)}}{\ln{(1+0.005\overline{6})}}\\
+&=-\frac{\ln{(0.563\overline{6})}}{\ln{(1.005\overline{6})}}\approx 102\end{align*}
+\par This means that it will take 102 months (that is, 8 years 6 months) to repay the loan, assuming the loan is repaid consistently and the APR does not change.\end{example}
+
+\begin{example}If $P=\$27,600$, $A=\$460$ per month and APR is 7\% (meaning that $r=7\%/12=0.0058\overline{3}$), then
+\begin{align*}n&=-\frac{\ln{(1-0.0058\overline{3}\cdot 27,600/460)}}{\ln{(1+0.0058\overline{3})}}\\
+&=-\frac{\ln{(0.65)}}{\ln{(1.0058\overline{3})}}\approx 75\end{align*}
+\par This means that it will take about 75 months (that is, 6 years 3 months) to repay the loan, assuming the loan is repaid consistently and the APR does not change.\end{example}
+
+\begin{example}If $P=\$20,000$, $A=\$250.25$ per month and APR is 4.8\% (meaning that $r=4.8\%/12=0.004$), then
+\begin{align*}n&=-\frac{\ln{(1-0.004\cdot 20,000/250.25)}}{\ln{(1+0.004)}}\\
+&\approx-\frac{\ln{(0.6804)}}{\ln{(1.0.004)}}\approx 97\end{align*}
+\par This means that it will take 97 months (that is, 8 years 1 month) to repay the loan, assuming the loan is repaid consistently and the APR does not change.\end{example}
+
+\vfill
+\pagebreak
+
+\par Feel free to practice some problems:
+
+\begin{xca}\label{ex4}If $P=\$13,500$, $A=\$180$ per month and APR is 6.8\%, find $n$.
+\vspace{5ex}
+$$n=\mathrm{\rule{2in}{1pt}\ months}$$\end{xca}
+
+\begin{xca}\label{ex5}If $P=\$24,190$, $A=\$295$ per month and APR is 7\%, find $n$.
+\vspace{5ex}
+$$n=\mathrm{\rule{2in}{1pt}\ months}$$\end{xca}
+
+\begin{xca}\label{ex6}If $P=\$35,220$, $A=\$325$ per month and APR is 3.4\%, find $n$.
+\vspace{5ex}
+$$n=\mathrm{\rule{2in}{1pt}\ months}$$\end{xca}
+
+\vspace{2ex}
+
+\begin{xca}\label{ex7}Compare exercises ~\ref{ex1} and ~\ref{ex4}. Which loan took longer to repay? (check)
+$$\Box\mathrm{\ the\ one\ \textbf{without}\ interest\ charged}$$
+$$\Box\mathrm{\ the\ one\ \textbf{with}\ interest\ charged}$$\end{xca}
+
+\begin{xca}\label{ex8}Compare exercises ~\ref{ex2} and ~\ref{ex5}. Which loan took longer to repay? (check)
+$$\Box\mathrm{\ the\ one\ \textbf{without}\ interest\ charged}$$
+$$\Box\mathrm{\ the\ one\ \textbf{with}\ interest\ charged}$$\end{xca}
+
+\begin{xca}\label{ex9}Compare exercises ~\ref{ex3} and ~\ref{ex6}. Which loan took longer to repay? (check)
+$$\Box\mathrm{\ the\ one\ \textbf{without}\ interest\ charged}$$
+$$\Box\mathrm{\ the\ one\ \textbf{with}\ interest\ charged}$$\end{xca}
+
+\vspace{2ex}
+
+\begin{xca}\label{ex10}Show (below) that when interest is not charged, that is $r=0$,
+$$P(1+r)^n=A[1+(1+r)+(1+r)^2+\cdots+(1+r)^{n-1}]\mathrm{\ becomes\ }P=A\cdot n$$
+\begin{table}[ht]\begin{tabular}[center]{|l|}
+\hline
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\color{white}\rule{6.5in}{1pt}\\
+\hline\end{tabular}\end{table}\end{xca}
+
+\vfill
+\pagebreak
+
+%Section 3--------------------------------------
+\section{Answer Key}
+\begin{table}[ht]\begin{tabular}[center]{l|l}
+\hline\hline
+Exercise	&	Answer\\
+\hline
+~\ref{ex1}	&	$75$\\
+~\ref{ex2}	&	$82$\\
+~\ref{ex3}	&	$109$\\
+~\ref{ex4}	&	$98$\\
+~\ref{ex5}	&	$112$\\
+~\ref{ex6}	&	$130$\\
+~\ref{ex7}	&	the one \textbf{with} interest charged\\
+~\ref{ex8}	&	the one \textbf{with} interest charged\\
+~\ref{ex9}	&	the one \textbf{with} interest charged\\
+\hline\end{tabular}\end{table}
+
+\vfill
+
+\end{document}
