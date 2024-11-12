@@ -67,7 +67,7 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 
 [Get Python Scripts &#128279;](https://github.com/saegl5/myprojects)
 
-**Web Apps**: [Update 加油 ("jiā yóu") Events &#128279;](https://github.com/saegl5/jiayou_update_events) (deprecated), [Delete 加油 ("jiā yóu") Events &#128279;](https://github.com/saegl5/jiayou_delete_events) (deprecated)<br>
+**Web Apps**: [Update 加油 ("jiā yóu") Events &#128279;](https://github.com/saegl5/jiayou_update_events) (deprecated) &#x2022; [Delete 加油 ("jiā yóu") Events &#128279;](https://github.com/saegl5/jiayou_delete_events) (deprecated)<br>
 **CSS**: [Light and dark Gitea red theme &#128279;](https://github.com/saegl5/Gitea-Red)<br>
 **Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)<br>
 (Some additional projects, for example a curriculum, lesson plans, and a Wiki that I developed, are under a non-disclosure agreement.)
@@ -78,8 +78,8 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 
 **Python**: [Computing errors for repaying a loan in ten years with minimum monthly payments &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/Python/Ten-Year_Minimum_Errors.py)<br>
 **Swift**: [iOS app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_ios)<br>
-**LaTeX**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex), [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex), [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html), [How to Compute Length of Time to Repay Student Loans &#128279;](./old/amortization.tex)<br>
-**Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android), [Practice Multiplying Integers &#128279;](./old/Multiplication3.java) (deprecated), [Find Least Common Denominator &#128279;](./old/LeastCommonDenominator4.java) (deprecated), [Create Equivalent Fractions &#128279;](./old/EqualFractionsRev5.java) (deprecated)<br>
+**LaTeX**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex) &#x2022; [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex) &#x2022; [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html) &#x2022; [How to Compute Length of Time to Repay Student Loans &#128279;](./old/amortization.tex)<br>
+**Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android) &#x2022; [Practice Multiplying Integers &#128279;](./old/Multiplication3.java) (deprecated) &#x2022; [Find Least Common Denominator &#128279;](./old/LeastCommonDenominator4.java) (deprecated) &#x2022; [Create Equivalent Fractions &#128279;](./old/EqualFractionsRev5.java) (deprecated)<br>
 (Some additional projects, for example other lesson plans, I have opted to keep private.)
 
 _...and I still remember coding in Borland C++ and Visual Basic_
