@@ -78,9 +78,7 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 **Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android), [Practice Multiplying Integers &#128279;](./old/Multiplication3.java) (deprecated), [Find Least Common Denominator &#128279;](./old/LeastCommonDenominator4.java) (deprecated), [Create Equivalent Fractions &#128279;](./old/EqualFractionsRev5.java) (deprecated)<br>
 (Some additional projects, for example other lesson plans, I have opted to keep private.)
 
-## Memory
-
-Borland C++, Visual Basic
+...and I still remember coding in Borland C++ and Visual Basic
 
 ## Learning Resources {#learning_resources}
 
