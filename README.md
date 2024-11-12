@@ -51,6 +51,8 @@ Python script for creating a sprite. It is a starter for Python game development
 
 [Get Python Script &#128279;](https://github.com/saegl5/sprite_template)
 
+<br>
+
 ## Recent Projects {#recent_projects}
 
 ### Python Scripts
@@ -70,6 +72,8 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 **Google Cloud**: [Hosted Gitea instance in Minimal Ubuntu LTS image &#128279;](https://github.com/saegl5/gitea-gcloud-ubuntu)<br>
 (Some additional projects, for example a curriculum, lesson plans, and a Wiki that I developed, are under a non-disclosure agreement.)
 
+<br>
+
 ## Past Projects {#past_projects}
 
 **Python**: [Computing errors for repaying a loan in ten years with minimum monthly payments &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/Python/Ten-Year_Minimum_Errors.py)<br>
@@ -79,6 +83,8 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 (Some additional projects, for example other lesson plans, I have opted to keep private.)
 
 _...and I still remember coding in Borland C++ and Visual Basic_
+
+<br>
 
 ## Learning Resources {#learning_resources}
 
