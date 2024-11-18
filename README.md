@@ -27,7 +27,7 @@ Google Web app for creating a calendar of recurring events that cycles the words
 
 _Note: Meant for limited, internal use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar._
 
-[Get Web App &#128279;](https://github.com/saegl5/jiayou_create_calendar) &nbsp; &#x2022; &nbsp; [View Privacy Policy &#128279;](./jiayou_create_calendar/privacy_policy.html)
+[Get Web App &#128279;](https://github.com/saegl5/jiayou_create_calendar) &#x2022; [View Privacy Policy &#128279;](./jiayou_create_calendar/privacy_policy.html)
 <br><br>
 
 #### Add 加油 ("jiā yóu") Events
@@ -38,7 +38,7 @@ Google Web app for creating recurring events on only certain letter days (e.g., 
 
 _Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar\*._
 
-[Get Web App &#128279;](https://github.com/saegl5/jiayou_add_events) &nbsp; &#x2022; &nbsp; [View Privacy Policy &#128279;](./jiayou_add_events/privacy_policy.html)
+[Get Web App &#128279;](https://github.com/saegl5/jiayou_add_events) &#x2022; [View Privacy Policy &#128279;](./jiayou_add_events/privacy_policy.html)
 
 <p style="font-size: 8pt">* Permission is required in order to get calendar information and create event series. That is, to get all calendars, including calendar names and IDs, to get calendar events, including calendar titles, start times, full dates, years, months and days/dates, and to create event series chained by date. However, no personal information from users who interact with the Web app will be collected, stored, or processed by me; users' personal information stays with Google.</p>
 <br>
