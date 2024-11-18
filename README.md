@@ -59,7 +59,7 @@ Python script for creating a sprite. It is a starter for Python game development
 
 ### Python Scripts
 
-#### Suburb Drawing, Billiards Animation, "Pictionary" Game, "Mario" Game, et al.
+#### Drawings, Animations, and Games
 
 Python scripts for creating some drawings, animations, and games. This is a compilation of scripts that I created over a couple of years while teaching computer science.
 
