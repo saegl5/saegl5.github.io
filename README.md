@@ -1,3 +1,5 @@
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
 `Hello world!` &#128075;
 
 My name is Ed.<br>
