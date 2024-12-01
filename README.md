@@ -4,7 +4,8 @@
 
 `Hello world!` &#128075;
 
-My name is Ed.<br>
+My name is Ed.
+
 I am an educator who also enjoys learning and coding.
 
 Below are some projects of mine that I would love to share with you.<br>
