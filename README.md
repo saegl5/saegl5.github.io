@@ -106,4 +106,4 @@ Craven, P. V. (2017). _Program Arcade Games With Python And Pygame_. Programarca
 
 ### Text-Based Coding Practice for All Learners
 
-Edabit. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com/)
+_Edabit_. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com/)
