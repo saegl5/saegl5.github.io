@@ -15,10 +15,17 @@ Enjoy!
 
 #### Table of Contents
 
+- [Certifications &#x2193;](#certifications)
 - [Current Projects &#x2193;](#current_projects)
 - [Recent Projects &#x2193;](#recent_projects)
 - [Past Projects &#x2193;](#past_projects)
 - [Learning Resources &#x2193;](#learning_resources)
+
+## Certifications {#certifications}
+
+<img src="./logo/Aplus%20Logo%20Certified%20CE.png" alt="logo of CompTIA A plus Certified Continuing Education" width="96"/> <!-- 1 inch equivalent -->
+
+<br>
 
 ## Current Projects {#current_projects}
 
