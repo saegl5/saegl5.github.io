@@ -23,7 +23,7 @@ Enjoy!
 
 ## Certifications {#certifications}
 
-<a href="https://www.comptia.org/"><img src="./logo/Aplus%20Logo%20Certified%20CE.png" alt="logo of CompTIA A plus Certified Continuing Education" width="96"/></a> <!-- 1 inch equivalent -->
+<a href="https://www.credly.com/badges/a0ccb55a-2590-4bfb-8ea6-34b2234ae654/public_url"><img src="./logo/Aplus%20Logo%20Certified%20CE.png" alt="logo of CompTIA A plus Certified Continuing Education" width="96"/></a> <!-- 1 inch equivalent -->
 
 <br>
 
