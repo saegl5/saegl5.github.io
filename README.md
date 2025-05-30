@@ -23,7 +23,7 @@ Enjoy!
 
 ## Certifications {#certifications}
 
-<a href="https://www.credly.com/badges/a0ccb55a-2590-4bfb-8ea6-34b2234ae654/public_url"><img src="./logo/Aplus%20Logo%20Certified%20CE.png" alt="logo of CompTIA A plus Certified Continuing Education" width="96"/></a> <!-- 1 inch equivalent -->
+<a href="https://www.credly.com/badges/a0ccb55a-2590-4bfb-8ea6-34b2234ae654/public_url"><img src="./logo/Aplus%20Logo%20Certified%20CE.png" alt="logo of CompTIA A plus Certified Continuing Education" width="96" style="display: block; margin-left: 0; margin-right: auto;"/></a> <!-- 1 inch equivalent -->
 
 <br>
 
@@ -38,13 +38,13 @@ Google Web app for creating a calendar of recurring events that cycles the words
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarFormDark.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarForm.png">
-  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300">
+  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
 </picture>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarDark.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendar.png">
-  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top">
+  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="display: inline-block; margin-left: 0; margin-right: auto; vertical-align: top">
 </picture>
 
 _Note: Meant for limited, internal use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar._
@@ -59,13 +59,13 @@ Google Web app for creating recurring events on only certain letter days (e.g., 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarFormDark.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarForm.png">
-  <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300">
+  <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
 </picture>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarDark.png">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendar.png">
-  <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="vertical-align: top">
+  <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="display: inline-block; margin-left: 0; margin-right: auto; vertical-align: top">
 </picture>
 
 _Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar\*._
@@ -81,7 +81,7 @@ _Note: Meant for broad, external use. Requires permission to see, edit, share, a
 
 Python script for creating a sprite. It is a starter for Python game development, based on what I learned from teaching computer science for a couple years.
 
-<img src="https://github.com/saegl5/sprite_template/raw/main/screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500"/>
+<img src="https://github.com/saegl5/sprite_template/raw/main/screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500" style="display: block; margin-left: 0; margin-right: auto;"/>
 
 [Get Python Script &#128279;](https://github.com/saegl5/sprite_template)
 
@@ -95,9 +95,9 @@ Python script for creating a sprite. It is a starter for Python game development
 
 Python scripts for creating some drawings, animations, and games. This is a compilation of scripts that I created over a couple of years while teaching computer science.
 
-<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/suburb.png" alt="screenshot of suburb drawing" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/billiards.gif" alt="screenshot of billiards animation" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/snowfall.gif" alt="screenshot of snowfall animation" width="200"><br>
-<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pictionary.gif" alt="screenshot of pictionary game" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pac_man.gif" alt="screenshot of pacman game" width="200"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/space_invaders.gif" alt="screenshot of space invaders game" width="200"><br>
-<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/mario.gif" alt="screenshot of mario game" width="200">
+<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/suburb.png" alt="screenshot of suburb drawing" width="200" style="display: inline-block; margin-left: 0; margin-right: auto;"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/billiards.gif" alt="screenshot of billiards animation" width="200" style="display: inline-block; margin-left: 0; margin-right: auto;"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/snowfall.gif" alt="screenshot of snowfall animation" width="200" style="display: inline-block; margin-left: 0; margin-right: auto;"><br>
+<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pictionary.gif" alt="screenshot of pictionary game" width="200" style="display: inline-block; margin-left: 0; margin-right: auto;"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/pac_man.gif" alt="screenshot of pacman game" width="200" style="display: inline-block; margin-left: 0; margin-right: auto;"><img src="https://github.com/saegl5/myprojects/raw/main/screenshots/space_invaders.gif" alt="screenshot of space invaders game" width="200" style="display: inline-block; margin-left: 0; margin-right: auto;"><br>
+<img src="https://github.com/saegl5/myprojects/raw/main/screenshots/mario.gif" alt="screenshot of mario game" width="200" style="display: block; margin-left: 0; margin-right: auto;">
 
 [Get Python Scripts &#128279;](https://github.com/saegl5/myprojects)
 
@@ -125,7 +125,7 @@ _...and I still remember coding in Borland C++ and Visual Basic_
 ### Scratch and Python for Beginners
 
 [Workman Publishing. (2020). _Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook_. Workman Publishing Company. &#128279;](https://a.co/d/cxwZQEi)<br>
-<img src="https://m.media-amazon.com/images/I/81CcyrRYMkL._SL1500_.jpg" alt="screenshot of book titled 'Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks)' " width="100"/>
+<img src="https://m.media-amazon.com/images/I/81CcyrRYMkL._SL1500_.jpg" alt="screenshot of book titled 'Everything You Need to Ace Computer Science and Coding in One Big Fat Notebook: The Complete Middle School Study Guide (Big Fat Notebooks)' " width="100" style="display: block; margin-left: 0; margin-right: auto;"/>
 
 ### Python and Pygame for Continuing Learners
 
