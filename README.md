@@ -6,7 +6,7 @@
 
 My name is Ed.
 
-I am an educator who also enjoys learning and coding.
+I am an aspiring IT professional and an educator who enjoys learning and coding.
 
 Below are some projects of mine that I would love to share with you.<br>
 Also included are some resources I have found to be incredibly useful.
