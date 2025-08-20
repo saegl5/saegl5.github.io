@@ -31,7 +31,7 @@ Enjoy!
 
 ### Web Apps
 
-#### Create 加油 ("jiā yóu") Calendar
+#### Create 加油 Calendar
 
 Google Web app for creating a calendar of recurring events that cycles the words "J Day," "I Day," "A Day," "Y Day," "O Day," and "U Day," except on weekends and holidays. Without an app script, one would need to create these events manually. Built in JavaScript and HTML.
 
@@ -52,9 +52,9 @@ _Note: Meant for limited, internal use. Requires permission to see, edit, share,
 [Get Web App &#128279;](https://github.com/saegl5/jiayou_create_calendar) &#x2022; [View Privacy Policy &#128279;](./jiayou_create_calendar/privacy_policy.html)
 <br><br>
 
-#### Add 加油 ("jiā yóu") Events
+#### Add 加油 Events
 
-Google Web app for creating recurring events on only certain letter days (e.g., on only "J Day's"). Without an app script, one would need to add these events manually. Built in JavaScript and HTML.
+Google Web app for creating recurring events on only certain letter days (e.g., on only "J Day's") of a 加油 calendar. Without an app script, one would need to add these events manually. Built in JavaScript and HTML.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarFormDark.png">
