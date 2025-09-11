@@ -20,6 +20,7 @@ Enjoy!
 - [Recent Projects &#x2193;](#recent_projects)
 - [Past Projects &#x2193;](#past_projects)
 - [Learning Resources &#x2193;](#learning_resources)
+- [Support Me &#x2193;](#support_me)
 
 ## Certifications {#certifications}
 
@@ -135,3 +136,11 @@ Craven, P. V. (2017). _Program Arcade Games With Python And Pygame_. Programarca
 
 _Advent of Code 2024_. (2024). Adventofcode.com. [https://adventofcode.com &#128279;](https://adventofcode.com)<br>
 _Edabit_. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com/)
+
+<br>
+
+## Support Me {#support_me}
+
+<a href="https://www.buymeacoffee.com/saegl5" target="_blank">
+  <img src="./qr-code.png" alt="qr code to support me" width="96" style="display: block; margin-left: 0; margin-right: auto;"/>
+</a>
