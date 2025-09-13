@@ -37,15 +37,15 @@ Enjoy!
 Google Web app for creating a calendar of recurring events that cycles the words "J Day," "I Day," "A Day," "Y Day," "O Day," and "U Day," except on weekends and holidays. Without an app script, one would need to create these events manually. Built in JavaScript and HTML.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarFormDark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarForm.png">
-  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/development/screenshots/calendarFormDark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/development/screenshots/calendarForm.png">
+  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/development/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendarDark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendar.png">
-  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="display: inline-block; margin-left: 0; margin-right: auto; vertical-align: top">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/development/screenshots/calendarDark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_create_calendar/raw/development/screenshots/calendar.png">
+  <img src="https://github.com/saegl5/jiayou_create_calendar/raw/development/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="display: inline-block; margin-left: 0; margin-right: auto; vertical-align: top">
 </picture>
 
 _Note: Meant for limited, internal use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar._
@@ -58,15 +58,15 @@ _Note: Meant for limited, internal use. Requires permission to see, edit, share,
 Google Web app for creating recurring events on only certain letter days (e.g., on only "J Day's") of a 加油 calendar. Without an app script, one would need to add these events manually. Built in JavaScript and HTML.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarFormDark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarForm.png">
-  <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_add_events/raw/development/screenshots/calendarFormDark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_add_events/raw/development/screenshots/calendarForm.png">
+  <img src="https://github.com/saegl5/jiayou_add_events/raw/development/screenshots/calendarForm.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
 </picture>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendarDark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendar.png">
-  <img src="https://github.com/saegl5/jiayou_add_events/raw/main/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="display: inline-block; margin-left: 0; margin-right: auto; vertical-align: top">
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/saegl5/jiayou_add_events/raw/development/screenshots/calendarDark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/saegl5/jiayou_add_events/raw/development/screenshots/calendar.png">
+  <img src="https://github.com/saegl5/jiayou_add_events/raw/development/screenshots/calendar.png" alt="screenshot of calendar" width="600" style="display: inline-block; margin-left: 0; margin-right: auto; vertical-align: top">
 </picture>
 
 _Note: Meant for broad, external use. Requires permission to see, edit, share, and permanently delete all the calendars you can access using Google Calendar\*._
