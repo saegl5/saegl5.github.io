@@ -115,6 +115,7 @@ Python scripts for creating some drawings, animations, and games. This is a comp
 **Swift**: [iOS app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_ios)<br>
 **LaTeX**: [Deeper Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/deeper_insight.tex) &#x2022; [Extra Insight into the iOS App &#128279;](https://github.com/saegl5/check_student_loans_other_resources/blob/master/LaTeX/extra_insight.tex) &#x2022; [Adding and Subtracting Fractions &#128279;](./old/add_subtract_fractions.html) &#x2022; [How to Compute Length of Time to Repay Student Loans &#128279;](https://raw.githubusercontent.com/saegl5/check_student_loans_other_resources/refs/heads/master/LaTeX/extra_insight.tex)<br>
 **Java**: [Android app of an experimental study &#128279;](https://github.com/saegl5/check_student_loans_android) &#x2022; [Practice Multiplying Integers &#128279;](./old/Multiplication3.java) (deprecated) &#x2022; [Find Least Common Denominator &#128279;](./old/LeastCommonDenominator4.java) (deprecated) &#x2022; [Create Equivalent Fractions &#128279;](./old/EqualFractionsRev5.java) (deprecated)<br>
+**MATLAB**: Modeling traffic flow (legacy)<br>
 (Some additional projects, for example other lesson plans, I have opted to keep private.)
 
 _...and I still remember coding in Borland C++ and Visual Basic_
