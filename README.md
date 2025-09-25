@@ -142,8 +142,13 @@ _Edabit_. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com
 
 ## Support Me {#support_me}
 
+GitHub:<br>
+
 <iframe src="https://github.com/sponsors/saegl5/button" title="Sponsor saegl5" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
 
+<!-- iframe hidden in vscode, displays online -->
+
+Buy Me a Coffee:<br>
 <a href="https://www.buymeacoffee.com/saegl5" target="_blank">
-  <img src="./qr-code.png" alt="qr code to support me" width="96" style="display: block; margin-left: 0; margin-right: auto;"/>
+<img src="./qr-code.png" alt="qr code to support me" width="96" style="display: block; margin-left: 0; margin-right: auto;"/>
 </a>
