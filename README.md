@@ -2,14 +2,11 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 
-`Hello world!` &#128075;
+`Hello world!` &#128075; My name is Ed.
 
-My name is Ed.
+I am an aspiring IT professional and an educator who enjoys learning and coding. My passion for technology and education drives me to continually learn, code, and share knowledge with others.
 
-I am an aspiring IT professional and an educator who enjoys learning and coding.
-
-Below are some projects of mine that I would love to share with you.<br>
-Also included are some resources I have found to be incredibly useful.
+Below are some projects of mine that I would love to share with you. Also included are some resources I have found to be incredibly useful. Through my projects, I hope to not only showcase what I’ve created but also inspire and support others on their own paths in technology and education.
 
 Enjoy!
 
@@ -141,6 +138,8 @@ _Edabit_. (n.d.). Edabit.com. [https://edabit.com/ &#128279;](https://edabit.com
 <br>
 
 ## Support Me {#support_me}
+
+Every contribution—whether feedback, collaboration, encouragement, opportunities to work together, or small tokens of support—helps me improve and grow, building a meaningful connection with those who share an interest in learning and technology. Together, we can create a community where knowledge thrives and everyone benefits.
 
 ### GitHub
 
