@@ -2,7 +2,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 
-`Hello world!` &#128075; My name is Ed.
+`Hello world!` &#128075;  您好。My name is Ed.
 
 I am an aspiring IT professional and an educator who enjoys learning and coding. My passion for technology and education drives me to continually learn, code, and share knowledge with others.
 
