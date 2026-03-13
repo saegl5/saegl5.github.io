@@ -29,6 +29,14 @@ Enjoy!
 
 ## Current Projects {#current_projects}
 
+### Terminal Scripts
+
+#### Transcribe Podcast Episodes
+
+Z Shell script for transcribing Apple Podcasts episodes.
+
+[Get ZSH Script &#128279;](https://github.com/saegl5/transcribe_podcast_episodes)
+
 ### Web Apps
 
 #### Create 加油 Calendar
