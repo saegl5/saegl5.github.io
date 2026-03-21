@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f5f0;
+    min-height: 100vh;
+    padding: 32px 20px;
+    color: #1a1a1a;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 20px;
+  }
+  .clock-box {
+    background: #eeeee8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+    margin-bottom: 24px;
+  }
+  canvas {
+    display: block;
+  }
+  .question {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 12px;
+  }
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .choice-btn {
+    padding: 16px 8px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    text-align: center;
+  }
+  .choice-btn:hover:not(:disabled) {
+    background: #f0f0ec;
+    border-color: #aaa;
+  }
+  .choice-btn.correct {
+    background: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+  }
+  .choice-btn.wrong {
+    background: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+  }
+  .choice-btn:disabled {
+    cursor: default;
+  }
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .btn-next {
+    padding: 14px;
+    background: #d6e4f7;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #1a6bb5;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-next:hover { background: #c2d8f0; }
+  .btn-help {
+    padding: 14px;
+    background: #fff;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-help:hover { background: #f5f5f0; }
+  .score-bar {
+    background: #fff;
+    border: 1.5px solid #e0e0d8;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #333;
+  }
+  .score-label { font-weight: 500; }
+  .scroll-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #ccc;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .help-box {
+    background: #fffbe6;
+    border: 1.5px solid #ffe066;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    display: none;
+  }
+  .help-box.visible { display: block; }
+  .feedback {
+    min-height: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: transparent;
+    transition: color 0.2s;
+  }
+  .feedback.correct { color: #28a745; }
+  .feedback.wrong { color: #dc3545; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Clock Learning Game</h1>
+  <p class="subtitle">Read the clock and select the correct time!</p>
+
+  <div class="clock-box">
+    <canvas id="clockCanvas" width="220" height="220"></canvas>
+  </div>
+
+  <div class="help-box" id="helpBox">
+    <strong>Tips for reading a clock:</strong><br>
+    • The <strong>short hand</strong> (red) points to the <strong>hour</strong>.<br>
+    • The <strong>long hand</strong> (black) points to the <strong>minutes</strong> — each number = 5 minutes.<br>
+    • If the minute hand is on 6, that's 30 minutes. On 3, that's 15 minutes.
+  </div>
+
+  <p class="question">What time is shown on the clock?</p>
+  <div class="choices" id="choices"></div>
+  <div class="feedback" id="feedback"></div>
+
+  <div class="actions">
+    <button class="btn-next" onclick="nextClock()">Next Clock</button>
+    <button class="btn-help" onclick="toggleHelp()">Show Help</button>
+  </div>
+
+  <div class="score-bar">
+    <span class="score-label">Score: <span id="scoreDisplay">0 / 0</span></span>
+    <div class="scroll-btn">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2 5l5 5 5-5" stroke="#555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+  let correct = 0, total = 0;
+  let correctAnswer = '';
+  let answered = false;
+  let helpVisible = false;
+
+  function drawClock(hour, minute) {
+    const canvas = document.getElementById('clockCanvas');
+    const ctx = canvas.getContext('2d');
+    const cx = 110, cy = 110, r = 100;
+
+    ctx.clearRect(0, 0, 220, 220);
+
+    // Face
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Tick marks
+    for (let i = 0; i < 60; i++) {
+      const angle = (i / 60) * 2 * Math.PI - Math.PI / 2;
+      const isMajor = i % 5 === 0;
+      const inner = isMajor ? r - 12 : r - 7;
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(angle) * inner, cy + Math.sin(angle) * inner);
+      ctx.lineTo(cx + Math.cos(angle) * (r - 2), cy + Math.sin(angle) * (r - 2));
+      ctx.strokeStyle = '#999';
+      ctx.lineWidth = isMajor ? 1.5 : 0.8;
+      ctx.stroke();
+    }
+
+    // Numbers
+    ctx.fillStyle = '#1a1a1a';
+    ctx.font = 'bold 14px -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (let n = 1; n <= 12; n++) {
+      const angle = (n / 12) * 2 * Math.PI - Math.PI / 2;
+      const nr = r - 22;
+      ctx.fillText(n, cx + Math.cos(angle) * nr, cy + Math.sin(angle) * nr);
+    }
+
+    // Hour hand (red, shorter)
+    const hourAngle = ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
+    drawHand(ctx, cx, cy, hourAngle, 55, 5, '#e05050');
+
+    // Minute hand (black, longer)
+    const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
+    drawHand(ctx, cx, cy, minAngle, 78, 3.5, '#1a1a1a');
+
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = '#e05050';
+    ctx.fill();
+  }
+
+  function drawHand(ctx, cx, cy, angle, length, width, color) {
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(angle) * length, cy + Math.sin(angle) * length);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+
+  function formatTime(h, m) {
+    return h + ':' + (m < 10 ? '0' + m : m);
+  }
+
+  function generateChoices(ch, cm) {
+    const correct = formatTime(ch, cm);
+    const wrongs = new Set();
+    const pool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    while (wrongs.size < 2) {
+      const wh = Math.floor(Math.random() * 12) + 1;
+      const wm = pool[Math.floor(Math.random() * pool.length)];
+      const w = formatTime(wh, wm);
+      if (w !== correct) wrongs.add(w);
+    }
+    const all = [correct, ...wrongs];
+    for (let i = all.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [all[i], all[j]] = [all[j], all[i]];
+    }
+    return { choices: all, correct };
+  }
+
+  function nextClock() {
+    answered = false;
+    const pool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    const h = Math.floor(Math.random() * 12) + 1;
+    const m = pool[Math.floor(Math.random() * pool.length)];
+
+    drawClock(h, m);
+
+    const { choices, correct: ca } = generateChoices(h, m);
+    correctAnswer = ca;
+
+    const choicesEl = document.getElementById('choices');
+    choicesEl.innerHTML = '';
+    choices.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = c;
+      btn.onclick = () => selectAnswer(c, btn);
+      choicesEl.appendChild(btn);
+    });
+
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+  }
+
+  function selectAnswer(val, btn) {
+    if (answered) return;
+    answered = true;
+    total++;
+
+    const allBtns = document.querySelectorAll('.choice-btn');
+    allBtns.forEach(b => {
+      b.disabled = true;
+      if (b.textContent === correctAnswer) b.classList.add('correct');
+    });
+
+    const fb = document.getElementById('feedback');
+    if (val === correctAnswer) {
+      correct++;
+      btn.classList.add('correct');
+      fb.textContent = '✓ Correct!';
+      fb.className = 'feedback correct';
+    } else {
+      btn.classList.add('wrong');
+      fb.textContent = '✗ Not quite. The correct answer is ' + correctAnswer + '.';
+      fb.className = 'feedback wrong';
+    }
+
+    document.getElementById('scoreDisplay').textContent = correct + ' / ' + total;
+  }
+
+  function toggleHelp() {
+    helpVisible = !helpVisible;
+    const box = document.getElementById('helpBox');
+    const btn = document.querySelector('.btn-help');
+    box.classList.toggle('visible', helpVisible);
+    btn.textContent = helpVisible ? 'Hide Help' : 'Show Help';
+  }
+
+  nextClock();
+</script>
+</body>
+</html>
