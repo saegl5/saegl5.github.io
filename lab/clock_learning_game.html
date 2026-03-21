@@ -193,9 +193,9 @@
       <input type="checkbox" id="secondHandToggle" onchange="onSecondHandToggle()">
       Show second hand (include seconds in quiz)
     </label>
-    <label class="clock-option">
-      <input type="checkbox" id="keepItRealToggle" onchange="onKeepItRealToggle()">
-      Keep it real!
+    <label class="clock-option" id="keepItRealLabel" style="opacity: 0.4; cursor: default;">
+      <input type="checkbox" id="keepItRealToggle" onchange="onKeepItRealToggle()" style="cursor: default;">
+      Keep it real! (where hands should be)
     </label>
   </div>
 
@@ -264,14 +264,16 @@
 
   function onKeepItRealToggle() {
     keepItReal = document.getElementById('keepItRealToggle').checked;
+    const label = document.getElementById('keepItRealLabel');
+    label.style.opacity = keepItReal ? '1' : '0.4';
+    label.style.cursor = keepItReal ? 'pointer' : 'default';
+    document.getElementById('keepItRealToggle').style.cursor = keepItReal ? 'pointer' : 'default';
     if (keepItReal) {
-      // Animate to real hand positions (hour includes minute offset)
-      const realHourAngle = ((currentH % 12 + currentM / 60) / 12) * 2 * Math.PI - Math.PI / 2;
-      const realMinAngle  = (currentM / 60) * 2 * Math.PI - Math.PI / 2;
+      const realHourAngle = ((currentH % 12 + currentM / 60 + currentSecond / 3600) / 12) * 2 * Math.PI - Math.PI / 2;
+      const realMinAngle  = ((currentM + currentSecond / 60) / 60) * 2 * Math.PI - Math.PI / 2;
       const realSecAngle  = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
       animateHandsOnly(realHourAngle, realMinAngle, realSecAngle);
     } else {
-      // Animate back to snapped positions
       const snapHourAngle = (currentH % 12) / 12 * 2 * Math.PI - Math.PI / 2;
       const snapMinAngle  = (currentM / 60) * 2 * Math.PI - Math.PI / 2;
       const snapSecAngle  = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
@@ -372,10 +374,13 @@
 
   function drawClock(hour, minute, second) {
     currentH = hour; currentM = minute;
+    const sec = second || 0;
     const hourAngle = keepItReal
-      ? ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2
+      ? ((hour % 12 + minute / 60 + sec / 3600) / 12) * 2 * Math.PI - Math.PI / 2
       : (hour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
-    const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
+    const minAngle = keepItReal
+      ? ((minute + sec / 60) / 60) * 2 * Math.PI - Math.PI / 2
+      : (minute / 60) * 2 * Math.PI - Math.PI / 2;
     const secAngle = second !== undefined ? (second / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
     currentHourAngle = hourAngle;
     currentMinAngle = minAngle;
@@ -384,10 +389,13 @@
   }
 
   function animateToTime(targetHour, targetMinute, targetSecond, onDone) {
+    const sec = targetSecond || 0;
     const targetHourAngle = keepItReal
-      ? ((targetHour % 12 + targetMinute / 60) / 12) * 2 * Math.PI - Math.PI / 2
+      ? ((targetHour % 12 + targetMinute / 60 + sec / 3600) / 12) * 2 * Math.PI - Math.PI / 2
       : (targetHour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
-    const targetMinAngle = (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
+    const targetMinAngle = keepItReal
+      ? ((targetMinute + sec / 60) / 60) * 2 * Math.PI - Math.PI / 2
+      : (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
     const targetSecAngle = targetSecond !== undefined ? (targetSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
 
     function forwardDelta(from, to) {
