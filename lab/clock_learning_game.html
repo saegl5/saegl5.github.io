@@ -456,13 +456,11 @@
   }
 
   function generateChoices(ch, cm) {
-    // Returns array of {h, m} objects in shuffled order, with correct one included
     const wrongValues = [];
-    const minPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     const usedKeys = new Set([ch + ':' + cm]);
     while (wrongValues.length < 2) {
       const wh = Math.floor(Math.random() * 12) + 1;
-      const wm = minPool[Math.floor(Math.random() * minPool.length)];
+      const wm = Math.floor(Math.random() * 60);
       const key = wh + ':' + wm;
       if (!usedKeys.has(key)) { usedKeys.add(key); wrongValues.push({h: wh, m: wm}); }
     }
@@ -471,7 +469,7 @@
       const j = Math.floor(Math.random() * (i + 1));
       [all[i], all[j]] = [all[j], all[i]];
     }
-    return all; // [{h, m}, ...]
+    return all;
   }
 
   function renderChoices(choiceValues, s) {
@@ -498,11 +496,9 @@
     animating = true;
     if (secondTickInterval) { clearInterval(secondTickInterval); secondTickInterval = null; }
 
-    const minPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
-    const secPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     const h = Math.floor(Math.random() * 12) + 1;
-    const m = minPool[Math.floor(Math.random() * minPool.length)];
-    const s = showSeconds ? secPool[Math.floor(Math.random() * secPool.length)] : undefined;
+    const m = Math.floor(Math.random() * 60);
+    const s = showSeconds ? Math.floor(Math.random() * 60) : undefined;
 
     document.getElementById('feedback').textContent = '';
     document.getElementById('feedback').className = 'feedback';
@@ -573,11 +569,9 @@
     document.getElementById('feedback').textContent = '';
     document.getElementById('feedback').className = 'feedback';
 
-    const minPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
-    const secPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     const h = Math.floor(Math.random() * 12) + 1;
-    const m = minPool[Math.floor(Math.random() * minPool.length)];
-    const s = showSeconds ? secPool[Math.floor(Math.random() * secPool.length)] : undefined;
+    const m = Math.floor(Math.random() * 60);
+    const s = showSeconds ? Math.floor(Math.random() * 60) : undefined;
 
     drawClock(h, m, s);
     renderChoices(generateChoices(h, m), s);
