@@ -188,7 +188,7 @@
   <p class="subtitle">Read the clock and select the correct time!</p>
 
   <div class="clock-box">
-    <canvas id="clockCanvas" width="540" height="540"></canvas>
+    <canvas id="clockCanvas" width="420" height="420"></canvas>
     <label class="clock-option">
       <input type="checkbox" id="secondHandToggle" onchange="onSecondHandToggle()">
       Show second hand (include seconds in quiz)
@@ -314,9 +314,9 @@
   function drawClockAt(hourAngle, minAngle, secAngle) {
     const canvas = document.getElementById('clockCanvas');
     const ctx = canvas.getContext('2d');
-    const cx = 270, cy = 270, r = 252;
+    const cx = 210, cy = 210, r = 195;
 
-    ctx.clearRect(0, 0, 540, 540);
+    ctx.clearRect(0, 0, 420, 420);
 
     // Face
     ctx.beginPath();
@@ -342,7 +342,7 @@
 
     // Numbers
     ctx.fillStyle = '#1a1a1a';
-    ctx.font = 'bold 28px -apple-system, sans-serif';
+    ctx.font = 'bold 22px -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     for (let n = 1; n <= 12; n++) {
@@ -351,18 +351,18 @@
       ctx.fillText(n, cx + Math.cos(angle) * nr, cy + Math.sin(angle) * nr);
     }
 
-    drawHand(ctx, cx, cy, hourAngle, 135, 12, '#e05050');
-    drawHand(ctx, cx, cy, minAngle, 200, 8, '#1a1a1a');
+    drawHand(ctx, cx, cy, hourAngle, 105, 9, '#e05050');
+    drawHand(ctx, cx, cy, minAngle, 155, 6, '#1a1a1a');
     if (secAngle !== undefined) {
-      drawHand(ctx, cx, cy, secAngle, 222, 2.5, '#e05050');
+      drawHand(ctx, cx, cy, secAngle, 172, 2, '#e05050');
     }
 
     ctx.beginPath();
-    ctx.arc(cx, cy, 12, 0, 2 * Math.PI);
+    ctx.arc(cx, cy, 9, 0, 2 * Math.PI);
     ctx.fillStyle = '#e05050';
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
+    ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
     ctx.fillStyle = '#fff';
     ctx.fill();
   }
