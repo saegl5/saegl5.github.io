@@ -161,7 +161,7 @@
   <p class="subtitle">Read the clock and select the correct time!</p>
 
   <div class="clock-box">
-    <canvas id="clockCanvas" width="220" height="220"></canvas>
+    <canvas id="clockCanvas" width="320" height="320"></canvas>
   </div>
 
   <div class="help-box" id="helpBox">
@@ -199,9 +199,9 @@
   function drawClock(hour, minute) {
     const canvas = document.getElementById('clockCanvas');
     const ctx = canvas.getContext('2d');
-    const cx = 110, cy = 110, r = 100;
+    const cx = 160, cy = 160, r = 145;
 
-    ctx.clearRect(0, 0, 220, 220);
+    ctx.clearRect(0, 0, 320, 320);
 
     // Face
     ctx.beginPath();
@@ -227,7 +227,7 @@
 
     // Numbers
     ctx.fillStyle = '#1a1a1a';
-    ctx.font = 'bold 14px -apple-system, sans-serif';
+    ctx.font = 'bold 18px -apple-system, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     for (let n = 1; n <= 12; n++) {
@@ -238,15 +238,15 @@
 
     // Hour hand (red, shorter)
     const hourAngle = ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
-    drawHand(ctx, cx, cy, hourAngle, 55, 5, '#e05050');
+    drawHand(ctx, cx, cy, hourAngle, 80, 7, '#e05050');
 
     // Minute hand (black, longer)
     const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
-    drawHand(ctx, cx, cy, minAngle, 78, 3.5, '#1a1a1a');
+    drawHand(ctx, cx, cy, minAngle, 115, 5, '#1a1a1a');
 
     // Center dot
     ctx.beginPath();
-    ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
+    ctx.arc(cx, cy, 7, 0, 2 * Math.PI);
     ctx.fillStyle = '#e05050';
     ctx.fill();
   }
