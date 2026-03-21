@@ -205,7 +205,8 @@
     • The <strong>long hand</strong> (black) points to the <strong>minutes</strong> — each mark = 5 minutes.<br>
     • If the minute hand is on 6, that's 30 minutes. On 3, that's 15 minutes.<br>
     • The <strong>thin red hand</strong> (second hand) points to the <strong>seconds</strong> — each mark = 5 seconds. Enable it with the checkbox below the clock.<br>
-    • <strong>Keep it real!</strong> shows where the hands would truly be on a real clock — the hour hand drifts between marks as the minutes and seconds pass, and the minute hand drifts as seconds pass. Great for checking your understanding!
+    • <strong>Keep it real!</strong> shows where the hands would truly be on a real clock — the hour hand drifts between marks as the minutes and seconds pass, and the minute hand drifts as seconds pass. Great for checking your understanding!<br>
+    • 🥚 <strong>Easter egg:</strong> when the second hand is visible, you can drag it around the clock face to see how the hour and minute hands move in response!
   </div>
 
   <p class="question">What time is shown on the clock?</p>
@@ -581,6 +582,89 @@
     drawClock(h, m, s);
     renderChoices(generateChoices(h, m), s);
   }
+
+  // Second hand drag
+  let draggingSecond = false;
+  let dragTotalSeconds = 0;  // continuous, can exceed 60
+  let dragLastAngle = 0;
+
+  function getAngleFromCanvas(e) {
+    const canvas = document.getElementById('clockCanvas');
+    const rect = canvas.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return Math.atan2(clientY - cy, clientX - cx);
+  }
+
+  function isNearSecondHand(e) {
+    if (!showSeconds) return false;
+    const angle = getAngleFromCanvas(e);
+    const secAngle = (currentSecond / 60) * 2 * Math.PI - Math.PI / 2;
+    let diff = Math.abs(angle - secAngle) % (2 * Math.PI);
+    if (diff > Math.PI) diff = 2 * Math.PI - diff;
+    return diff < 0.25;
+  }
+
+  function applySecondDrag(e) {
+    if (!draggingSecond || animating) return;
+    const angle = getAngleFromCanvas(e);
+
+    // Compute shortest angular delta from last angle
+    let delta = angle - dragLastAngle;
+    if (delta > Math.PI) delta -= 2 * Math.PI;
+    if (delta < -Math.PI) delta += 2 * Math.PI;
+    dragLastAngle = angle;
+
+    // Convert delta radians to seconds and accumulate
+    const deltaSeconds = (delta / (2 * Math.PI)) * 60;
+    dragTotalSeconds += deltaSeconds;
+
+    // Snap to nearest whole second
+    const snappedTotal = Math.round(dragTotalSeconds);
+
+    // currentSecond is just the fractional part for display
+    currentSecond = ((snappedTotal % 60) + 60) % 60;
+
+    // Base time in total seconds from start of hour
+    const baseTotalSeconds = currentM * 60 + snappedTotal;
+    const secAngle = (currentSecond / 60) * 2 * Math.PI - Math.PI / 2;
+    const realMinAngle  = (baseTotalSeconds / 3600) * 2 * Math.PI - Math.PI / 2;
+    const realHourAngle = ((currentH % 12) / 12 + baseTotalSeconds / (3600 * 12)) * 2 * Math.PI - Math.PI / 2;
+
+    currentHourAngle = realHourAngle;
+    currentMinAngle = realMinAngle;
+    drawClockAt(realHourAngle, realMinAngle, secAngle);
+  }
+
+  const canvas = document.getElementById('clockCanvas');
+  canvas.style.cursor = 'default';
+
+  canvas.addEventListener('mousedown', e => {
+    if (isNearSecondHand(e)) {
+      draggingSecond = true;
+      dragLastAngle = getAngleFromCanvas(e);
+      dragTotalSeconds = currentSecond;
+      e.preventDefault();
+    }
+  });
+  canvas.addEventListener('touchstart', e => {
+    if (isNearSecondHand(e)) {
+      draggingSecond = true;
+      dragLastAngle = getAngleFromCanvas(e);
+      dragTotalSeconds = currentSecond;
+      e.preventDefault();
+    }
+  }, { passive: false });
+  document.addEventListener('mousemove', e => { if (draggingSecond) { applySecondDrag(e); e.preventDefault(); } });
+  document.addEventListener('touchmove', e => { if (draggingSecond) { applySecondDrag(e); e.preventDefault(); } }, { passive: false });
+  document.addEventListener('mouseup', () => { draggingSecond = false; });
+  document.addEventListener('touchend', () => { draggingSecond = false; });
+
+  canvas.addEventListener('mousemove', e => {
+    canvas.style.cursor = isNearSecondHand(e) ? 'grab' : 'default';
+  });
 
   initFirst();
 </script>
