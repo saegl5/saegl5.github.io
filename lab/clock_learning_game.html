@@ -319,7 +319,7 @@
 
   function drawClock(hour, minute, second) {
     currentH = hour; currentM = minute;
-    const hourAngle = ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
+    const hourAngle = (hour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
     const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
     const secAngle = second !== undefined ? (second / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
     currentHourAngle = hourAngle;
@@ -329,7 +329,7 @@
   }
 
   function animateToTime(targetHour, targetMinute, targetSecond, onDone) {
-    const targetHourAngle = ((targetHour % 12 + targetMinute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
+    const targetHourAngle = (targetHour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
     const targetMinAngle = (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
     const targetSecAngle = targetSecond !== undefined ? (targetSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
 
