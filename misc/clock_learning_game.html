@@ -153,9 +153,25 @@
   }
   .feedback.correct { color: #28a745; }
   .feedback.wrong { color: #dc3545; }
+
+  #confettiCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  @keyframes flashGreen {
+    0%   { background: #f5f5f0; }
+    20%  { background: #c8f5d0; }
+    100% { background: #f5f5f0; }
+  }
+  body.flash { animation: flashGreen 0.6s ease-out; }
 </style>
 </head>
 <body>
+<canvas id="confettiCanvas"></canvas>
 <div class="container">
   <h1>Clock Learning Game</h1>
   <p class="subtitle">Read the clock and select the correct time!</p>
@@ -322,6 +338,9 @@
       fb.textContent = '✓ Correct!';
       fb.className = 'feedback correct';
       document.getElementById('scoreDisplay').textContent = correct + ' / ' + total;
+      blingBrowser();
+      blingBrowser();
+      celebrateCorrect();
     } else {
       if (btn.classList.contains('wrong')) return; // already tried this one
       btn.classList.add('wrong');
@@ -354,6 +373,110 @@
     btn.textContent = helpVisible ? 'Hide Help' : 'Show Help';
   }
 
+  function celebrateCorrect() {
+    // Tab title flash
+    const origTitle = document.title;
+    const flashTitles = ['🎉 Correct!', '⭐ Nice one!', '✅ Correct!'];
+    let fi = 0;
+    const flashInterval = setInterval(() => {
+      document.title = flashTitles[fi % flashTitles.length];
+      fi++;
+      if (fi > 5) { clearInterval(flashInterval); document.title = origTitle; }
+    }, 300);
+
+    // Confetti burst
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.display = 'block';
+
+    const colors = ['#ff595e','#ffca3a','#6a4c93','#1982c4','#8ac926','#ff924c'];
+    const pieces = Array.from({length: 120}, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height * 0.4 - canvas.height * 0.1,
+      r: Math.random() * 7 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 6,
+      vy: Math.random() * 4 + 2,
+      rot: Math.random() * 360,
+      rotV: (Math.random() - 0.5) * 8,
+      shape: Math.random() > 0.5 ? 'rect' : 'circle',
+      alpha: 1
+    }));
+
+    let frame = 0;
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.15;
+        p.rot += p.rotV;
+        if (frame > 40) p.alpha -= 0.018;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        if (p.shape === 'rect') {
+          ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.r, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+        ctx.restore();
+      });
+      frame++;
+      if (frame < 90) requestAnimationFrame(animate);
+      else canvas.style.display = 'none';
+    }
+    animate();
+  }
+
+  function blingBrowser() {
+    // Flash tab title
+    const originalTitle = document.title;
+    const frames = ['🎉 Correct!', '⭐ Correct!', '✅ Correct!', '🌟 Correct!', originalTitle];
+    let i = 0;
+    const titleInterval = setInterval(() => {
+      document.title = frames[i % frames.length];
+      i++;
+      if (i >= frames.length * 3) {
+        clearInterval(titleInterval);
+        document.title = originalTitle;
+      }
+    }, 200);
+
+    // Flash favicon with emoji
+    const emojis = ['🎉', '⭐', '✅', '🌟', '🏆'];
+    let fi = 0;
+    const faviconInterval = setInterval(() => {
+      setEmojiFavicon(emojis[fi % emojis.length]);
+      fi++;
+      if (fi >= emojis.length * 3) {
+        clearInterval(faviconInterval);
+        setEmojiFavicon('🕐');
+      }
+    }, 200);
+  }
+
+  function setEmojiFavicon(emoji) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 32; canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+    ctx.font = '28px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(emoji, 16, 16);
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+    link.href = canvas.toDataURL();
+  }
+
+  // Set default clock favicon
+  setEmojiFavicon('🕐');
   nextClock();
 </script>
 </body>
