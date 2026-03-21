@@ -206,7 +206,7 @@
     • If the minute hand is on 6, that's 30 minutes. On 3, that's 15 minutes.<br>
     • The <strong>thin red hand</strong> (second hand) points to the <strong>seconds</strong> — each mark = 5 seconds. Enable it with the checkbox below the clock.<br>
     • <strong>Keep it real!</strong> shows where the hands would truly be on a real clock — the hour hand drifts between marks as the minutes and seconds pass, and the minute hand drifts as seconds pass. Great for checking your understanding!<br>
-    • 🥚 <strong>Easter egg:</strong> when the second hand is visible, you can drag it around the clock face to see how the hour and minute hands move in response!
+    • 🥚 <strong>Easter egg:</strong> when the second hand is visible, you can drag it around the clock face. When it is visible and Keep it real! is checked, drag it to see how the hour and minute hands move in response!
   </div>
 
   <p class="question">What time is shown on the clock?</p>
@@ -627,17 +627,18 @@
     // currentSecond is just the fractional part for display
     currentSecond = ((snappedTotal % 60) + 60) % 60;
 
-    // Base time in total seconds from start of hour
-    const baseTotalSeconds = currentM * 60 + snappedTotal;
     const secAngle = (currentSecond / 60) * 2 * Math.PI - Math.PI / 2;
-    const realMinAngle  = (baseTotalSeconds / 3600) * 2 * Math.PI - Math.PI / 2;
-    const realHourAngle = ((currentH % 12) / 12 + baseTotalSeconds / (3600 * 12)) * 2 * Math.PI - Math.PI / 2;
-
-    currentHourAngle = realHourAngle;
-    currentMinAngle = realMinAngle;
-    drawClockAt(realHourAngle, realMinAngle, secAngle);
+    if (keepItReal) {
+      const baseTotalSeconds = currentM * 60 + snappedTotal;
+      const realMinAngle  = (baseTotalSeconds / 3600) * 2 * Math.PI - Math.PI / 2;
+      const realHourAngle = ((currentH % 12) / 12 + baseTotalSeconds / (3600 * 12)) * 2 * Math.PI - Math.PI / 2;
+      currentHourAngle = realHourAngle;
+      currentMinAngle = realMinAngle;
+      drawClockAt(realHourAngle, realMinAngle, secAngle);
+    } else {
+      drawClockAt(currentHourAngle, currentMinAngle, secAngle);
+    }
   }
-
   const canvas = document.getElementById('clockCanvas');
   canvas.style.cursor = 'default';
 
