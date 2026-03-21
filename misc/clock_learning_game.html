@@ -211,7 +211,12 @@
   let answered = false;
   let helpVisible = false;
 
-  function drawClock(hour, minute) {
+  // Track current hand angles for animation
+  let currentHourAngle = 0;
+  let currentMinAngle = 0;
+  let animating = false;
+
+  function drawClockAt(hourAngle, minAngle) {
     const canvas = document.getElementById('clockCanvas');
     const ctx = canvas.getContext('2d');
     const cx = 160, cy = 160, r = 145;
@@ -251,19 +256,65 @@
       ctx.fillText(n, cx + Math.cos(angle) * nr, cy + Math.sin(angle) * nr);
     }
 
-    // Hour hand (red, shorter)
-    const hourAngle = ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
     drawHand(ctx, cx, cy, hourAngle, 80, 7, '#e05050');
-
-    // Minute hand (black, longer)
-    const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
     drawHand(ctx, cx, cy, minAngle, 115, 5, '#1a1a1a');
 
-    // Center dot
     ctx.beginPath();
     ctx.arc(cx, cy, 7, 0, 2 * Math.PI);
     ctx.fillStyle = '#e05050';
     ctx.fill();
+  }
+
+  function drawClock(hour, minute) {
+    const hourAngle = ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
+    const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
+    currentHourAngle = hourAngle;
+    currentMinAngle = minAngle;
+    drawClockAt(hourAngle, minAngle);
+  }
+
+  function animateToTime(targetHour, targetMinute, onDone) {
+    const targetHourAngle = ((targetHour % 12 + targetMinute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
+    const targetMinAngle = (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
+
+    // Always sweep forward (clockwise), wrapping if needed
+    function forwardDelta(from, to) {
+      let delta = (to - from) % (2 * Math.PI);
+      if (delta <= 0) delta += 2 * Math.PI;
+      return delta;
+    }
+
+    const minDelta = forwardDelta(currentMinAngle, targetMinAngle);
+    // Hour hand moves 1/12 as fast as minute hand
+    const hourDelta = minDelta / 12 + forwardDelta(currentHourAngle, targetHourAngle) - forwardDelta(currentHourAngle, targetHourAngle) % (2 * Math.PI / 12);
+
+    // Simpler: just sweep both forward by their natural deltas
+    const hDelta = forwardDelta(currentHourAngle, targetHourAngle);
+    const mDelta = forwardDelta(currentMinAngle, targetMinAngle);
+
+    const duration = 700; // ms
+    const start = performance.now();
+    const startH = currentHourAngle;
+    const startM = currentMinAngle;
+
+    function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+    function frame(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const e = easeInOut(t);
+      const h = startH + hDelta * e;
+      const m = startM + mDelta * e;
+      drawClockAt(h, m);
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        currentHourAngle = targetHourAngle;
+        currentMinAngle = targetMinAngle;
+        animating = false;
+        onDone();
+      }
+    }
+    requestAnimationFrame(frame);
   }
 
   function drawHand(ctx, cx, cy, angle, length, width, color) {
@@ -299,28 +350,31 @@
   }
 
   function nextClock() {
-    answered = false;
+    if (animating) return;
+    animating = true;
+
     const pool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     const h = Math.floor(Math.random() * 12) + 1;
     const m = pool[Math.floor(Math.random() * pool.length)];
 
-    drawClock(h, m);
-
-    const { choices, correct: ca } = generateChoices(h, m);
-    correctAnswer = ca;
-
-    const choicesEl = document.getElementById('choices');
-    choicesEl.innerHTML = '';
-    choices.forEach(c => {
-      const btn = document.createElement('button');
-      btn.className = 'choice-btn';
-      btn.textContent = c;
-      btn.onclick = () => selectAnswer(c, btn);
-      choicesEl.appendChild(btn);
-    });
-
     document.getElementById('feedback').textContent = '';
     document.getElementById('feedback').className = 'feedback';
+
+    animateToTime(h, m, () => {
+      answered = false;
+      const { choices, correct: ca } = generateChoices(h, m);
+      correctAnswer = ca;
+
+      const choicesEl = document.getElementById('choices');
+      choicesEl.innerHTML = '';
+      choices.forEach(c => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.textContent = c;
+        btn.onclick = () => selectAnswer(c, btn);
+        choicesEl.appendChild(btn);
+      });
+    });
   }
 
   function selectAnswer(val, btn) {
@@ -371,7 +425,24 @@
     btn.textContent = helpVisible ? 'Hide Help' : 'Show Help';
   }
 
-  nextClock();
+  // Draw first clock immediately (no animation on load)
+  (function initFirst() {
+    const pool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    const h = Math.floor(Math.random() * 12) + 1;
+    const m = pool[Math.floor(Math.random() * pool.length)];
+    drawClock(h, m);
+    const { choices, correct: ca } = generateChoices(h, m);
+    correctAnswer = ca;
+    const choicesEl = document.getElementById('choices');
+    choicesEl.innerHTML = '';
+    choices.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = c;
+      btn.onclick = () => selectAnswer(c, btn);
+      choicesEl.appendChild(btn);
+    });
+  })();
 </script>
 </body>
 </html>
