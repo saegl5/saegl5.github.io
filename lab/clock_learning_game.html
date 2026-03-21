@@ -555,6 +555,17 @@
     btn.textContent = helpVisible ? 'Hide Help' : 'Show Help';
   }
 
+  document.addEventListener('click', function(e) {
+    if (!helpVisible) return;
+    const box = document.getElementById('helpBox');
+    const btn = document.querySelector('.btn-help');
+    if (!box.contains(e.target) && !btn.contains(e.target)) {
+      helpVisible = false;
+      box.classList.remove('visible');
+      btn.textContent = 'Show Help';
+    }
+  });
+
   // Draw first clock immediately (no animation on load)
   function initFirst() {
     if (secondTickInterval) { clearInterval(secondTickInterval); secondTickInterval = null; }
