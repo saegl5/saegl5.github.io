@@ -310,28 +310,40 @@
 
   function selectAnswer(val, btn) {
     if (answered) return;
-    answered = true;
-    total++;
-
-    const allBtns = document.querySelectorAll('.choice-btn');
-    allBtns.forEach(b => {
-      b.disabled = true;
-      if (b.textContent === correctAnswer) b.classList.add('correct');
-    });
 
     const fb = document.getElementById('feedback');
+
     if (val === correctAnswer) {
+      answered = true;
+      total++;
       correct++;
       btn.classList.add('correct');
+      document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
       fb.textContent = '✓ Correct!';
       fb.className = 'feedback correct';
+      document.getElementById('scoreDisplay').textContent = correct + ' / ' + total;
     } else {
+      if (btn.classList.contains('wrong')) return; // already tried this one
       btn.classList.add('wrong');
-      fb.textContent = '✗ Not quite. The correct answer is ' + correctAnswer + '.';
-      fb.className = 'feedback wrong';
+      btn.disabled = true;
+      // Check if this was the first wrong attempt (only one wrong button so far)
+      const wrongCount = document.querySelectorAll('.choice-btn.wrong').length;
+      if (wrongCount === 1) {
+        fb.textContent = '✗ Not quite — try again!';
+        fb.className = 'feedback wrong';
+      } else {
+        // Second wrong: reveal answer, count as wrong
+        answered = true;
+        total++;
+        document.querySelectorAll('.choice-btn').forEach(b => {
+          b.disabled = true;
+          if (b.textContent === correctAnswer) b.classList.add('correct');
+        });
+        fb.textContent = '✗ The correct answer is ' + correctAnswer + '.';
+        fb.className = 'feedback wrong';
+        document.getElementById('scoreDisplay').textContent = correct + ' / ' + total;
+      }
     }
-
-    document.getElementById('scoreDisplay').textContent = correct + ' / ' + total;
   }
 
   function toggleHelp() {
