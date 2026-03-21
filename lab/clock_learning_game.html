@@ -193,6 +193,10 @@
       <input type="checkbox" id="secondHandToggle" onchange="onSecondHandToggle()">
       Show second hand (include seconds in quiz)
     </label>
+    <label class="clock-option">
+      <input type="checkbox" id="keepItRealToggle" onchange="onKeepItRealToggle()">
+      Keep it real!
+    </label>
   </div>
 
   <div class="help-box" id="helpBox">
@@ -228,6 +232,7 @@
   let answered = false;
   let helpVisible = false;
   let showSeconds = false;
+  let keepItReal = false;
   let currentSecond = 0;
   let currentH = 1, currentM = 0;
   let secondTickInterval = null;
@@ -255,8 +260,54 @@
     });
   }
 
-  // Track current hand angles for animation
-  let currentHourAngle = 0;
+  function onKeepItRealToggle() {
+    keepItReal = document.getElementById('keepItRealToggle').checked;
+    if (keepItReal) {
+      // Animate to real hand positions (hour includes minute offset)
+      const realHourAngle = ((currentH % 12 + currentM / 60) / 12) * 2 * Math.PI - Math.PI / 2;
+      const realMinAngle  = (currentM / 60) * 2 * Math.PI - Math.PI / 2;
+      const realSecAngle  = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+      animateHandsOnly(realHourAngle, realMinAngle, realSecAngle);
+    } else {
+      // Animate back to snapped positions
+      const snapHourAngle = (currentH % 12) / 12 * 2 * Math.PI - Math.PI / 2;
+      const snapMinAngle  = (currentM / 60) * 2 * Math.PI - Math.PI / 2;
+      const snapSecAngle  = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+      animateHandsOnly(snapHourAngle, snapMinAngle, snapSecAngle);
+    }
+  }
+
+  function animateHandsOnly(targetH, targetM, targetS) {
+    if (animating) return;
+    animating = true;
+    function forwardDelta(from, to) {
+      let delta = (to - from) % (2 * Math.PI);
+      if (delta < 0) delta += 2 * Math.PI;
+      // Allow zero-delta (no movement needed) but avoid full rotation
+      return delta;
+    }
+    const hDelta = forwardDelta(currentHourAngle, targetH);
+    const mDelta = forwardDelta(currentMinAngle, targetM);
+    const startSec = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+    const sDelta = (targetS !== undefined && startSec !== undefined) ? forwardDelta(startSec, targetS) : undefined;
+    const startH = currentHourAngle, startM = currentMinAngle;
+    const duration = 700, start = performance.now();
+    function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+    function frame(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const e = easeInOut(t);
+      const sec = sDelta !== undefined ? startSec + sDelta * e : undefined;
+      drawClockAt(startH + hDelta * e, startM + mDelta * e, sec);
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        currentHourAngle = targetH;
+        currentMinAngle = targetM;
+        animating = false;
+      }
+    }
+    requestAnimationFrame(frame);
+  }
   let currentMinAngle = 0;
   let animating = false;
 
@@ -319,7 +370,9 @@
 
   function drawClock(hour, minute, second) {
     currentH = hour; currentM = minute;
-    const hourAngle = (hour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
+    const hourAngle = keepItReal
+      ? ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2
+      : (hour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
     const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
     const secAngle = second !== undefined ? (second / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
     currentHourAngle = hourAngle;
@@ -329,7 +382,9 @@
   }
 
   function animateToTime(targetHour, targetMinute, targetSecond, onDone) {
-    const targetHourAngle = (targetHour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
+    const targetHourAngle = keepItReal
+      ? ((targetHour % 12 + targetMinute / 60) / 12) * 2 * Math.PI - Math.PI / 2
+      : (targetHour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
     const targetMinAngle = (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
     const targetSecAngle = targetSecond !== undefined ? (targetSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
 
