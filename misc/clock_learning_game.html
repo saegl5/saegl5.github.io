@@ -30,9 +30,10 @@
     background: #eeeee8;
     border-radius: 12px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 48px 20px;
+    padding: 48px 20px 24px;
     margin-bottom: 24px;
   }
   canvas {
@@ -167,7 +168,17 @@
   }
   .feedback.correct span { display: inline-block; animation: jiggle 0.6s ease; }
 
-
+  .clock-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    user-select: none;
+  }
+  .clock-option input { cursor: pointer; width: 15px; height: 15px; }
 </style>
 </head>
 <body>
@@ -177,6 +188,10 @@
 
   <div class="clock-box">
     <canvas id="clockCanvas" width="320" height="320"></canvas>
+    <label class="clock-option">
+      <input type="checkbox" id="secondHandToggle" onchange="onSecondHandToggle()">
+      Show second hand (include seconds in quiz)
+    </label>
   </div>
 
   <div class="help-box" id="helpBox">
@@ -210,13 +225,40 @@
   let correctAnswer = '';
   let answered = false;
   let helpVisible = false;
+  let showSeconds = false;
+  let currentSecond = 0;
+  let currentH = 1, currentM = 0;
+  let secondTickInterval = null;
+
+  function onSecondHandToggle() {
+    showSeconds = document.getElementById('secondHandToggle').checked;
+    const secAngle = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+    drawClockAt(currentHourAngle, currentMinAngle, secAngle);
+
+    // Regenerate choices to include/exclude seconds, reset answer state
+    answered = false;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+    const s = showSeconds ? currentSecond : undefined;
+    const { choices, correct: ca } = generateChoices(currentH, currentM, s);
+    correctAnswer = ca;
+    const choicesEl = document.getElementById('choices');
+    choicesEl.innerHTML = '';
+    choices.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = c;
+      btn.onclick = () => selectAnswer(c, btn);
+      choicesEl.appendChild(btn);
+    });
+  }
 
   // Track current hand angles for animation
   let currentHourAngle = 0;
   let currentMinAngle = 0;
   let animating = false;
 
-  function drawClockAt(hourAngle, minAngle) {
+  function drawClockAt(hourAngle, minAngle, secAngle) {
     const canvas = document.getElementById('clockCanvas');
     const ctx = canvas.getContext('2d');
     const cx = 160, cy = 160, r = 145;
@@ -258,41 +300,50 @@
 
     drawHand(ctx, cx, cy, hourAngle, 80, 7, '#e05050');
     drawHand(ctx, cx, cy, minAngle, 115, 5, '#1a1a1a');
+    if (secAngle !== undefined) {
+      drawHand(ctx, cx, cy, secAngle, 128, 1.5, '#e05050');
+    }
 
     ctx.beginPath();
     ctx.arc(cx, cy, 7, 0, 2 * Math.PI);
     ctx.fillStyle = '#e05050';
     ctx.fill();
+    // small white center dot over second hand
+    ctx.beginPath();
+    ctx.arc(cx, cy, 3, 0, 2 * Math.PI);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
   }
 
-  function drawClock(hour, minute) {
+  function drawClock(hour, minute, second) {
+    currentH = hour; currentM = minute;
     const hourAngle = ((hour % 12 + minute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
     const minAngle = (minute / 60) * 2 * Math.PI - Math.PI / 2;
+    const secAngle = second !== undefined ? (second / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
     currentHourAngle = hourAngle;
     currentMinAngle = minAngle;
-    drawClockAt(hourAngle, minAngle);
+    currentSecond = second || 0;
+    drawClockAt(hourAngle, minAngle, secAngle);
   }
 
-  function animateToTime(targetHour, targetMinute, onDone) {
+  function animateToTime(targetHour, targetMinute, targetSecond, onDone) {
     const targetHourAngle = ((targetHour % 12 + targetMinute / 60) / 12) * 2 * Math.PI - Math.PI / 2;
     const targetMinAngle = (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
+    const targetSecAngle = targetSecond !== undefined ? (targetSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
 
-    // Always sweep forward (clockwise), wrapping if needed
     function forwardDelta(from, to) {
       let delta = (to - from) % (2 * Math.PI);
       if (delta <= 0) delta += 2 * Math.PI;
       return delta;
     }
 
-    const minDelta = forwardDelta(currentMinAngle, targetMinAngle);
-    // Hour hand moves 1/12 as fast as minute hand
-    const hourDelta = minDelta / 12 + forwardDelta(currentHourAngle, targetHourAngle) - forwardDelta(currentHourAngle, targetHourAngle) % (2 * Math.PI / 12);
-
-    // Simpler: just sweep both forward by their natural deltas
     const hDelta = forwardDelta(currentHourAngle, targetHourAngle);
     const mDelta = forwardDelta(currentMinAngle, targetMinAngle);
+    const startSecAngle = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+    const sDelta = (targetSecAngle !== undefined && startSecAngle !== undefined)
+      ? forwardDelta(startSecAngle, targetSecAngle) : undefined;
 
-    const duration = 700; // ms
+    const duration = 700;
     const start = performance.now();
     const startH = currentHourAngle;
     const startM = currentMinAngle;
@@ -304,12 +355,15 @@
       const e = easeInOut(t);
       const h = startH + hDelta * e;
       const m = startM + mDelta * e;
-      drawClockAt(h, m);
+      const sec = (sDelta !== undefined) ? startSecAngle + sDelta * e : undefined;
+      drawClockAt(h, m, sec);
       if (t < 1) {
         requestAnimationFrame(frame);
       } else {
         currentHourAngle = targetHourAngle;
         currentMinAngle = targetMinAngle;
+        currentH = targetHour; currentM = targetMinute;
+        if (targetSecond !== undefined) currentSecond = targetSecond;
         animating = false;
         onDone();
       }
@@ -327,18 +381,22 @@
     ctx.stroke();
   }
 
-  function formatTime(h, m) {
-    return h + ':' + (m < 10 ? '0' + m : m);
+  function formatTime(h, m, s) {
+    const base = h + ':' + (m < 10 ? '0' + m : m);
+    if (s !== undefined) return base + ':' + (s < 10 ? '0' + s : s);
+    return base;
   }
 
-  function generateChoices(ch, cm) {
-    const correct = formatTime(ch, cm);
+  function generateChoices(ch, cm, cs) {
+    const correct = formatTime(ch, cm, cs);
     const wrongs = new Set();
-    const pool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    const minPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    const secPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     while (wrongs.size < 2) {
       const wh = Math.floor(Math.random() * 12) + 1;
-      const wm = pool[Math.floor(Math.random() * pool.length)];
-      const w = formatTime(wh, wm);
+      const wm = minPool[Math.floor(Math.random() * minPool.length)];
+      const ws = showSeconds ? secPool[Math.floor(Math.random() * secPool.length)] : undefined;
+      const w = formatTime(wh, wm, ws);
       if (w !== correct) wrongs.add(w);
     }
     const all = [correct, ...wrongs];
@@ -349,20 +407,31 @@
     return { choices: all, correct };
   }
 
+  function startSecondTick(h, m, s) {
+    // Second hand is static - only moves during clock transition animation
+  }
+
   function nextClock() {
     if (animating) return;
     animating = true;
+    if (secondTickInterval) { clearInterval(secondTickInterval); secondTickInterval = null; }
 
-    const pool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    const minPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    const secPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     const h = Math.floor(Math.random() * 12) + 1;
-    const m = pool[Math.floor(Math.random() * pool.length)];
+    const m = minPool[Math.floor(Math.random() * minPool.length)];
+    const s = showSeconds ? secPool[Math.floor(Math.random() * secPool.length)] : undefined;
 
     document.getElementById('feedback').textContent = '';
     document.getElementById('feedback').className = 'feedback';
 
-    animateToTime(h, m, () => {
+    animateToTime(h, m, s, () => {
       answered = false;
-      const { choices, correct: ca } = generateChoices(h, m);
+      if (s !== undefined) {
+        currentSecond = s;
+        drawClockAt(currentHourAngle, currentMinAngle, (s / 60) * 2 * Math.PI - Math.PI / 2);
+      }
+      const { choices, correct: ca } = generateChoices(h, m, s);
       correctAnswer = ca;
 
       const choicesEl = document.getElementById('choices');
@@ -426,12 +495,22 @@
   }
 
   // Draw first clock immediately (no animation on load)
-  (function initFirst() {
-    const pool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  function initFirst() {
+    if (secondTickInterval) { clearInterval(secondTickInterval); secondTickInterval = null; }
+    animating = false;
+    answered = false;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+
+    const minPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+    const secPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     const h = Math.floor(Math.random() * 12) + 1;
-    const m = pool[Math.floor(Math.random() * pool.length)];
-    drawClock(h, m);
-    const { choices, correct: ca } = generateChoices(h, m);
+    const m = minPool[Math.floor(Math.random() * minPool.length)];
+    const s = showSeconds ? secPool[Math.floor(Math.random() * secPool.length)] : undefined;
+
+    drawClock(h, m, s);
+
+    const { choices, correct: ca } = generateChoices(h, m, s);
     correctAnswer = ca;
     const choicesEl = document.getElementById('choices');
     choicesEl.innerHTML = '';
@@ -442,7 +521,9 @@
       btn.onclick = () => selectAnswer(c, btn);
       choicesEl.appendChild(btn);
     });
-  })();
+  }
+
+  initFirst();
 </script>
 </body>
 </html>
