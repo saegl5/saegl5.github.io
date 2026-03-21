@@ -237,25 +237,27 @@
   let currentH = 1, currentM = 0;
   let secondTickInterval = null;
 
+  let currentChoiceValues = []; // [{h, m}, ...] in current display order
+
   function onSecondHandToggle() {
     showSeconds = document.getElementById('secondHandToggle').checked;
     const secAngle = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
     drawClockAt(currentHourAngle, currentMinAngle, secAngle);
 
-    // Regenerate choices to include/exclude seconds, reset answer state
+    // Reformat existing choices in place — no reshuffle
     answered = false;
     document.getElementById('feedback').textContent = '';
     document.getElementById('feedback').className = 'feedback';
     const s = showSeconds ? currentSecond : undefined;
-    const { choices, correct: ca } = generateChoices(currentH, currentM, s);
-    correctAnswer = ca;
+    correctAnswer = formatTime(currentH, currentM, s);
     const choicesEl = document.getElementById('choices');
     choicesEl.innerHTML = '';
-    choices.forEach(c => {
+    currentChoiceValues.forEach(cv => {
+      const label = formatTime(cv.h, cv.m, s);
       const btn = document.createElement('button');
       btn.className = 'choice-btn';
-      btn.textContent = c;
-      btn.onclick = () => selectAnswer(c, btn);
+      btn.textContent = label;
+      btn.onclick = () => selectAnswer(label, btn);
       choicesEl.appendChild(btn);
     });
   }
@@ -280,16 +282,16 @@
   function animateHandsOnly(targetH, targetM, targetS) {
     if (animating) return;
     animating = true;
-    function forwardDelta(from, to) {
+    function shortestDelta(from, to) {
       let delta = (to - from) % (2 * Math.PI);
-      if (delta < 0) delta += 2 * Math.PI;
-      // Allow zero-delta (no movement needed) but avoid full rotation
+      if (delta > Math.PI) delta -= 2 * Math.PI;
+      if (delta < -Math.PI) delta += 2 * Math.PI;
       return delta;
     }
-    const hDelta = forwardDelta(currentHourAngle, targetH);
-    const mDelta = forwardDelta(currentMinAngle, targetM);
+    const hDelta = shortestDelta(currentHourAngle, targetH);
+    const mDelta = shortestDelta(currentMinAngle, targetM);
     const startSec = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
-    const sDelta = (targetS !== undefined && startSec !== undefined) ? forwardDelta(startSec, targetS) : undefined;
+    const sDelta = (targetS !== undefined && startSec !== undefined) ? shortestDelta(startSec, targetS) : undefined;
     const startH = currentHourAngle, startM = currentMinAngle;
     const duration = 700, start = performance.now();
     function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
@@ -444,24 +446,38 @@
     return base;
   }
 
-  function generateChoices(ch, cm, cs) {
-    const correct = formatTime(ch, cm, cs);
-    const wrongs = new Set();
+  function generateChoices(ch, cm) {
+    // Returns array of {h, m} objects in shuffled order, with correct one included
+    const wrongValues = [];
     const minPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
-    const secPool = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
-    while (wrongs.size < 2) {
+    const usedKeys = new Set([ch + ':' + cm]);
+    while (wrongValues.length < 2) {
       const wh = Math.floor(Math.random() * 12) + 1;
       const wm = minPool[Math.floor(Math.random() * minPool.length)];
-      const ws = showSeconds ? secPool[Math.floor(Math.random() * secPool.length)] : undefined;
-      const w = formatTime(wh, wm, ws);
-      if (w !== correct) wrongs.add(w);
+      const key = wh + ':' + wm;
+      if (!usedKeys.has(key)) { usedKeys.add(key); wrongValues.push({h: wh, m: wm}); }
     }
-    const all = [correct, ...wrongs];
+    const all = [{h: ch, m: cm}, ...wrongValues];
     for (let i = all.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [all[i], all[j]] = [all[j], all[i]];
     }
-    return { choices: all, correct };
+    return all; // [{h, m}, ...]
+  }
+
+  function renderChoices(choiceValues, s) {
+    currentChoiceValues = choiceValues;
+    correctAnswer = formatTime(currentH, currentM, s);
+    const choicesEl = document.getElementById('choices');
+    choicesEl.innerHTML = '';
+    choiceValues.forEach(cv => {
+      const label = formatTime(cv.h, cv.m, s);
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = label;
+      btn.onclick = () => selectAnswer(label, btn);
+      choicesEl.appendChild(btn);
+    });
   }
 
   function startSecondTick(h, m, s) {
@@ -488,18 +504,7 @@
         currentSecond = s;
         drawClockAt(currentHourAngle, currentMinAngle, (s / 60) * 2 * Math.PI - Math.PI / 2);
       }
-      const { choices, correct: ca } = generateChoices(h, m, s);
-      correctAnswer = ca;
-
-      const choicesEl = document.getElementById('choices');
-      choicesEl.innerHTML = '';
-      choices.forEach(c => {
-        const btn = document.createElement('button');
-        btn.className = 'choice-btn';
-        btn.textContent = c;
-        btn.onclick = () => selectAnswer(c, btn);
-        choicesEl.appendChild(btn);
-      });
+      renderChoices(generateChoices(h, m), s);
     });
   }
 
@@ -566,18 +571,7 @@
     const s = showSeconds ? secPool[Math.floor(Math.random() * secPool.length)] : undefined;
 
     drawClock(h, m, s);
-
-    const { choices, correct: ca } = generateChoices(h, m, s);
-    correctAnswer = ca;
-    const choicesEl = document.getElementById('choices');
-    choicesEl.innerHTML = '';
-    choices.forEach(c => {
-      const btn = document.createElement('button');
-      btn.className = 'choice-btn';
-      btn.textContent = c;
-      btn.onclick = () => selectAnswer(c, btn);
-      choicesEl.appendChild(btn);
-    });
+    renderChoices(generateChoices(h, m), s);
   }
 
   initFirst();
