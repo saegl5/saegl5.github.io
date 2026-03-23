@@ -39,7 +39,7 @@ Z Shell script for transcribing Apple Podcasts episodes.
 
 ### Web Apps
 
-#### Clock Learning Game
+#### &#129514; Clock Learning Game
 
 Basic web app designed to help students learn how to read an analog clock. Built in JavaScript and HTML.
 
