@@ -39,6 +39,19 @@ Z Shell script for transcribing Apple Podcasts episodes.
 
 ### Web Apps
 
+#### Clock Learning Game
+
+Basic web app designed to help students learn how to read an analog clock. Built in JavaScript and HTML.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://saegl5.dev/lab/clock_learning_game_dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://saegl5.dev/lab/clock_learning_game_light.png">
+  <img src="https://saegl5.dev/lab/clock_learning_game_light.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
+</picture>
+
+[Get Web App &#128279;](https://saegl5.dev/lab/clock_learning_game.html)
+<br><br>
+
 #### Create 加油 Calendar
 
 Google Web app for creating a calendar of recurring events that cycles the words "J Day," "I Day," "A Day," "Y Day," "O Day," and "U Day," except on weekends and holidays. Without an app script, one would need to create these events manually. Built in JavaScript and HTML.
