@@ -202,10 +202,10 @@
 
   <div class="help-box" id="helpBox">
     <strong>Tips for reading a clock:</strong><br>
-    • The <strong>short hand</strong> (red) points to the <strong>hour</strong>.<br>
-    • The <strong>long hand</strong> (black) points to the <strong>minutes</strong> — each mark = 5 minutes.<br>
+    • The <strong>short hand</strong> points to the <strong>hour</strong>.<br>
+    • The <strong>long hand</strong> points to the <strong>minutes</strong> — each mark = 5 minutes.<br>
     • If the minute hand is on 6, that's 30 minutes. On 3, that's 15 minutes.<br>
-    • The <strong>thin red hand</strong> (second hand) points to the <strong>seconds</strong> — each mark = 5 seconds. Enable it with the checkbox below the clock.<br>
+    • The <strong>thin hand</strong> (second hand) points to the <strong>seconds</strong> — each mark = 5 seconds. Enable it with the checkbox below the clock.<br>
     • <strong>Keep it real!</strong> shows where the hands would truly be on a real clock — the hour hand drifts between marks as the minutes and seconds pass, and the minute hand drifts as seconds pass. Great for checking your understanding!<br>
     • 🥚 <strong>Easter egg:</strong> when the second hand is visible, you can drag it around the clock face. When it is visible and Keep it real! is checked, drag it to see how the hour and minute hands move in response!
   </div>
@@ -353,15 +353,19 @@
       ctx.fillText(n, cx + Math.cos(angle) * nr, cy + Math.sin(angle) * nr);
     }
 
-    drawHand(ctx, cx, cy, hourAngle, 105, 9, '#e05050');
+    drawHand(ctx, cx, cy, hourAngle, 105, 9, '#1a1a1a');
     drawHand(ctx, cx, cy, minAngle, 155, 6, '#1a1a1a');
     if (secAngle !== undefined) {
-      drawHand(ctx, cx, cy, secAngle, 172, 2, '#e05050');
+      drawHand(ctx, cx, cy, secAngle, 172, 2, '#1a1a1a');
     }
 
     ctx.beginPath();
     ctx.arc(cx, cy, 9, 0, 2 * Math.PI);
-    ctx.fillStyle = '#e05050';
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
+    ctx.fillStyle = '#fff';
     ctx.fill();
     ctx.beginPath();
     ctx.arc(cx, cy, 4, 0, 2 * Math.PI);
