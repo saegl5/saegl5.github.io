@@ -466,7 +466,15 @@
       wrongValues.push({h: swappedH, m: swappedM});
     }
 
-    // Fill remaining with random
+    // Second wrong answer: hour off by one (student picks wrong number when hand is between two)
+    const offByOneH = (ch % 12) + 1 || 12; // next hour, wrapping 12→1
+    const offByOneKey = offByOneH + ':' + cm;
+    if (!usedKeys.has(offByOneKey) && offByOneKey !== ch + ':' + cm) {
+      usedKeys.add(offByOneKey);
+      wrongValues.push({h: offByOneH, m: cm});
+    }
+
+    // Fill any remaining with random (fallback)
     while (wrongValues.length < 2) {
       const wh = Math.floor(Math.random() * 12) + 1;
       const wm = Math.floor(Math.random() * 60);
