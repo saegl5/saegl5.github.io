@@ -454,12 +454,26 @@
   function generateChoices(ch, cm) {
     const wrongValues = [];
     const usedKeys = new Set([ch + ':' + cm]);
+
+    // First wrong answer: classic beginner mistake — minute hand read as hour, hour hand read as minute
+    // Apparent hour = minute / 5 (which number the minute hand points at)
+    // Apparent minute = hour * 5 (which tick the hour hand points at)
+    const swappedH = Math.round(cm / 5) % 12 || 12;
+    const swappedM = (ch % 12) * 5;
+    const swappedKey = swappedH + ':' + swappedM;
+    if (swappedKey !== ch + ':' + cm) {
+      usedKeys.add(swappedKey);
+      wrongValues.push({h: swappedH, m: swappedM});
+    }
+
+    // Fill remaining with random
     while (wrongValues.length < 2) {
       const wh = Math.floor(Math.random() * 12) + 1;
       const wm = Math.floor(Math.random() * 60);
       const key = wh + ':' + wm;
       if (!usedKeys.has(key)) { usedKeys.add(key); wrongValues.push({h: wh, m: wm}); }
     }
+
     const all = [{h: ch, m: cm}, ...wrongValues];
     for (let i = all.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
