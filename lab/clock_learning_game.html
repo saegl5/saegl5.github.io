@@ -207,7 +207,7 @@
     • If the minute hand is on 6, that's 30 minutes. On 3, that's 15 minutes.<br>
     • The <strong>thin hand</strong> (second hand) points to the <strong>seconds</strong> — each mark = 5 seconds. Enable it with the checkbox below the clock.<br>
     • <strong>Keep it real!</strong> shows where the hands would truly be on a real clock — the hour hand drifts between marks as the minutes and seconds pass, and the minute hand drifts as seconds pass. Great for checking your understanding!<br>
-    • 🥚 <strong>Easter egg:</strong> when the second hand is visible, you can drag it around the clock face. When it is visible and Keep it real! is checked, drag it to see how the hour and minute hands move in response!
+    • 🥚 <strong>Easter egg:</strong> when the second hand is visible, you can drag it around the clock face to set your own time — releasing it will update the answer choices to match. When it is visible and Keep it real! is checked, drag it to see how the hour and minute hands should move in response!
   </div>
 
   <p class="question">What time is shown on the clock?</p>
@@ -527,6 +527,9 @@
 
     animateToTime(h, m, s, () => {
       answered = false;
+      const initSec = s !== undefined ? s : 0;
+      dragBaseSeconds = m * 60 + initSec;
+      dragTotalSeconds = dragBaseSeconds;
       if (s !== undefined) {
         currentSecond = s;
         drawClockAt(currentHourAngle, currentMinAngle, (s / 60) * 2 * Math.PI - Math.PI / 2);
@@ -599,6 +602,8 @@
     if (secondTickInterval) { clearInterval(secondTickInterval); secondTickInterval = null; }
     animating = false;
     answered = false;
+    dragBaseSeconds = 0;
+    dragTotalSeconds = 0;
     document.getElementById('feedback').textContent = '';
     document.getElementById('feedback').className = 'feedback';
 
@@ -607,12 +612,17 @@
     const s = showSeconds ? Math.floor(Math.random() * 60) : undefined;
 
     drawClock(h, m, s);
+    // dragBaseSeconds = absolute seconds from start of hour for this clock
+    const initSec = s !== undefined ? s : 0;
+    dragBaseSeconds = m * 60 + initSec;
+    dragTotalSeconds = dragBaseSeconds;
     renderChoices(generateChoices(h, m), s);
   }
 
   // Second hand drag
   let draggingSecond = false;
-  let dragTotalSeconds = 0;  // continuous, can exceed 60
+  let dragTotalSeconds = 0;
+  let dragBaseSeconds = 0; // persists between drags
   let dragLastAngle = 0;
 
   function getAngleFromCanvas(e) {
@@ -656,9 +666,10 @@
 
     const secAngle = (currentSecond / 60) * 2 * Math.PI - Math.PI / 2;
     if (keepItReal) {
-      const baseTotalSeconds = currentM * 60 + snappedTotal;
-      const realMinAngle  = (baseTotalSeconds / 3600) * 2 * Math.PI - Math.PI / 2;
-      const realHourAngle = ((currentH % 12) / 12 + baseTotalSeconds / (3600 * 12)) * 2 * Math.PI - Math.PI / 2;
+      // snappedTotal is delta from initial second — add to absolute start of clock time
+      const absSeconds = currentH * 3600 + snappedTotal;
+      const realMinAngle  = (absSeconds / 3600) * 2 * Math.PI - Math.PI / 2;
+      const realHourAngle = (absSeconds / (3600 * 12)) * 2 * Math.PI - Math.PI / 2;
       currentHourAngle = realHourAngle;
       currentMinAngle = realMinAngle;
       drawClockAt(realHourAngle, realMinAngle, secAngle);
@@ -673,7 +684,7 @@
     if (isNearSecondHand(e)) {
       draggingSecond = true;
       dragLastAngle = getAngleFromCanvas(e);
-      dragTotalSeconds = currentSecond;
+      dragTotalSeconds = dragBaseSeconds;
       e.preventDefault();
     }
   });
@@ -681,14 +692,53 @@
     if (isNearSecondHand(e)) {
       draggingSecond = true;
       dragLastAngle = getAngleFromCanvas(e);
-      dragTotalSeconds = currentSecond;
+      dragTotalSeconds = dragBaseSeconds;
       e.preventDefault();
     }
   }, { passive: false });
   document.addEventListener('mousemove', e => { if (draggingSecond) { applySecondDrag(e); e.preventDefault(); } });
   document.addEventListener('touchmove', e => { if (draggingSecond) { applySecondDrag(e); e.preventDefault(); } }, { passive: false });
-  document.addEventListener('mouseup', () => { draggingSecond = false; });
-  document.addEventListener('touchend', () => { draggingSecond = false; });
+  document.addEventListener('mouseup', () => {
+    if (draggingSecond) {
+      draggingSecond = false;
+      dragBaseSeconds = dragTotalSeconds;
+      regenerateChoicesAfterDrag();
+    }
+  });
+  document.addEventListener('touchend', () => {
+    if (draggingSecond) {
+      draggingSecond = false;
+      dragBaseSeconds = dragTotalSeconds;
+      regenerateChoicesAfterDrag();
+    }
+  });
+
+  function regenerateChoicesAfterDrag() {
+    const absSeconds = ((currentH * 3600 + Math.round(dragTotalSeconds)) % 43200 + 43200) % 43200;
+    currentH = Math.floor(absSeconds / 3600) || 12;
+    currentM = Math.floor((absSeconds % 3600) / 60);
+    currentSecond = absSeconds % 60;
+
+    if (keepItReal) {
+      currentHourAngle = (absSeconds / (3600 * 12)) * 2 * Math.PI - Math.PI / 2;
+      currentMinAngle  = (absSeconds / 3600) * 2 * Math.PI - Math.PI / 2;
+    } else {
+      currentHourAngle = (currentH % 12) / 12 * 2 * Math.PI - Math.PI / 2;
+      currentMinAngle  = (currentM / 60) * 2 * Math.PI - Math.PI / 2;
+    }
+    const secAngle = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+    drawClockAt(currentHourAngle, currentMinAngle, secAngle);
+
+    // Update dragBaseSeconds for next drag
+    dragBaseSeconds = currentM * 60 + currentSecond;
+    dragTotalSeconds = dragBaseSeconds;
+
+    const s = showSeconds ? currentSecond : undefined;
+    answered = false;
+    document.getElementById('feedback').textContent = '';
+    document.getElementById('feedback').className = 'feedback';
+    renderChoices(generateChoices(currentH, currentM), s);
+  }
 
   canvas.addEventListener('mousemove', e => {
     canvas.style.cursor = isNearSecondHand(e) ? 'grab' : 'default';
