@@ -43,11 +43,13 @@ Z Shell script for transcribing Apple Podcasts episodes.
 
 Basic web app designed to help students learn how to read an analog clock. Built in JavaScript and HTML.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://saegl5.dev/lab/clock_learning_game_dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://saegl5.dev/lab/clock_learning_game_light.png">
-  <img src="https://saegl5.dev/lab/clock_learning_game_light.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
-</picture>
+<a href="https://saegl5.dev/lab/clock_learning_game.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://saegl5.dev/lab/clock_learning_game_dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="https://saegl5.dev/lab/clock_learning_game_light.png">
+    <img src="https://saegl5.dev/lab/clock_learning_game_light.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
+  </picture>
+</a>
 
 [Get Web App &#128279;](https://saegl5.dev/lab/clock_learning_game.html)
 <br><br>
