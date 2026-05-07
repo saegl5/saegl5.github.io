@@ -4,7 +4,7 @@
 
 `Hello world!` &#128075;  您好。My name is Ed.
 
-I am an aspiring IT professional and an educator who enjoys learning and coding. My passion for technology and education drives me to continually learn, code, and share knowledge with others.
+IT professional and educator who enjoys learning and coding. My passion for technology and education drives me to continually learn, code, and share knowledge with others.
 
 Below are some projects of mine that I would love to share with you. Also included are some resources I have found to be incredibly useful. Through my projects, I hope to not only showcase what I’ve created but also inspire and support others on their own paths in technology and education.
 
