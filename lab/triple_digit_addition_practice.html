@@ -1,0 +1,165 @@
+
+<html>
+<style>
+  body { font-family: var(--font-sans); }
+  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+  .problem-card { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 1.5rem; }
+  .problem-container { display: flex; flex-direction: column; gap: 0; width: fit-content; margin-left: auto; }
+  .operand { display: flex; align-items: center; font-size: 20px; font-weight: 500; font-family: var(--font-mono); justify-content: flex-end; }
+  .cell { display: inline-block; width: 32px; text-align: center; }
+  .cell-wide { display: inline-block; width: 52px; text-align: center; }
+  .operator-cell { display: inline-block; width: 24px; text-align: left; }
+  .trade-row { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 2px; }
+  .trade-cell { display: inline-block; width: 32px; text-align: center; }
+  .trade-cell-wide { display: inline-block; width: 52px; text-align: center; }
+  .trade-input { width: 20px; height: 20px; padding: 0; border: 1px dashed var(--color-border-secondary); border-radius: 4px; font-size: 11px; font-family: var(--font-mono); text-align: center; background: var(--color-background-primary); color: var(--color-text-secondary); }
+  .trade-input:focus { outline: 0; border-color: var(--color-border-primary); border-style: solid; }
+  .result-line { border-top: 2px solid var(--color-text-primary); padding-top: 8px; margin-top: 6px; display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+  .digit-input { width: 28px; height: 36px; padding: 0; border: 1.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 20px; font-family: var(--font-mono); text-align: center; background: var(--color-background-primary); color: var(--color-text-primary); transition: background 0.15s, border-color 0.15s; }
+  .digit-input-wide { width: 48px; height: 36px; padding: 0; border: 1.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 20px; font-family: var(--font-mono); text-align: center; background: var(--color-background-primary); color: var(--color-text-primary); transition: background 0.15s, border-color 0.15s; }
+  .digit-input:focus, .digit-input-wide:focus { outline: 0; border-color: var(--color-border-primary); }
+  .correct-box { border-color: var(--color-border-success) !important; background: var(--color-background-success) !important; color: var(--color-text-success) !important; }
+  .incorrect-box { border-color: var(--color-border-danger) !important; background: var(--color-background-danger) !important; color: var(--color-text-danger) !important; }
+  .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
+  .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: var(--color-background-primary); border-radius: var(--border-radius-md); padding: 6px 10px; transition: background 0.15s; }
+  .step-row.correct { background: var(--color-background-success); }
+  .step-row.incorrect { background: var(--color-background-danger); }
+  .step-label { font-weight: 500; width: 72px; flex-shrink: 0; color: var(--color-text-secondary); }
+  .step-row.correct .step-label, .step-row.correct .step-eq, .step-row.correct .step-result { color: var(--color-text-success); }
+  .step-row.incorrect .step-label, .step-row.incorrect .step-eq, .step-row.incorrect .step-result { color: var(--color-text-danger); }
+  .step-eq { color: var(--color-text-secondary); flex: 1; }
+  .step-result { font-weight: 500; font-family: var(--font-mono); min-width: 28px; text-align: right; color: var(--color-text-primary); }
+  button { padding: 8px 16px; border: 0.5px solid var(--color-border-secondary); background: transparent; border-radius: var(--border-radius-md); font-size: 14px; cursor: pointer; transition: 0.15s; color: var(--color-text-primary); }
+  button:hover { background: var(--color-background-secondary); border-color: var(--color-border-primary); }
+  button:active { transform: scale(0.98); }
+</style>
+
+<div style="padding: 1rem 0;">
+  <div style="margin-bottom: 1.5rem;">
+    <label style="display: block; font-size: 14px; color: var(--color-text-secondary); margin-bottom: 8px;">Number of problems</label>
+    <input type="range" id="numProblems" min="1" max="6" value="3" style="width: 100%;" />
+  </div>
+  <div id="problems" class="problem-set"></div>
+  <button onclick="generateProblems()">New problems</button>
+</div>
+
+<script>
+const problems = [];
+function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function digs(n) { return { h: Math.floor(n/100), t: Math.floor(n/10)%10, o: n%10 }; }
+
+function generateProblems() {
+  const n = parseInt(document.getElementById('numProblems').value);
+  problems.length = 0;
+  document.getElementById('problems').innerHTML = '';
+
+  for (let i = 0; i < n; i++) {
+    const num1 = randInt(100, 999);
+    const twoDigit = i % 2 !== 0;
+    const num2 = twoDigit ? randInt(10, 99) : randInt(100, 999);
+    const d1 = digs(num1), d2 = digs(num2);
+    const correct = num1 + num2;
+    const cd = digs(correct);
+    const onesSum = d1.o + d2.o;
+    const onesTrade = Math.floor(onesSum / 10);
+    const tensSum = d1.t + d2.t + onesTrade;
+    const tensTrade = Math.floor(tensSum / 10);
+    const hundredsSum = d1.h + d2.h + tensTrade;
+
+    problems.push({ num1, num2, correct, cd, d1, d2, onesSum, onesTrade, tensSum, tensTrade, hundredsSum });
+
+    const card = document.createElement('div');
+    card.className = 'problem-card';
+    card.innerHTML = `
+      <div class="problem-container">
+        <div class="trade-row">
+          <span class="operator-cell"></span>
+          <span class="trade-cell-wide"></span>
+          <span class="trade-cell"><input class="trade-input" id="tr-h-${i}" maxlength="1" inputmode="numeric" placeholder=""></span>
+          <span class="trade-cell"><input class="trade-input" id="tr-t-${i}" maxlength="1" inputmode="numeric" placeholder=""></span>
+          <span class="trade-cell"></span>
+        </div>
+        <div class="operand" style="margin-top:2px;">
+          <span class="operator-cell"></span>
+          <span class="cell-wide"></span><span class="cell">${d1.h}</span><span class="cell">${d1.t}</span><span class="cell">${d1.o}</span>
+        </div>
+        <div class="operand">
+          <span class="operator-cell">+</span>
+          ${twoDigit
+            ? `<span class="cell-wide"></span><span class="cell"></span><span class="cell">${d2.t}</span><span class="cell">${d2.o}</span>`
+            : `<span class="cell-wide"></span><span class="cell">${d2.h}</span><span class="cell">${d2.t}</span><span class="cell">${d2.o}</span>`}
+        </div>
+        <div class="result-line">
+          <span class="operator-cell"></span>
+          <input class="digit-input-wide" id="ah-${i}" maxlength="2" inputmode="numeric" placeholder="?">
+          <input class="digit-input" id="at-${i}" maxlength="1" inputmode="numeric" placeholder="?">
+          <input class="digit-input" id="ao-${i}" maxlength="1" inputmode="numeric" placeholder="?">
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step-row" id="row-o-${i}">
+          <span class="step-label">Ones</span>
+          <span class="step-eq">${d1.o} + ${d2.o}${onesTrade ? ' → trade ' + onesTrade : ''}</span>
+          <span class="step-result" id="sr-o-${i}">—</span>
+        </div>
+        <div class="step-row" id="row-t-${i}">
+          <span class="step-label">Tens</span>
+          <span class="step-eq">${d1.t} + ${d2.t}${onesTrade ? ' + ' + onesTrade : ''}${tensTrade ? ' → trade ' + tensTrade : ''}</span>
+          <span class="step-result" id="sr-t-${i}">—</span>
+        </div>
+        <div class="step-row" id="row-h-${i}">
+          <span class="step-label">Hundreds</span>
+          <span class="step-eq">${d1.h} + ${d2.h}${tensTrade ? ' + ' + tensTrade : ''}</span>
+          <span class="step-result" id="sr-h-${i}">—</span>
+        </div>
+      </div>
+    `;
+    document.getElementById('problems').appendChild(card);
+
+    const p = problems[i];
+
+    function checkTrade(inputEl, val, expected) {
+      inputEl.classList.remove('correct-box', 'incorrect-box');
+      if (val === '') return;
+      const ok = parseInt(val) === expected;
+      inputEl.classList.add(ok ? 'correct-box' : 'incorrect-box');
+    }
+
+    function updateAnswer(inputEl, srEl, rowEl, val, expected) {
+      inputEl.classList.remove('correct-box', 'incorrect-box');
+      srEl.textContent = '—';
+      rowEl.classList.remove('correct', 'incorrect');
+      if (val === '') return;
+      const ok = parseInt(val) === expected;
+      inputEl.classList.add(ok ? 'correct-box' : 'incorrect-box');
+      srEl.textContent = val;
+      rowEl.classList.add(ok ? 'correct' : 'incorrect');
+    }
+
+    function onAnswerInput(col) {
+      const aoEl = document.getElementById(`ao-${i}`);
+      const atEl = document.getElementById(`at-${i}`);
+      const ahEl = document.getElementById(`ah-${i}`);
+      updateAnswer(aoEl, document.getElementById(`sr-o-${i}`), document.getElementById(`row-o-${i}`), aoEl.value, p.cd.o);
+      updateAnswer(atEl, document.getElementById(`sr-t-${i}`), document.getElementById(`row-t-${i}`), atEl.value, p.cd.t);
+      updateAnswer(ahEl, document.getElementById(`sr-h-${i}`), document.getElementById(`row-h-${i}`), ahEl.value, p.hundredsSum);
+      if (col === 'o' && aoEl.value.length === 1) atEl.focus();
+      if (col === 't' && atEl.value.length === 1) ahEl.focus();
+    }
+
+    document.getElementById(`ao-${i}`).addEventListener('input', () => onAnswerInput('o'));
+    document.getElementById(`at-${i}`).addEventListener('input', () => onAnswerInput('t'));
+    document.getElementById(`ah-${i}`).addEventListener('input', () => onAnswerInput('h'));
+
+    document.getElementById(`tr-t-${i}`).addEventListener('input', (e) => {
+      checkTrade(e.target, e.target.value, p.onesTrade);
+    });
+    document.getElementById(`tr-h-${i}`).addEventListener('input', (e) => {
+      checkTrade(e.target, e.target.value, p.tensTrade);
+    });
+  }
+}
+
+generateProblems();
+</script>
+</html>
