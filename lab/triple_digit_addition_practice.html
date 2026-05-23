@@ -71,6 +71,24 @@ const problems = [];
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function digs(n){return{h:Math.floor(n/100),t:Math.floor(n/10)%10,o:n%10};}
 
+function checkTradeBox(el, val, expected) {
+  el.classList.remove('correct-box','incorrect-box');
+  const isEmpty = val === '' || val === '0' || val === 0;
+  const shouldTrade = expected > 0;
+  if (shouldTrade) {
+    // must be nonzero — empty or zero is wrong
+    if (val === '') return; // don't mark until touched
+    el.classList.add(parseInt(val) === expected ? 'correct-box' : 'incorrect-box');
+  } else {
+    // should be empty or zero — green immediately, red only if nonzero entered
+    if (val === '') {
+      el.classList.add('correct-box');
+    } else {
+      el.classList.add(parseInt(val) === 0 ? 'correct-box' : 'incorrect-box');
+    }
+  }
+}
+
 function generateProblems(){
   const n=parseInt(document.getElementById('numProblems').value);
   problems.length=0;
@@ -140,11 +158,10 @@ function generateProblems(){
 
     const p=problems[i];
 
-    function checkBox(el,val,expected){
-      el.classList.remove('correct-box','incorrect-box');
-      if(val==='') return;
-      el.classList.add(parseInt(val)===expected?'correct-box':'incorrect-box');
-    }
+    // initialise no-trade boxes as green immediately
+    if(p.onesTrade === 0) document.getElementById(`tr-t-${i}`).classList.add('correct-box');
+    if(p.tensTrade === 0) document.getElementById(`tr-h-${i}`).classList.add('correct-box');
+
     function updateAns(el,srEl,rowEl,val,expected){
       el.classList.remove('correct-box','incorrect-box');
       srEl.textContent='—'; rowEl.classList.remove('correct','incorrect');
@@ -166,8 +183,8 @@ function generateProblems(){
     document.getElementById(`ao-${i}`).addEventListener('input',()=>onAns('o'));
     document.getElementById(`at-${i}`).addEventListener('input',()=>onAns('t'));
     document.getElementById(`ah-${i}`).addEventListener('input',()=>onAns('h'));
-    document.getElementById(`tr-t-${i}`).addEventListener('input',e=>checkBox(e.target,e.target.value,p.onesTrade));
-    document.getElementById(`tr-h-${i}`).addEventListener('input',e=>checkBox(e.target,e.target.value,p.tensTrade));
+    document.getElementById(`tr-t-${i}`).addEventListener('input',e=>checkTradeBox(e.target,e.target.value,p.onesTrade));
+    document.getElementById(`tr-h-${i}`).addEventListener('input',e=>checkTradeBox(e.target,e.target.value,p.tensTrade));
   }
 }
 generateProblems();
