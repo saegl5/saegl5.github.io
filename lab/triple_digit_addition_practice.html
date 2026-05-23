@@ -7,22 +7,33 @@
   .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
   .problem-card { background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
   .problem-container { width: fit-content; margin-left: auto; }
-  .box, .box-wide {
-    display: inline-block; height: 24px; padding: 0;
+
+  /* trade boxes — small, but same font face/weight as numbers */
+  .box {
+    display: inline-block; width: 24px; height: 24px; padding: 0;
     border: 1px dashed #aaa; border-radius: 4px;
-    font-size: 12px; font-family: monospace; text-align: center;
-    background: #f9f9f9; color: #333; vertical-align: middle;
+    font-size: 14px; font-weight: 600; font-family: monospace;
+    text-align: center; background: #f9f9f9; color: #333; vertical-align: middle;
   }
-  .box { width: 24px; } .box-wide { width: 48px; }
+  /* answer boxes — same size as trade boxes but wider for hundreds */
+  .box-wide {
+    display: inline-block; width: 48px; height: 24px; padding: 0;
+    border: 1px dashed #aaa; border-radius: 4px;
+    font-size: 14px; font-weight: 600; font-family: monospace;
+    text-align: center; background: #f9f9f9; color: #333; vertical-align: middle;
+  }
   .box:focus, .box-wide:focus { outline: 0; border-style: solid; border-color: #555; }
   .box:disabled, .box-wide:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
   .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
+
   .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 32px; }
-  .prow .op { width: 24px; flex-shrink: 0; font-size: 22px; }
+  .prow .op { width: 24px; flex-shrink: 0; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
   .prow .sw { display: inline-flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; }
+
   .divider { border: none; border-top: 2px solid #333; margin: 4px 0; }
+
   .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
   .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: #f0f0f0; border-radius: 8px; padding: 6px 10px; transition: background 0.15s; }
   .step-row.correct   { background: #d4f5e2; color: #1a6e3f; }
@@ -32,6 +43,7 @@
   .step-row.incorrect .step-label, .step-row.incorrect .step-eq, .step-row.incorrect .step-result { color: #a33; }
   .step-eq { color: #555; flex: 1; }
   .step-result { font-weight: 600; font-family: monospace; min-width: 28px; text-align: right; }
+
   button { padding: 8px 16px; border: 1px solid #ccc; background: #fff; border-radius: 8px; font-size: 14px; cursor: pointer; transition: 0.15s; color: #333; }
   button:hover { background: #f0f0f0; }
   button:active { transform: scale(0.98); }
@@ -62,20 +74,12 @@ function applyTradeColor(el, val, expected) {
 function setupTradeBox(trEl, expected, onDone) {
   trEl.addEventListener('input', () => {
     const val = trEl.value;
-    if (val !== '') {
-      // user typed something — color immediately
-      applyTradeColor(trEl, val, expected);
-    } else {
-      // cleared back to empty — remove color, wait for blur
-      trEl.classList.remove('correct-box', 'incorrect-box');
-    }
+    if (val !== '') applyTradeColor(trEl, val, expected);
+    else trEl.classList.remove('correct-box', 'incorrect-box');
   });
-
   trEl.addEventListener('blur', () => {
     const val = trEl.value;
-    // if empty, now apply color on blur
     if (val === '') applyTradeColor(trEl, val, expected);
-    // unlock next if no trade needed (any value including empty), or trade needed and nonzero entered
     const canProceed = expected === 0 || (val !== '' && parseInt(val) !== 0);
     if (canProceed) onDone();
   });
