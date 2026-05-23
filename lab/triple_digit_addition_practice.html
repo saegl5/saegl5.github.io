@@ -16,6 +16,7 @@
   }
   .box { width: 24px; } .box-wide { width: 48px; }
   .box:focus, .box-wide:focus { outline: 0; border-style: solid; border-color: #555; }
+  .box:disabled, .box-wide:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
   .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
 
@@ -61,11 +62,9 @@ function checkTradeBox(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
   const shouldTrade = expected > 0;
   if (shouldTrade) {
-    // empty or zero when a trade is needed = incorrect
     if (val === '' || parseInt(val) === 0) el.classList.add('incorrect-box');
     else el.classList.add(parseInt(val) === expected ? 'correct-box' : 'incorrect-box');
   } else {
-    // no trade needed: empty or zero = correct, nonzero = incorrect
     if (val === '' || parseInt(val) === 0) el.classList.add('correct-box');
     else el.classList.add('incorrect-box');
   }
@@ -93,8 +92,8 @@ function generateProblems(){
       <div class="problem-container">
         <div class="prow">
           <span class="op"></span><span class="sw"></span>
-          <span class="s"><input class="box" id="tr-h-${i}" maxlength="1" inputmode="numeric"></span>
-          <span class="s"><input class="box" id="tr-t-${i}" maxlength="1" inputmode="numeric"></span>
+          <span class="s"><input class="box" id="tr-h-${i}" maxlength="1" inputmode="numeric" disabled></span>
+          <span class="s"><input class="box" id="tr-t-${i}" maxlength="1" inputmode="numeric" disabled></span>
           <span class="s"></span>
         </div>
         <div class="prow">
@@ -110,8 +109,8 @@ function generateProblems(){
         <hr class="divider">
         <div class="prow">
           <span class="op"></span>
-          <span class="sw"><input class="box-wide" id="ah-${i}" maxlength="2" inputmode="numeric"></span>
-          <span class="s"><input class="box" id="at-${i}" maxlength="1" inputmode="numeric"></span>
+          <span class="sw"><input class="box-wide" id="ah-${i}" maxlength="2" inputmode="numeric" disabled></span>
+          <span class="s"><input class="box" id="at-${i}" maxlength="1" inputmode="numeric" disabled></span>
           <span class="s"><input class="box" id="ao-${i}" maxlength="1" inputmode="numeric"></span>
         </div>
       </div>
@@ -137,6 +136,15 @@ function generateProblems(){
 
     const p=problems[i];
 
+    // Order: ao → tr-t → at → tr-h → ah
+    const ao = ()=>document.getElementById(`ao-${i}`);
+    const trt = ()=>document.getElementById(`tr-t-${i}`);
+    const at_ = ()=>document.getElementById(`at-${i}`);
+    const trh = ()=>document.getElementById(`tr-h-${i}`);
+    const ah = ()=>document.getElementById(`ah-${i}`);
+
+    function enable(el){ el.disabled=false; }
+
     function updateAns(el,srEl,rowEl,val,expected){
       el.classList.remove('correct-box','incorrect-box');
       srEl.textContent='—'; rowEl.classList.remove('correct','incorrect');
@@ -145,24 +153,41 @@ function generateProblems(){
       el.classList.add(ok?'correct-box':'incorrect-box');
       srEl.textContent=val; rowEl.classList.add(ok?'correct':'incorrect');
     }
-    function onAns(col){
-      const ao=document.getElementById(`ao-${i}`);
-      const at=document.getElementById(`at-${i}`);
-      const ah=document.getElementById(`ah-${i}`);
-      updateAns(ao,document.getElementById(`sr-o-${i}`),document.getElementById(`row-o-${i}`),ao.value,p.cd.o);
-      updateAns(at,document.getElementById(`sr-t-${i}`),document.getElementById(`row-t-${i}`),at.value,p.cd.t);
-      updateAns(ah,document.getElementById(`sr-h-${i}`),document.getElementById(`row-h-${i}`),ah.value,p.hundredsSum);
-      if(col==='o'&&ao.value.length===1) at.focus();
-      if(col==='t'&&at.value.length===1) ah.focus();
-    }
-    document.getElementById(`ao-${i}`).addEventListener('input',()=>onAns('o'));
-    document.getElementById(`at-${i}`).addEventListener('input',()=>onAns('t'));
-    document.getElementById(`ah-${i}`).addEventListener('input',()=>onAns('h'));
 
-    document.getElementById(`tr-t-${i}`).addEventListener('blur',e=>checkTradeBox(e.target,e.target.value,p.onesTrade));
-    document.getElementById(`tr-h-${i}`).addEventListener('blur',e=>checkTradeBox(e.target,e.target.value,p.tensTrade));
-    document.getElementById(`tr-t-${i}`).addEventListener('input',e=>e.target.classList.remove('correct-box','incorrect-box'));
-    document.getElementById(`tr-h-${i}`).addEventListener('input',e=>e.target.classList.remove('correct-box','incorrect-box'));
+    // Step 1: ones answer
+    ao().addEventListener('input', ()=>{
+      updateAns(ao(), document.getElementById(`sr-o-${i}`), document.getElementById(`row-o-${i}`), ao().value, p.cd.o);
+      if(ao().value.length===1){ enable(trt()); trt().focus(); }
+    });
+
+    // Step 2: trade tens
+    trt().addEventListener('input', ()=>{
+      trt().classList.remove('correct-box','incorrect-box');
+    });
+    trt().addEventListener('blur', ()=>{
+      checkTradeBox(trt(), trt().value, p.onesTrade);
+      if(trt().value !== '') { enable(at_()); at_().focus(); }
+    });
+
+    // Step 3: tens answer
+    at_().addEventListener('input', ()=>{
+      updateAns(at_(), document.getElementById(`sr-t-${i}`), document.getElementById(`row-t-${i}`), at_().value, p.cd.t);
+      if(at_().value.length===1){ enable(trh()); trh().focus(); }
+    });
+
+    // Step 4: trade hundreds
+    trh().addEventListener('input', ()=>{
+      trh().classList.remove('correct-box','incorrect-box');
+    });
+    trh().addEventListener('blur', ()=>{
+      checkTradeBox(trh(), trh().value, p.tensTrade);
+      if(trh().value !== '') { enable(ah()); ah().focus(); }
+    });
+
+    // Step 5: hundreds answer
+    ah().addEventListener('input', ()=>{
+      updateAns(ah(), document.getElementById(`sr-h-${i}`), document.getElementById(`row-h-${i}`), ah().value, p.hundredsSum);
+    });
   }
 }
 generateProblems();
