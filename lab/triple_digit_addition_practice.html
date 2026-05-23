@@ -7,7 +7,6 @@
   .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
   .problem-card { background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
   .problem-container { width: fit-content; margin-left: auto; }
-
   .box, .box-wide {
     display: inline-block; height: 24px; padding: 0;
     border: 1px dashed #aaa; border-radius: 4px;
@@ -19,14 +18,11 @@
   .box:disabled, .box-wide:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
   .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
-
   .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 32px; }
   .prow .op { width: 24px; flex-shrink: 0; font-size: 22px; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
   .prow .sw { display: inline-flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; }
-
   .divider { border: none; border-top: 2px solid #333; margin: 4px 0; }
-
   .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
   .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: #f0f0f0; border-radius: 8px; padding: 6px 10px; transition: background 0.15s; }
   .step-row.correct   { background: #d4f5e2; color: #1a6e3f; }
@@ -36,7 +32,6 @@
   .step-row.incorrect .step-label, .step-row.incorrect .step-eq, .step-row.incorrect .step-result { color: #a33; }
   .step-eq { color: #555; flex: 1; }
   .step-result { font-weight: 600; font-family: monospace; min-width: 28px; text-align: right; }
-
   button { padding: 8px 16px; border: 1px solid #ccc; background: #fff; border-radius: 8px; font-size: 14px; cursor: pointer; transition: 0.15s; color: #333; }
   button:hover { background: #f0f0f0; }
   button:active { transform: scale(0.98); }
@@ -53,7 +48,7 @@ const problems = [];
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function digs(n){return{h:Math.floor(n/100),t:Math.floor(n/10)%10,o:n%10};}
 
-function checkTradeBox(el, val, expected) {
+function applyTradeColor(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
   if (expected > 0) {
     if (val === '' || parseInt(val) === 0) el.classList.add('incorrect-box');
@@ -62,6 +57,28 @@ function checkTradeBox(el, val, expected) {
     if (val === '' || parseInt(val) === 0) el.classList.add('correct-box');
     else el.classList.add('incorrect-box');
   }
+}
+
+function setupTradeBox(trEl, expected, onDone) {
+  trEl.addEventListener('input', () => {
+    const val = trEl.value;
+    if (val !== '') {
+      // user typed something — color immediately
+      applyTradeColor(trEl, val, expected);
+    } else {
+      // cleared back to empty — remove color, wait for blur
+      trEl.classList.remove('correct-box', 'incorrect-box');
+    }
+  });
+
+  trEl.addEventListener('blur', () => {
+    const val = trEl.value;
+    // if empty, now apply color on blur
+    if (val === '') applyTradeColor(trEl, val, expected);
+    // unlock next if no trade needed (any value including empty), or trade needed and nonzero entered
+    const canProceed = expected === 0 || (val !== '' && parseInt(val) !== 0);
+    if (canProceed) onDone();
+  });
 }
 
 function generateProblems(){
@@ -128,11 +145,11 @@ function generateProblems(){
     document.getElementById('problems').appendChild(card);
 
     const p=problems[i];
-    const ao  = ()=>document.getElementById(`ao-${i}`);
-    const trt = ()=>document.getElementById(`tr-t-${i}`);
-    const at_ = ()=>document.getElementById(`at-${i}`);
-    const trh = ()=>document.getElementById(`tr-h-${i}`);
-    const ah  = ()=>document.getElementById(`ah-${i}`);
+    const ao  = document.getElementById(`ao-${i}`);
+    const trt = document.getElementById(`tr-t-${i}`);
+    const at_ = document.getElementById(`at-${i}`);
+    const trh = document.getElementById(`tr-h-${i}`);
+    const ah  = document.getElementById(`ah-${i}`);
 
     function updateAns(el,srEl,rowEl,val,expected){
       el.classList.remove('correct-box','incorrect-box');
@@ -143,57 +160,22 @@ function generateProblems(){
       srEl.textContent=val; rowEl.classList.add(ok?'correct':'incorrect');
     }
 
-    // Step 1: ones answer
-    ao().addEventListener('input', ()=>{
-      updateAns(ao(), document.getElementById(`sr-o-${i}`), document.getElementById(`row-o-${i}`), ao().value, p.cd.o);
-      if(ao().value.length===1){
-        trt().disabled=false;
-        trt().focus();
-      }
+    ao.addEventListener('input', () => {
+      updateAns(ao, document.getElementById(`sr-o-${i}`), document.getElementById(`row-o-${i}`), ao.value, p.cd.o);
+      if (ao.value.length === 1) { trt.disabled = false; trt.focus(); }
     });
 
-    // Step 2: trade tens — if no trade needed, unlock at_ immediately on focus
-    trt().addEventListener('focus', ()=>{
-      if(p.onesTrade === 0){
-        // no trade needed: unlock tens answer right away
-        at_().disabled=false;
-      }
-    });
-    trt().addEventListener('input', ()=>{ trt().classList.remove('correct-box','incorrect-box'); });
-    trt().addEventListener('blur', ()=>{
-      checkTradeBox(trt(), trt().value, p.onesTrade);
-      // unlock next if: trade needed and filled, OR no trade needed (empty/zero ok)
-      const val = trt().value;
-      const canProceed = p.onesTrade === 0 || (val !== '' && parseInt(val) !== 0);
-      if(canProceed){ at_().disabled=false; at_().focus(); }
+    setupTradeBox(trt, p.onesTrade, () => { at_.disabled = false; at_.focus(); });
+
+    at_.addEventListener('input', () => {
+      updateAns(at_, document.getElementById(`sr-t-${i}`), document.getElementById(`row-t-${i}`), at_.value, p.cd.t);
+      if (at_.value.length === 1) { trh.disabled = false; trh.focus(); }
     });
 
-    // Step 3: tens answer
-    at_().addEventListener('input', ()=>{
-      updateAns(at_(), document.getElementById(`sr-t-${i}`), document.getElementById(`row-t-${i}`), at_().value, p.cd.t);
-      if(at_().value.length===1){
-        trh().disabled=false;
-        trh().focus();
-      }
-    });
+    setupTradeBox(trh, p.tensTrade, () => { ah.disabled = false; ah.focus(); });
 
-    // Step 4: trade hundreds — if no trade needed, unlock ah immediately on focus
-    trh().addEventListener('focus', ()=>{
-      if(p.tensTrade === 0){
-        ah().disabled=false;
-      }
-    });
-    trh().addEventListener('input', ()=>{ trh().classList.remove('correct-box','incorrect-box'); });
-    trh().addEventListener('blur', ()=>{
-      checkTradeBox(trh(), trh().value, p.tensTrade);
-      const val = trh().value;
-      const canProceed = p.tensTrade === 0 || (val !== '' && parseInt(val) !== 0);
-      if(canProceed){ ah().disabled=false; ah().focus(); }
-    });
-
-    // Step 5: hundreds answer
-    ah().addEventListener('input', ()=>{
-      updateAns(ah(), document.getElementById(`sr-h-${i}`), document.getElementById(`row-h-${i}`), ah().value, p.hundredsSum);
+    ah.addEventListener('input', () => {
+      updateAns(ah, document.getElementById(`sr-h-${i}`), document.getElementById(`row-h-${i}`), ah.value, p.hundredsSum);
     });
   }
 }
