@@ -37,9 +37,6 @@
   .step-eq { color: #555; flex: 1; }
   .step-result { font-weight: 600; font-family: monospace; min-width: 28px; text-align: right; }
 
-  label { font-size: 14px; color: #555; display: block; margin-bottom: 8px; }
-  input[type=range] { width: 100%; margin-bottom: 1.5rem; }
-
   button { padding: 8px 16px; border: 1px solid #ccc; background: #fff; border-radius: 8px; font-size: 14px; cursor: pointer; transition: 0.15s; color: #333; }
   button:hover { background: #f0f0f0; }
   button:active { transform: scale(0.98); }
@@ -47,8 +44,6 @@
 
 <div style="padding:1rem 0">
   <h1>Triple Digit Addition Practice</h1>
-  <label>Number of problems</label>
-  <input type="range" id="numProblems" min="1" max="6" value="3">
   <div id="problems" class="problem-set"></div>
   <button onclick="generateProblems()">New problems</button>
 </div>
@@ -60,8 +55,7 @@ function digs(n){return{h:Math.floor(n/100),t:Math.floor(n/10)%10,o:n%10};}
 
 function checkTradeBox(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
-  const shouldTrade = expected > 0;
-  if (shouldTrade) {
+  if (expected > 0) {
     if (val === '' || parseInt(val) === 0) el.classList.add('incorrect-box');
     else el.classList.add(parseInt(val) === expected ? 'correct-box' : 'incorrect-box');
   } else {
@@ -71,11 +65,10 @@ function checkTradeBox(el, val, expected) {
 }
 
 function generateProblems(){
-  const n=parseInt(document.getElementById('numProblems').value);
   problems.length=0;
   document.getElementById('problems').innerHTML='';
 
-  for(let i=0;i<n;i++){
+  for(let i=0;i<4;i++){
     const num1=randInt(100,999);
     const two=i%2!==0;
     const num2=two?randInt(10,99):randInt(100,999);
@@ -135,15 +128,11 @@ function generateProblems(){
     document.getElementById('problems').appendChild(card);
 
     const p=problems[i];
-
-    // Order: ao → tr-t → at → tr-h → ah
-    const ao = ()=>document.getElementById(`ao-${i}`);
+    const ao  = ()=>document.getElementById(`ao-${i}`);
     const trt = ()=>document.getElementById(`tr-t-${i}`);
     const at_ = ()=>document.getElementById(`at-${i}`);
     const trh = ()=>document.getElementById(`tr-h-${i}`);
-    const ah = ()=>document.getElementById(`ah-${i}`);
-
-    function enable(el){ el.disabled=false; }
+    const ah  = ()=>document.getElementById(`ah-${i}`);
 
     function updateAns(el,srEl,rowEl,val,expected){
       el.classList.remove('correct-box','incorrect-box');
@@ -154,37 +143,28 @@ function generateProblems(){
       srEl.textContent=val; rowEl.classList.add(ok?'correct':'incorrect');
     }
 
-    // Step 1: ones answer
     ao().addEventListener('input', ()=>{
       updateAns(ao(), document.getElementById(`sr-o-${i}`), document.getElementById(`row-o-${i}`), ao().value, p.cd.o);
-      if(ao().value.length===1){ enable(trt()); trt().focus(); }
+      if(ao().value.length===1){ trt().disabled=false; trt().focus(); }
     });
 
-    // Step 2: trade tens
-    trt().addEventListener('input', ()=>{
-      trt().classList.remove('correct-box','incorrect-box');
-    });
+    trt().addEventListener('input', ()=>{ trt().classList.remove('correct-box','incorrect-box'); });
     trt().addEventListener('blur', ()=>{
       checkTradeBox(trt(), trt().value, p.onesTrade);
-      if(trt().value !== '') { enable(at_()); at_().focus(); }
+      if(trt().value !== ''){ at_().disabled=false; at_().focus(); }
     });
 
-    // Step 3: tens answer
     at_().addEventListener('input', ()=>{
       updateAns(at_(), document.getElementById(`sr-t-${i}`), document.getElementById(`row-t-${i}`), at_().value, p.cd.t);
-      if(at_().value.length===1){ enable(trh()); trh().focus(); }
+      if(at_().value.length===1){ trh().disabled=false; trh().focus(); }
     });
 
-    // Step 4: trade hundreds
-    trh().addEventListener('input', ()=>{
-      trh().classList.remove('correct-box','incorrect-box');
-    });
+    trh().addEventListener('input', ()=>{ trh().classList.remove('correct-box','incorrect-box'); });
     trh().addEventListener('blur', ()=>{
       checkTradeBox(trh(), trh().value, p.tensTrade);
-      if(trh().value !== '') { enable(ah()); ah().focus(); }
+      if(trh().value !== ''){ ah().disabled=false; ah().focus(); }
     });
 
-    // Step 5: hundreds answer
     ah().addEventListener('input', ()=>{
       updateAns(ah(), document.getElementById(`sr-h-${i}`), document.getElementById(`row-h-${i}`), ah().value, p.hundredsSum);
     });
