@@ -3,38 +3,23 @@
 <style>
   * { box-sizing: border-box; }
   body { font-family: system-ui, sans-serif; background: #f5f5f5; margin: 0; padding: 16px; }
+  h1 { font-size: 28px; font-weight: 800; text-align: center; color: #222; margin: 0 0 1.5rem 0; letter-spacing: -0.5px; }
   .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
   .problem-card { background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
   .problem-container { width: fit-content; margin-left: auto; }
 
   .box, .box-wide {
-    display: inline-block;
-    height: 24px;
-    padding: 0;
-    border: 1px dashed #aaa;
-    border-radius: 4px;
-    font-size: 12px;
-    font-family: monospace;
-    text-align: center;
-    background: #f9f9f9;
-    color: #333;
-    vertical-align: middle;
+    display: inline-block; height: 24px; padding: 0;
+    border: 1px dashed #aaa; border-radius: 4px;
+    font-size: 12px; font-family: monospace; text-align: center;
+    background: #f9f9f9; color: #333; vertical-align: middle;
   }
-  .box      { width: 24px; }
-  .box-wide { width: 48px; }
+  .box { width: 24px; } .box-wide { width: 48px; }
   .box:focus, .box-wide:focus { outline: 0; border-style: solid; border-color: #555; }
   .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
   .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
 
-  .prow {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    font-size: 22px;
-    font-weight: 600;
-    font-family: monospace;
-    line-height: 32px;
-  }
+  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 32px; }
   .prow .op { width: 24px; flex-shrink: 0; font-size: 22px; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
   .prow .sw { display: inline-flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; }
@@ -46,7 +31,7 @@
   .step-row.correct   { background: #d4f5e2; color: #1a6e3f; }
   .step-row.incorrect { background: #fde8e8; color: #a33; }
   .step-label { font-weight: 600; width: 72px; flex-shrink: 0; color: #555; }
-  .step-row.correct   .step-label, .step-row.correct   .step-eq, .step-row.correct   .step-result { color: #1a6e3f; }
+  .step-row.correct .step-label, .step-row.correct .step-eq, .step-row.correct .step-result { color: #1a6e3f; }
   .step-row.incorrect .step-label, .step-row.incorrect .step-eq, .step-row.incorrect .step-result { color: #a33; }
   .step-eq { color: #555; flex: 1; }
   .step-result { font-weight: 600; font-family: monospace; min-width: 28px; text-align: right; }
@@ -60,6 +45,7 @@
 </style>
 
 <div style="padding:1rem 0">
+  <h1>Triple Digit Addition Practice</h1>
   <label>Number of problems</label>
   <input type="range" id="numProblems" min="1" max="6" value="3">
   <div id="problems" class="problem-set"></div>
@@ -73,19 +59,12 @@ function digs(n){return{h:Math.floor(n/100),t:Math.floor(n/10)%10,o:n%10};}
 
 function checkTradeBox(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
-  const isEmpty = val === '' || val === '0' || val === 0;
-  const shouldTrade = expected > 0;
-  if (shouldTrade) {
-    // must be nonzero — empty or zero is wrong
-    if (val === '') return; // don't mark until touched
+  if (expected > 0) {
+    if (val === '') return;
     el.classList.add(parseInt(val) === expected ? 'correct-box' : 'incorrect-box');
   } else {
-    // should be empty or zero — green immediately, red only if nonzero entered
-    if (val === '') {
-      el.classList.add('correct-box');
-    } else {
-      el.classList.add(parseInt(val) === 0 ? 'correct-box' : 'incorrect-box');
-    }
+    if (val === '' || parseInt(val) === 0) el.classList.add('correct-box');
+    else el.classList.add('incorrect-box');
   }
 }
 
@@ -110,15 +89,13 @@ function generateProblems(){
     card.innerHTML=`
       <div class="problem-container">
         <div class="prow">
-          <span class="op"></span>
-          <span class="sw"></span>
+          <span class="op"></span><span class="sw"></span>
           <span class="s"><input class="box" id="tr-h-${i}" maxlength="1" inputmode="numeric"></span>
           <span class="s"><input class="box" id="tr-t-${i}" maxlength="1" inputmode="numeric"></span>
           <span class="s"></span>
         </div>
         <div class="prow">
-          <span class="op"></span>
-          <span class="sw"></span>
+          <span class="op"></span><span class="sw"></span>
           <span class="s">${d1.h}</span><span class="s">${d1.t}</span><span class="s">${d1.o}</span>
         </div>
         <div class="prow">
@@ -135,7 +112,6 @@ function generateProblems(){
           <span class="s"><input class="box" id="ao-${i}" maxlength="1" inputmode="numeric"></span>
         </div>
       </div>
-
       <div class="steps">
         <div class="step-row" id="row-o-${i}">
           <span class="step-label">Ones</span>
@@ -158,10 +134,6 @@ function generateProblems(){
 
     const p=problems[i];
 
-    // initialise no-trade boxes as green immediately
-    if(p.onesTrade === 0) document.getElementById(`tr-t-${i}`).classList.add('correct-box');
-    if(p.tensTrade === 0) document.getElementById(`tr-h-${i}`).classList.add('correct-box');
-
     function updateAns(el,srEl,rowEl,val,expected){
       el.classList.remove('correct-box','incorrect-box');
       srEl.textContent='—'; rowEl.classList.remove('correct','incorrect');
@@ -183,8 +155,19 @@ function generateProblems(){
     document.getElementById(`ao-${i}`).addEventListener('input',()=>onAns('o'));
     document.getElementById(`at-${i}`).addEventListener('input',()=>onAns('t'));
     document.getElementById(`ah-${i}`).addEventListener('input',()=>onAns('h'));
-    document.getElementById(`tr-t-${i}`).addEventListener('input',e=>checkTradeBox(e.target,e.target.value,p.onesTrade));
-    document.getElementById(`tr-h-${i}`).addEventListener('input',e=>checkTradeBox(e.target,e.target.value,p.tensTrade));
+
+    document.getElementById(`tr-t-${i}`).addEventListener('blur',e=>checkTradeBox(e.target,e.target.value,p.onesTrade));
+    document.getElementById(`tr-h-${i}`).addEventListener('blur',e=>checkTradeBox(e.target,e.target.value,p.tensTrade));
+    document.getElementById(`tr-t-${i}`).addEventListener('input',e=>{
+      e.target.classList.remove('correct-box','incorrect-box');
+      if(e.target.value!==''&&p.onesTrade>0&&parseInt(e.target.value)!==p.onesTrade) e.target.classList.add('incorrect-box');
+      if(e.target.value!==''&&p.onesTrade===0&&parseInt(e.target.value)!==0) e.target.classList.add('incorrect-box');
+    });
+    document.getElementById(`tr-h-${i}`).addEventListener('input',e=>{
+      e.target.classList.remove('correct-box','incorrect-box');
+      if(e.target.value!==''&&p.tensTrade>0&&parseInt(e.target.value)!==p.tensTrade) e.target.classList.add('incorrect-box');
+      if(e.target.value!==''&&p.tensTrade===0&&parseInt(e.target.value)!==0) e.target.classList.add('incorrect-box');
+    });
   }
 }
 generateProblems();
