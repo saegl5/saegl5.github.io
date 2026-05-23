@@ -143,28 +143,55 @@ function generateProblems(){
       srEl.textContent=val; rowEl.classList.add(ok?'correct':'incorrect');
     }
 
+    // Step 1: ones answer
     ao().addEventListener('input', ()=>{
       updateAns(ao(), document.getElementById(`sr-o-${i}`), document.getElementById(`row-o-${i}`), ao().value, p.cd.o);
-      if(ao().value.length===1){ trt().disabled=false; trt().focus(); }
+      if(ao().value.length===1){
+        trt().disabled=false;
+        trt().focus();
+      }
     });
 
+    // Step 2: trade tens — if no trade needed, unlock at_ immediately on focus
+    trt().addEventListener('focus', ()=>{
+      if(p.onesTrade === 0){
+        // no trade needed: unlock tens answer right away
+        at_().disabled=false;
+      }
+    });
     trt().addEventListener('input', ()=>{ trt().classList.remove('correct-box','incorrect-box'); });
     trt().addEventListener('blur', ()=>{
       checkTradeBox(trt(), trt().value, p.onesTrade);
-      if(trt().value !== ''){ at_().disabled=false; at_().focus(); }
+      // unlock next if: trade needed and filled, OR no trade needed (empty/zero ok)
+      const val = trt().value;
+      const canProceed = p.onesTrade === 0 || (val !== '' && parseInt(val) !== 0);
+      if(canProceed){ at_().disabled=false; at_().focus(); }
     });
 
+    // Step 3: tens answer
     at_().addEventListener('input', ()=>{
       updateAns(at_(), document.getElementById(`sr-t-${i}`), document.getElementById(`row-t-${i}`), at_().value, p.cd.t);
-      if(at_().value.length===1){ trh().disabled=false; trh().focus(); }
+      if(at_().value.length===1){
+        trh().disabled=false;
+        trh().focus();
+      }
     });
 
+    // Step 4: trade hundreds — if no trade needed, unlock ah immediately on focus
+    trh().addEventListener('focus', ()=>{
+      if(p.tensTrade === 0){
+        ah().disabled=false;
+      }
+    });
     trh().addEventListener('input', ()=>{ trh().classList.remove('correct-box','incorrect-box'); });
     trh().addEventListener('blur', ()=>{
       checkTradeBox(trh(), trh().value, p.tensTrade);
-      if(trh().value !== ''){ ah().disabled=false; ah().focus(); }
+      const val = trh().value;
+      const canProceed = p.tensTrade === 0 || (val !== '' && parseInt(val) !== 0);
+      if(canProceed){ ah().disabled=false; ah().focus(); }
     });
 
+    // Step 5: hundreds answer
     ah().addEventListener('input', ()=>{
       updateAns(ah(), document.getElementById(`sr-h-${i}`), document.getElementById(`row-h-${i}`), ah().value, p.hundredsSum);
     });
