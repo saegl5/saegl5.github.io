@@ -7,15 +7,12 @@
   .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
   .problem-card { background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
   .problem-container { width: fit-content; margin-left: auto; }
-
-  /* trade boxes — small, but same font face/weight as numbers */
   .box {
     display: inline-block; width: 24px; height: 24px; padding: 0;
     border: 1px dashed #aaa; border-radius: 4px;
     font-size: 14px; font-weight: 600; font-family: monospace;
     text-align: center; background: #f9f9f9; color: #333; vertical-align: middle;
   }
-  /* answer boxes — same size as trade boxes but wider for hundreds */
   .box-wide {
     display: inline-block; width: 48px; height: 24px; padding: 0;
     border: 1px dashed #aaa; border-radius: 4px;
@@ -26,24 +23,22 @@
   .box:disabled, .box-wide:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
   .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
-
   .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 32px; }
   .prow .op { width: 24px; flex-shrink: 0; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
   .prow .sw { display: inline-flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; }
-
   .divider { border: none; border-top: 2px solid #333; margin: 4px 0; }
-
   .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
-  .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: #f0f0f0; border-radius: 8px; padding: 6px 10px; transition: background 0.15s; }
-  .step-row.correct   { background: #d4f5e2; color: #1a6e3f; }
-  .step-row.incorrect { background: #fde8e8; color: #a33; }
+  .step-row {
+    display: flex; align-items: center; gap: 8px; font-size: 13px;
+    background: #f0f0f0; border-radius: 8px; padding: 6px 10px;
+    transition: opacity 0.3s;
+    opacity: 0.3;
+  }
+  .step-row.active { opacity: 1; }
   .step-label { font-weight: 600; width: 72px; flex-shrink: 0; color: #555; }
-  .step-row.correct .step-label, .step-row.correct .step-eq, .step-row.correct .step-result { color: #1a6e3f; }
-  .step-row.incorrect .step-label, .step-row.incorrect .step-eq, .step-row.incorrect .step-result { color: #a33; }
   .step-eq { color: #555; flex: 1; }
-  .step-result { font-weight: 600; font-family: monospace; min-width: 28px; text-align: right; }
-
+  .step-result { font-weight: 600; font-family: monospace; min-width: 28px; text-align: right; color: #333; }
   button { padding: 8px 16px; border: 1px solid #ccc; background: #fff; border-radius: 8px; font-size: 14px; cursor: pointer; transition: 0.15s; color: #333; }
   button:hover { background: #f0f0f0; }
   button:active { transform: scale(0.98); }
@@ -71,18 +66,36 @@ function applyTradeColor(el, val, expected) {
   }
 }
 
-function setupTradeBox(trEl, expected, onDone) {
+function setupTradeBox(trEl, expected, nextEl) {
+  let advanced = false;
+  function advance() {
+    if (!advanced) {
+      advanced = true;
+      nextEl.disabled = false;
+      nextEl.focus();
+    }
+  }
   trEl.addEventListener('input', () => {
     const val = trEl.value;
-    if (val !== '') applyTradeColor(trEl, val, expected);
-    else trEl.classList.remove('correct-box', 'incorrect-box');
+    if (val !== '') { applyTradeColor(trEl, val, expected); advance(); }
+    else { trEl.classList.remove('correct-box','incorrect-box'); advanced = false; }
   });
   trEl.addEventListener('blur', () => {
     const val = trEl.value;
     if (val === '') applyTradeColor(trEl, val, expected);
-    const canProceed = expected === 0 || (val !== '' && parseInt(val) !== 0);
-    if (canProceed) onDone();
+    advance();
   });
+}
+
+function guideText(a, b, extra, sum) {
+  const total = a + b + extra;
+  const trade = Math.floor(total / 10);
+  const leave = total % 10;
+  let eq = `${a}+${b}`;
+  if (extra) eq += `+${extra}`;
+  eq += ` = ${total}`;
+  if (trade) eq += ` → trade ${trade}, leave ${leave}`;
+  return eq;
 }
 
 function generateProblems(){
@@ -99,6 +112,10 @@ function generateProblems(){
     const tensSum=d1.t+d2.t+onesTrade,tensTrade=Math.floor(tensSum/10);
     const hundredsSum=d1.h+d2.h+tensTrade;
     problems.push({num1,num2,correct,cd,d1,d2,onesSum,onesTrade,tensSum,tensTrade,hundredsSum});
+
+    const onesGuide    = guideText(d1.o, d2.o, 0, onesSum);
+    const tensGuide    = guideText(d1.t, d2.t, onesTrade, tensSum);
+    const hundredsGuide= guideText(d1.h, d2.h, tensTrade, hundredsSum);
 
     const card=document.createElement('div');
     card.className='problem-card';
@@ -129,20 +146,17 @@ function generateProblems(){
         </div>
       </div>
       <div class="steps">
-        <div class="step-row" id="row-o-${i}">
+        <div class="step-row active" id="row-o-${i}">
           <span class="step-label">Ones</span>
-          <span class="step-eq">${d1.o}+${d2.o}${onesTrade?' → trade '+onesTrade:''}</span>
-          <span class="step-result" id="sr-o-${i}">—</span>
+          <span class="step-eq">${onesGuide}</span>
         </div>
         <div class="step-row" id="row-t-${i}">
           <span class="step-label">Tens</span>
-          <span class="step-eq">${d1.t}+${d2.t}${onesTrade?'+'+onesTrade:''}${tensTrade?' → trade '+tensTrade:''}</span>
-          <span class="step-result" id="sr-t-${i}">—</span>
+          <span class="step-eq">${tensGuide}</span>
         </div>
         <div class="step-row" id="row-h-${i}">
           <span class="step-label">Hundreds</span>
-          <span class="step-eq">${d1.h}+${d2.h}${tensTrade?'+'+tensTrade:''}</span>
-          <span class="step-result" id="sr-h-${i}">—</span>
+          <span class="step-eq">${hundredsGuide}</span>
         </div>
       </div>
     `;
@@ -154,33 +168,90 @@ function generateProblems(){
     const at_ = document.getElementById(`at-${i}`);
     const trh = document.getElementById(`tr-h-${i}`);
     const ah  = document.getElementById(`ah-${i}`);
+    const rowO = document.getElementById(`row-o-${i}`);
+    const rowT = document.getElementById(`row-t-${i}`);
+    const rowH = document.getElementById(`row-h-${i}`);
 
-    function updateAns(el,srEl,rowEl,val,expected){
+    function updateAns(el, val, expected){
       el.classList.remove('correct-box','incorrect-box');
-      srEl.textContent='—'; rowEl.classList.remove('correct','incorrect');
       if(val==='') return;
-      const ok=parseInt(val)===expected;
-      el.classList.add(ok?'correct-box':'incorrect-box');
-      srEl.textContent=val; rowEl.classList.add(ok?'correct':'incorrect');
+      el.classList.add(parseInt(val)===expected ? 'correct-box' : 'incorrect-box');
     }
 
+    // Step 1: ones answer → activate ones guide, unlock trade-tens
     ao.addEventListener('input', () => {
-      updateAns(ao, document.getElementById(`sr-o-${i}`), document.getElementById(`row-o-${i}`), ao.value, p.cd.o);
+      updateAns(ao, ao.value, p.cd.o);
       if (ao.value.length === 1) { trt.disabled = false; trt.focus(); }
     });
 
-    setupTradeBox(trt, p.onesTrade, () => { at_.disabled = false; at_.focus(); });
-
-    at_.addEventListener('input', () => {
-      updateAns(at_, document.getElementById(`sr-t-${i}`), document.getElementById(`row-t-${i}`), at_.value, p.cd.t);
-      if (at_.value.length === 1) { trh.disabled = false; trh.focus(); }
+    // Step 2: trade-tens → unlock tens answer, activate tens guide
+    setupTradeBox(trt, p.onesTrade, {
+      disabled: false,
+      focus: () => { at_.disabled = false; rowT.classList.add('active'); at_.focus(); }
     });
+    // override setupTradeBox — redo with inline to get guide activation
+    // (reset and redo properly below)
 
-    setupTradeBox(trh, p.tensTrade, () => { ah.disabled = false; ah.focus(); });
+    document.getElementById('problems').lastChild; // just a no-op to keep flow
 
-    ah.addEventListener('input', () => {
-      updateAns(ah, document.getElementById(`sr-h-${i}`), document.getElementById(`row-h-${i}`), ah.value, p.hundredsSum);
-    });
+    ao.removeEventListener('input', ao._handler);
+
+    // redo everything cleanly with guide activation built in
+    function wire() {
+      let trtAdvanced = false;
+      let trhAdvanced = false;
+
+      ao.addEventListener('input', () => {
+        updateAns(ao, ao.value, p.cd.o);
+        if (ao.value.length === 1 && !trtAdvanced) {
+          trt.disabled = false; trt.focus();
+        }
+      });
+
+      function tradeFocus(trEl, expected, nextEl, nextRow, advancedFlag, setAdvanced) {
+        trEl.addEventListener('input', () => {
+          const val = trEl.value;
+          if (val !== '') {
+            applyTradeColor(trEl, val, expected);
+            if (!advancedFlag()) {
+              setAdvanced();
+              nextEl.disabled = false;
+              nextRow.classList.add('active');
+              nextEl.focus();
+            }
+          } else {
+            trEl.classList.remove('correct-box','incorrect-box');
+          }
+        });
+        trEl.addEventListener('blur', () => {
+          const val = trEl.value;
+          if (val === '') applyTradeColor(trEl, val, expected);
+          if (!advancedFlag()) {
+            setAdvanced();
+            nextEl.disabled = false;
+            nextRow.classList.add('active');
+            nextEl.focus();
+          }
+        });
+      }
+
+      tradeFocus(trt, p.onesTrade, at_, rowT, ()=>trtAdvanced, ()=>{ trtAdvanced=true; });
+
+      at_.addEventListener('input', () => {
+        updateAns(at_, at_.value, p.cd.t);
+        if (at_.value.length === 1 && !trhAdvanced) {
+          trh.disabled = false; trh.focus();
+        }
+      });
+
+      tradeFocus(trh, p.tensTrade, ah, rowH, ()=>trhAdvanced, ()=>{ trhAdvanced=true; });
+
+      ah.addEventListener('input', () => {
+        updateAns(ah, ah.value, p.hundredsSum);
+      });
+    }
+
+    wire();
   }
 }
 generateProblems();
