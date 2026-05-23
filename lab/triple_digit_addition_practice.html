@@ -59,10 +59,13 @@ function digs(n){return{h:Math.floor(n/100),t:Math.floor(n/10)%10,o:n%10};}
 
 function checkTradeBox(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
-  if (expected > 0) {
-    if (val === '') return;
-    el.classList.add(parseInt(val) === expected ? 'correct-box' : 'incorrect-box');
+  const shouldTrade = expected > 0;
+  if (shouldTrade) {
+    // empty or zero when a trade is needed = incorrect
+    if (val === '' || parseInt(val) === 0) el.classList.add('incorrect-box');
+    else el.classList.add(parseInt(val) === expected ? 'correct-box' : 'incorrect-box');
   } else {
+    // no trade needed: empty or zero = correct, nonzero = incorrect
     if (val === '' || parseInt(val) === 0) el.classList.add('correct-box');
     else el.classList.add('incorrect-box');
   }
@@ -158,16 +161,8 @@ function generateProblems(){
 
     document.getElementById(`tr-t-${i}`).addEventListener('blur',e=>checkTradeBox(e.target,e.target.value,p.onesTrade));
     document.getElementById(`tr-h-${i}`).addEventListener('blur',e=>checkTradeBox(e.target,e.target.value,p.tensTrade));
-    document.getElementById(`tr-t-${i}`).addEventListener('input',e=>{
-      e.target.classList.remove('correct-box','incorrect-box');
-      if(e.target.value!==''&&p.onesTrade>0&&parseInt(e.target.value)!==p.onesTrade) e.target.classList.add('incorrect-box');
-      if(e.target.value!==''&&p.onesTrade===0&&parseInt(e.target.value)!==0) e.target.classList.add('incorrect-box');
-    });
-    document.getElementById(`tr-h-${i}`).addEventListener('input',e=>{
-      e.target.classList.remove('correct-box','incorrect-box');
-      if(e.target.value!==''&&p.tensTrade>0&&parseInt(e.target.value)!==p.tensTrade) e.target.classList.add('incorrect-box');
-      if(e.target.value!==''&&p.tensTrade===0&&parseInt(e.target.value)!==0) e.target.classList.add('incorrect-box');
-    });
+    document.getElementById(`tr-t-${i}`).addEventListener('input',e=>e.target.classList.remove('correct-box','incorrect-box'));
+    document.getElementById(`tr-h-${i}`).addEventListener('input',e=>e.target.classList.remove('correct-box','incorrect-box'));
   }
 }
 generateProblems();
