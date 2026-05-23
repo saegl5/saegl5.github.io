@@ -39,18 +39,11 @@ Z Shell script for transcribing Apple Podcasts episodes.
 
 ### Web Apps
 
-#### &#129514; Clock Learning Game
+| <h4>&#129514; Clock Learning Game</h4> | <h4>&#129514; Triple Digit Addition Practice</h4> |
+| - | - |
+| Basic web app designed to help students learn how to read an analog clock. Built in JavaScript and HTML.<br><picture><source media="(prefers-color-scheme: dark)" srcset="https://saegl5.dev/lab/clock_learning_game_dark.png"><source media="(prefers-color-scheme: light)" srcset="https://saegl5.dev/lab/clock_learning_game_light.png"><img src="https://saegl5.dev/lab/clock_learning_game_light.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;"></picture><br>[Get Web App &#128279;](https://saegl5.dev/lab/clock_learning_game.html) | Basic web app designed to help students learn how to add numbers involving three digits. Built in JavaScript and HTML.<br><picture><source media="(prefers-color-scheme: dark)" srcset="https://saegl5.dev/lab/triple_digit_addition_practice_dark.png"><source media="(prefers-color-scheme: light)" srcset="https://saegl5.dev/lab/triple_digit_addition_practice_light.png"><img src="https://saegl5.dev/lab/triple_digit_addition_practice_light.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;"></picture><br>[Get Web App &#128279;](https://saegl5.dev/lab/triple_digit_addition_practice.html) |
 
-Basic web app designed to help students learn how to read an analog clock. Built in JavaScript and HTML.
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://saegl5.dev/lab/clock_learning_game_dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="https://saegl5.dev/lab/clock_learning_game_light.png">
-  <img src="https://saegl5.dev/lab/clock_learning_game_light.png" alt="screenshot of calendar form" width="300" style="display: inline-block; margin-left: 0; margin-right: auto;">
-</picture>
-
-[Get Web App &#128279;](https://saegl5.dev/lab/clock_learning_game.html)
-<br><br>
+<!-- <br><br> -->
 
 #### Create 加油 Calendar
 
