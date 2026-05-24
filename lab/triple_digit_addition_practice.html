@@ -4,7 +4,7 @@
   * { box-sizing: border-box; }
   body { font-family: system-ui, sans-serif; background: #f5f5f5; margin: 0; padding: 16px; }
   h1 { font-size: 28px; font-weight: 800; text-align: center; color: #222; margin: 0 0 1.5rem 0; letter-spacing: -0.5px; }
-  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
   .problem-card { background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
   .problem-container { width: fit-content; margin-left: auto; }
   .box {
@@ -13,27 +13,16 @@
     font-size: 14px; font-weight: 600; font-family: monospace;
     text-align: center; background: #f9f9f9; color: #333; vertical-align: middle;
   }
-  .box-wide {
-    display: inline-block; width: 48px; height: 24px; padding: 0;
-    border: 1px dashed #aaa; border-radius: 4px;
-    font-size: 14px; font-weight: 600; font-family: monospace;
-    text-align: center; background: #f9f9f9; color: #333; vertical-align: middle;
-  }
-  .box:focus, .box-wide:focus { outline: 0; border-style: solid; border-color: #555; }
-  .box:disabled, .box-wide:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
+  .box:focus { outline: 0; border-style: solid; border-color: #555; }
+  .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
   .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
   .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 32px; }
   .prow .op { width: 24px; flex-shrink: 0; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
-  .prow .sw { display: inline-flex; align-items: center; justify-content: center; width: 56px; flex-shrink: 0; }
   .divider { border: none; border-top: 2px solid #333; margin: 4px 0; }
   .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
-  .step-row {
-    display: flex; align-items: center; gap: 8px; font-size: 13px;
-    background: #f0f0f0; border-radius: 8px; padding: 6px 10px;
-    transition: opacity 0.3s; opacity: 0.3;
-  }
+  .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: #f0f0f0; border-radius: 8px; padding: 6px 10px; transition: opacity 0.3s; opacity: 0.3; }
   .step-row.active { opacity: 1; }
   .step-label { font-weight: 600; width: 72px; flex-shrink: 0; color: #555; }
   .step-eq { color: #555; flex: 1; }
@@ -51,7 +40,7 @@
 <script>
 const problems = [];
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
-function digs(n){return{h:Math.floor(n/100),t:Math.floor(n/10)%10,o:n%10};}
+function digs(n){return{th:Math.floor(n/1000),h:Math.floor(n/100)%10,t:Math.floor(n/10)%10,o:n%10};}
 
 function applyTradeColor(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
@@ -65,13 +54,35 @@ function applyTradeColor(el, val, expected) {
 }
 
 function guideText(a, b, carriedIn) {
-  const total = (carriedIn || 0) + a + b;
-  const trade = Math.floor(total / 10);
-  const leave = total % 10;
+  const total = (carriedIn||0) + a + b;
+  const trade = Math.floor(total/10);
+  const leave = total%10;
   let eq = carriedIn ? `${carriedIn}+${a}+${b}` : `${a}+${b}`;
   eq += ` = ${total}`;
   if (trade) eq += ` → leave ${leave}, trade ${trade}`;
   return eq;
+}
+
+function tradeFocusFn(trEl, expected, nextEl) {
+  let advanced = false;
+  function advance() {
+    if (!advanced) { advanced = true; nextEl.disabled = false; nextEl.focus(); }
+  }
+  trEl.addEventListener('input', () => {
+    const val = trEl.value;
+    if (val !== '') { applyTradeColor(trEl, val, expected); advance(); }
+    else { trEl.classList.remove('correct-box','incorrect-box'); advanced = false; }
+  });
+  trEl.addEventListener('blur', () => {
+    if (trEl.value === '') applyTradeColor(trEl, trEl.value, expected);
+    advance();
+  });
+}
+
+function updateAns(el, val, expected){
+  el.classList.remove('correct-box','incorrect-box');
+  if(val==='') return;
+  el.classList.add(parseInt(val)===expected ? 'correct-box' : 'incorrect-box');
 }
 
 function generateProblems(){
@@ -82,37 +93,49 @@ function generateProblems(){
     const num1=randInt(100,999);
     const two=i%2!==0;
     const num2=two?randInt(10,99):randInt(100,999);
-    const d1=digs(num1),d2=digs(num2);
-    const correct=num1+num2,cd=digs(correct);
-    const onesSum=d1.o+d2.o,onesTrade=Math.floor(onesSum/10);
-    const tensSum=d1.t+d2.t+onesTrade,tensTrade=Math.floor(tensSum/10);
-    const hundredsSum=d1.h+d2.h+tensTrade;
-    problems.push({num1,num2,correct,cd,d1,d2,onesSum,onesTrade,tensSum,tensTrade,hundredsSum});
+    const d1=digs(num1), d2=digs(num2);
+    const correct=num1+num2;
+    const cd=digs(correct);
+    const onesSum=d1.o+d2.o, onesTrade=Math.floor(onesSum/10);
+    const tensSum=d1.t+d2.t+onesTrade, tensTrade=Math.floor(tensSum/10);
+    const hundredsSum=d1.h+d2.h+tensTrade, hundredsTrade=Math.floor(hundredsSum/10);
+    const hasThousands = correct >= 1000;
+    problems.push({num1,num2,correct,cd,d1,d2,onesSum,onesTrade,tensSum,tensTrade,hundredsSum,hundredsTrade,hasThousands});
+
+    // columns: [thousands?] [hundreds] [tens] [ones]
+    // trade row has trades above tens and hundreds (and thousands if needed)
+    const thCol = hasThousands ? `<span class="s"><input class="box" id="tr-th-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
+    const thAnsCol = hasThousands ? `<span class="s"><input class="box" id="ath-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
+    const thNum1 = hasThousands ? `<span class="s"></span>` : `<span class="s"></span>`;
+    const thNum2 = hasThousands ? `<span class="s"></span>` : `<span class="s"></span>`;
 
     const card=document.createElement('div');
     card.className='problem-card';
     card.innerHTML=`
       <div class="problem-container">
         <div class="prow">
-          <span class="op"></span><span class="sw"></span>
+          <span class="op"></span>
+          ${thCol}
           <span class="s"><input class="box" id="tr-h-${i}" maxlength="1" inputmode="numeric" disabled></span>
           <span class="s"><input class="box" id="tr-t-${i}" maxlength="1" inputmode="numeric" disabled></span>
           <span class="s"></span>
         </div>
         <div class="prow">
-          <span class="op"></span><span class="sw"></span>
+          <span class="op"></span>
+          <span class="s"></span>
           <span class="s">${d1.h}</span><span class="s">${d1.t}</span><span class="s">${d1.o}</span>
         </div>
         <div class="prow">
           <span class="op">+</span>
           ${two
-            ?`<span class="sw"></span><span class="s"></span><span class="s">${d2.t}</span><span class="s">${d2.o}</span>`
-            :`<span class="sw"></span><span class="s">${d2.h}</span><span class="s">${d2.t}</span><span class="s">${d2.o}</span>`}
+            ? `<span class="s"></span><span class="s"></span><span class="s">${d2.t}</span><span class="s">${d2.o}</span>`
+            : `<span class="s"></span><span class="s">${d2.h}</span><span class="s">${d2.t}</span><span class="s">${d2.o}</span>`}
         </div>
         <hr class="divider">
         <div class="prow">
           <span class="op"></span>
-          <span class="sw"><input class="box-wide" id="ah-${i}" maxlength="2" inputmode="numeric" disabled></span>
+          ${thAnsCol}
+          <span class="s"><input class="box" id="ah-${i}" maxlength="1" inputmode="numeric" disabled></span>
           <span class="s"><input class="box" id="at-${i}" maxlength="1" inputmode="numeric" disabled></span>
           <span class="s"><input class="box" id="ao-${i}" maxlength="1" inputmode="numeric"></span>
         </div>
@@ -130,6 +153,7 @@ function generateProblems(){
           <span class="step-label">Hundreds</span>
           <span class="step-eq">${guideText(d1.h, d2.h, tensTrade)}</span>
         </div>
+        ${hasThousands ? `<div class="step-row" id="row-th-${i}"><span class="step-label">Thousands</span><span class="step-eq">${guideText(0, 0, hundredsTrade)}</span></div>` : ''}
       </div>
     `;
     document.getElementById('problems').appendChild(card);
@@ -144,59 +168,49 @@ function generateProblems(){
     const rowT = document.getElementById(`row-t-${i}`);
     const rowH = document.getElementById(`row-h-${i}`);
 
+    const allRows = [rowO, rowT, rowH];
+    let trth, ath, rowTh;
+    if (p.hasThousands) {
+      trth = document.getElementById(`tr-th-${i}`);
+      ath  = document.getElementById(`ath-${i}`);
+      rowTh = document.getElementById(`row-th-${i}`);
+      allRows.push(rowTh);
+    }
+
     function setActive(row) {
-      [rowO, rowT, rowH].forEach(r => r.classList.remove('active'));
+      allRows.forEach(r => r.classList.remove('active'));
       row.classList.add('active');
     }
 
-    function updateAns(el, val, expected){
-      el.classList.remove('correct-box','incorrect-box');
-      if(val==='') return;
-      el.classList.add(parseInt(val)===expected ? 'correct-box' : 'incorrect-box');
-    }
-
-    function tradeFocus(trEl, expected, nextEl) {
-      let advanced = false;
-      function advance() {
-        if (!advanced) {
-          advanced = true;
-          nextEl.disabled = false;
-          nextEl.focus();
-        }
-      }
-      trEl.addEventListener('input', () => {
-        const val = trEl.value;
-        if (val !== '') { applyTradeColor(trEl, val, expected); advance(); }
-        else { trEl.classList.remove('correct-box','incorrect-box'); advanced = false; }
-      });
-      trEl.addEventListener('blur', () => {
-        const val = trEl.value;
-        if (val === '') applyTradeColor(trEl, val, expected);
-        advance();
-      });
-    }
-
-    // ones: already active on load
     ao.addEventListener('focus', () => setActive(rowO));
     ao.addEventListener('input', () => {
       updateAns(ao, ao.value, p.cd.o);
-      if (ao.value.length === 1) { trt.disabled = false; trt.focus(); }
+      if (ao.value.length===1) { trt.disabled=false; trt.focus(); }
     });
 
-    tradeFocus(trt, p.onesTrade, at_);
+    tradeFocusFn(trt, p.onesTrade, at_);
 
     at_.addEventListener('focus', () => setActive(rowT));
     at_.addEventListener('input', () => {
       updateAns(at_, at_.value, p.cd.t);
-      if (at_.value.length === 1) { trh.disabled = false; trh.focus(); }
+      if (at_.value.length===1) { trh.disabled=false; trh.focus(); }
     });
 
-    tradeFocus(trh, p.tensTrade, ah);
+    tradeFocusFn(trh, p.tensTrade, ah);
 
     ah.addEventListener('focus', () => setActive(rowH));
     ah.addEventListener('input', () => {
-      updateAns(ah, ah.value, p.hundredsSum);
+      updateAns(ah, ah.value, p.cd.h);
+      if (ah.value.length===1 && p.hasThousands) { trth.disabled=false; trth.focus(); }
     });
+
+    if (p.hasThousands) {
+      tradeFocusFn(trth, p.hundredsTrade, ath);
+      ath.addEventListener('focus', () => setActive(rowTh));
+      ath.addEventListener('input', () => {
+        updateAns(ath, ath.value, p.cd.th);
+      });
+    }
   }
 }
 generateProblems();
