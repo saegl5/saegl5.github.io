@@ -64,18 +64,34 @@ function guideText(a, b, carriedIn) {
 }
 
 function tradeFocusFn(trEl, expected, nextEl) {
-  let advanced = false;
-  function advance() {
-    if (!advanced) { advanced = true; nextEl.disabled = false; nextEl.focus(); }
+  // nextUnlocked tracks whether next box has been unlocked already
+  let nextUnlocked = false;
+
+  function unlockNext() {
+    if (!nextUnlocked) {
+      nextUnlocked = true;
+      nextEl.disabled = false;
+    }
+    nextEl.focus();
   }
+
   trEl.addEventListener('input', () => {
     const val = trEl.value;
-    if (val !== '') { applyTradeColor(trEl, val, expected); advance(); }
-    else { trEl.classList.remove('correct-box','incorrect-box'); advanced = false; }
+    if (val !== '') {
+      applyTradeColor(trEl, val, expected);
+      unlockNext();
+    } else {
+      trEl.classList.remove('correct-box','incorrect-box');
+    }
   });
+
   trEl.addEventListener('blur', () => {
-    if (trEl.value === '') applyTradeColor(trEl, trEl.value, expected);
-    advance();
+    const val = trEl.value;
+    if (val === '') {
+      applyTradeColor(trEl, val, expected);
+      // if no trade required, still unlock next on blur even when empty
+      if (expected === 0) unlockNext();
+    }
   });
 }
 
@@ -102,12 +118,8 @@ function generateProblems(){
     const hasThousands = correct >= 1000;
     problems.push({num1,num2,correct,cd,d1,d2,onesSum,onesTrade,tensSum,tensTrade,hundredsSum,hundredsTrade,hasThousands});
 
-    // columns: [thousands?] [hundreds] [tens] [ones]
-    // trade row has trades above tens and hundreds (and thousands if needed)
-    const thCol = hasThousands ? `<span class="s"><input class="box" id="tr-th-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
+    const thCol    = hasThousands ? `<span class="s"><input class="box" id="tr-th-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
     const thAnsCol = hasThousands ? `<span class="s"><input class="box" id="ath-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
-    const thNum1 = hasThousands ? `<span class="s"></span>` : `<span class="s"></span>`;
-    const thNum2 = hasThousands ? `<span class="s"></span>` : `<span class="s"></span>`;
 
     const card=document.createElement('div');
     card.className='problem-card';
@@ -171,8 +183,8 @@ function generateProblems(){
     const allRows = [rowO, rowT, rowH];
     let trth, ath, rowTh;
     if (p.hasThousands) {
-      trth = document.getElementById(`tr-th-${i}`);
-      ath  = document.getElementById(`ath-${i}`);
+      trth  = document.getElementById(`tr-th-${i}`);
+      ath   = document.getElementById(`ath-${i}`);
       rowTh = document.getElementById(`row-th-${i}`);
       allRows.push(rowTh);
     }
@@ -207,9 +219,7 @@ function generateProblems(){
     if (p.hasThousands) {
       tradeFocusFn(trth, p.hundredsTrade, ath);
       ath.addEventListener('focus', () => setActive(rowTh));
-      ath.addEventListener('input', () => {
-        updateAns(ath, ath.value, p.cd.th);
-      });
+      ath.addEventListener('input', () => { updateAns(ath, ath.value, p.cd.th); });
     }
   }
 }
