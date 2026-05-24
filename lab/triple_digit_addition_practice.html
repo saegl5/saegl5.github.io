@@ -64,12 +64,12 @@ function applyTradeColor(el, val, expected) {
   }
 }
 
-function guideText(a, b, extra) {
-  const total = a + b + extra;
+// trade (carried) comes first, then the two digits
+function guideText(a, b, carriedIn) {
+  const total = (carriedIn || 0) + a + b;
   const trade = Math.floor(total / 10);
   const leave = total % 10;
-  let eq = `${a}+${b}`;
-  if (extra) eq += `+${extra}`;
+  let eq = carriedIn ? `${carriedIn}+${a}+${b}` : `${a}+${b}`;
   eq += ` = ${total}`;
   if (trade) eq += ` → leave ${leave}, trade ${trade}`;
   return eq;
@@ -150,15 +150,13 @@ function generateProblems(){
       el.classList.add(parseInt(val)===expected ? 'correct-box' : 'incorrect-box');
     }
 
-    function tradeFocus(trEl, expected, nextEl, nextRow, onAdvance) {
+    function tradeFocus(trEl, expected, nextEl, guideRow) {
       let advanced = false;
       function advance() {
         if (!advanced) {
           advanced = true;
           nextEl.disabled = false;
-          nextRow.classList.add('active');
           nextEl.focus();
-          if (onAdvance) onAdvance();
         }
       }
       trEl.addEventListener('input', () => {
@@ -173,6 +171,7 @@ function generateProblems(){
       });
     }
 
+    // ones answer — guide already active
     ao.addEventListener('input', () => {
       updateAns(ao, ao.value, p.cd.o);
       if (ao.value.length === 1) { trt.disabled = false; trt.focus(); }
@@ -180,6 +179,8 @@ function generateProblems(){
 
     tradeFocus(trt, p.onesTrade, at_, rowT);
 
+    // tens answer — activate tens guide on focus
+    at_.addEventListener('focus', () => rowT.classList.add('active'));
     at_.addEventListener('input', () => {
       updateAns(at_, at_.value, p.cd.t);
       if (at_.value.length === 1) { trh.disabled = false; trh.focus(); }
@@ -187,6 +188,8 @@ function generateProblems(){
 
     tradeFocus(trh, p.tensTrade, ah, rowH);
 
+    // hundreds answer — activate hundreds guide on focus
+    ah.addEventListener('focus', () => rowH.classList.add('active'));
     ah.addEventListener('input', () => {
       updateAns(ah, ah.value, p.hundredsSum);
     });
