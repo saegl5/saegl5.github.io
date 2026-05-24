@@ -8,16 +8,17 @@
   .problem-card { background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
   .problem-container { width: fit-content; margin-left: auto; }
   .box {
-    display: inline-block; width: 24px; height: 24px; padding: 0;
+    display: inline-block; width: 32px; height: 32px; padding: 0;
     border: 1px dashed #aaa; border-radius: 4px;
-    font-size: 14px; font-weight: 600; font-family: monospace;
+    font-size: 22px; font-weight: 600; font-family: monospace;
     text-align: center; background: #f9f9f9; color: #333; vertical-align: middle;
+    line-height: 32px;
   }
   .box:focus { outline: 0; border-style: solid; border-color: #555; }
   .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
   .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
-  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 32px; }
+  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 36px; }
   .prow .op { width: 24px; flex-shrink: 0; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
   .divider { border: none; border-top: 2px solid #333; margin: 4px 0; }
@@ -64,32 +65,20 @@ function guideText(a, b, carriedIn) {
 }
 
 function tradeFocusFn(trEl, expected, nextEl) {
-  // nextUnlocked tracks whether next box has been unlocked already
   let nextUnlocked = false;
-
   function unlockNext() {
-    if (!nextUnlocked) {
-      nextUnlocked = true;
-      nextEl.disabled = false;
-    }
+    if (!nextUnlocked) { nextUnlocked = true; nextEl.disabled = false; }
     nextEl.focus();
   }
-
   trEl.addEventListener('input', () => {
     const val = trEl.value;
-    if (val !== '') {
-      applyTradeColor(trEl, val, expected);
-      unlockNext();
-    } else {
-      trEl.classList.remove('correct-box','incorrect-box');
-    }
+    if (val !== '') { applyTradeColor(trEl, val, expected); unlockNext(); }
+    else { trEl.classList.remove('correct-box','incorrect-box'); }
   });
-
   trEl.addEventListener('blur', () => {
     const val = trEl.value;
     if (val === '') {
       applyTradeColor(trEl, val, expected);
-      // if no trade required, still unlock next on blur even when empty
       if (expected === 0) unlockNext();
     }
   });
@@ -201,7 +190,6 @@ function generateProblems(){
     });
 
     tradeFocusFn(trt, p.onesTrade, at_);
-
     at_.addEventListener('focus', () => setActive(rowT));
     at_.addEventListener('input', () => {
       updateAns(at_, at_.value, p.cd.t);
@@ -209,7 +197,6 @@ function generateProblems(){
     });
 
     tradeFocusFn(trh, p.tensTrade, ah);
-
     ah.addEventListener('focus', () => setActive(rowH));
     ah.addEventListener('input', () => {
       updateAns(ah, ah.value, p.cd.h);
