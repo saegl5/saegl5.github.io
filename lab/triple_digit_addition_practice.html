@@ -50,11 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    font-weight: 600;
     margin-top: 8px;
-    color: #28a745;
-    gap: 6px;
   }
 
   @keyframes jiggle {
@@ -67,7 +63,15 @@
     90%  { transform: rotate(3deg); }
     100% { transform: rotate(0deg); }
   }
-  .jiggle { display: inline-block; animation: jiggle 0.6s ease; }
+  .feedback-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #28a745;
+    animation: jiggle 0.6s ease;
+  }
 
   .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
   .step-row {
@@ -187,6 +191,15 @@ function checkAnswerBoxes(i) {
   return { allFilled, allCorrect };
 }
 
+function showCorrect(fb) {
+  // Remove and re-add to restart animation each time
+  fb.innerHTML = '';
+  const span = document.createElement('span');
+  span.className = 'feedback-content';
+  span.innerHTML = '👍 Correct!';
+  fb.appendChild(span);
+}
+
 function checkAndScore(i) {
   const state = problems[i];
   const { allFilled, allCorrect } = checkAnswerBoxes(i);
@@ -205,8 +218,7 @@ function checkAndScore(i) {
       }
       document.getElementById('scoreDisplay').textContent = scoreCorrect + ' / ' + scoreTotal;
     }
-    // Always re-render so jiggle replays on correction
-    fb.innerHTML = '<span class="jiggle">👍</span><span class="jiggle">Correct!</span>';
+    showCorrect(fb);
   } else {
     fb.innerHTML = '';
     if (!state.countedWrong && !state.scored) {
