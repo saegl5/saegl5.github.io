@@ -1,45 +1,128 @@
 
 <html>
+<head>
 <style>
-  * { box-sizing: border-box; }
-  body { font-family: system-ui, sans-serif; background: #f5f5f5; margin: 0; padding: 16px; }
-  h1 { font-size: 28px; font-weight: 800; text-align: center; color: #222; margin: 0 0 1.5rem 0; letter-spacing: -0.5px; }
-  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-  .problem-card { background: #ffffff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-  .problem-container { width: fit-content; margin-left: auto; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f5f0;
+    min-height: 100vh;
+    padding: 32px 20px;
+    color: #1a1a1a;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
+  .subtitle { font-size: 15px; color: #444; margin-bottom: 24px; }
+
+  .problem-set {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .problem-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1.5px solid #e0e0d8;
+  }
+  .problem-container { width: fit-content; margin-left: auto; font-family: monospace; }
+
   .box {
     display: inline-block; width: 32px; height: 32px; padding: 0;
-    border: 1px dashed #aaa; border-radius: 4px;
+    border: 1.5px dashed #ccc; border-radius: 6px;
     font-size: 22px; font-weight: 600; font-family: monospace;
-    text-align: center; background: #f9f9f9; color: #333; vertical-align: middle;
-    line-height: 32px;
+    text-align: center; background: #fafaf8; color: #1a1a1a;
+    vertical-align: middle; line-height: 32px;
   }
-  .box:focus { outline: 0; border-style: solid; border-color: #555; }
+  .box:focus { outline: 0; border-style: solid; border-color: #888; }
   .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
-  .correct-box   { border-style: solid !important; border-color: #2a9d5c !important; background: #d4f5e2 !important; color: #1a6e3f !important; }
-  .incorrect-box { border-style: solid !important; border-color: #e05c5c !important; background: #fde8e8 !important; color: #a33 !important; }
+  .correct-box   { border-style: solid !important; border-color: #28a745 !important; background: #d4edda !important; color: #155724 !important; }
+  .incorrect-box { border-style: solid !important; border-color: #dc3545 !important; background: #f8d7da !important; color: #721c24 !important; }
+
   .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 36px; }
   .prow .op { width: 24px; flex-shrink: 0; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
-  .divider { border: none; border-top: 2px solid #333; margin: 4px 0; }
-  .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; }
-  .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: #f0f0f0; border-radius: 8px; padding: 6px 10px; transition: opacity 0.3s; opacity: 0.3; }
+  .divider { border: none; border-top: 2px solid #1a1a1a; margin: 4px 0; }
+
+  .card-feedback {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 8px;
+    color: #28a745;
+    gap: 6px;
+  }
+
+  @keyframes jiggle {
+    0%   { transform: rotate(0deg); }
+    15%  { transform: rotate(-8deg); }
+    30%  { transform: rotate(8deg); }
+    45%  { transform: rotate(-6deg); }
+    60%  { transform: rotate(6deg); }
+    75%  { transform: rotate(-3deg); }
+    90%  { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+  }
+  .jiggle { display: inline-block; animation: jiggle 0.6s ease; }
+
+  .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+  .step-row {
+    display: flex; align-items: center; gap: 8px; font-size: 13px;
+    background: #f5f5f0; border-radius: 8px; padding: 6px 10px;
+    transition: opacity 0.3s; opacity: 0.3;
+  }
   .step-row.active { opacity: 1; }
   .step-label { font-weight: 600; width: 72px; flex-shrink: 0; color: #555; }
-  .step-eq { color: #555; flex: 1; }
-  button { padding: 8px 16px; border: 1px solid #ccc; background: #fff; border-radius: 8px; font-size: 14px; cursor: pointer; transition: 0.15s; color: #333; }
-  button:hover { background: #f0f0f0; }
-  button:active { transform: scale(0.98); }
-</style>
+  .step-eq { color: #444; flex: 1; }
 
-<div style="padding:1rem 0">
+  .actions { margin-bottom: 20px; }
+  .btn-next {
+    padding: 14px 28px;
+    background: #d6e4f7;
+    border: none; border-radius: 10px;
+    font-size: 15px; font-family: inherit;
+    color: #1a6bb5; font-weight: 500;
+    cursor: pointer; transition: background 0.15s;
+  }
+  .btn-next:hover { background: #c2d8f0; }
+
+  .score-bar {
+    background: #fff;
+    border: 1.5px solid #e0e0d8;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+  }
+  .score-label { font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="container">
   <h1>Triple Digit Addition Practice</h1>
+  <p class="subtitle">Instructions: Enter each digit of your answer right to left, and trade when necessary.</p>
+
   <div id="problems" class="problem-set"></div>
-  <button onclick="generateProblems()">New problems</button>
+
+  <div class="actions">
+    <button class="btn-next" onclick="generateProblems()">Next Problems</button>
+  </div>
+
+  <div class="score-bar">
+    <span class="score-label">Score: <span id="scoreDisplay">0 / 0</span></span>
+  </div>
 </div>
 
 <script>
+let scoreCorrect = 0, scoreTotal = 0;
 const problems = [];
+
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function digs(n){return{th:Math.floor(n/1000),h:Math.floor(n/100)%10,t:Math.floor(n/10)%10,o:n%10};}
 
@@ -84,35 +167,79 @@ function tradeFocusFn(trEl, expected, nextEl) {
   });
 }
 
-function updateAns(el, val, expected){
+function updateAns(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
-  if(val==='') return;
-  el.classList.add(parseInt(val)===expected ? 'correct-box' : 'incorrect-box');
+  if (val === '') return;
+  el.classList.add(parseInt(val) === expected ? 'correct-box' : 'incorrect-box');
 }
 
-function generateProblems(){
-  problems.length=0;
-  document.getElementById('problems').innerHTML='';
+function checkAnswerBoxes(i) {
+  const p = problems[i];
+  const ids = p.hasThousands
+    ? [`ao-${i}`, `at-${i}`, `ah-${i}`, `ath-${i}`]
+    : [`ao-${i}`, `at-${i}`, `ah-${i}`];
+  let allFilled = true, allCorrect = true;
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    if (!el || el.value === '') allFilled = false;
+    if (!el || !el.classList.contains('correct-box')) allCorrect = false;
+  }
+  return { allFilled, allCorrect };
+}
 
-  for(let i=0;i<4;i++){
-    const num1=randInt(100,999);
-    const two=i%2!==0;
-    const num2=two?randInt(10,99):randInt(100,999);
-    const d1=digs(num1), d2=digs(num2);
-    const correct=num1+num2;
-    const cd=digs(correct);
-    const onesSum=d1.o+d2.o, onesTrade=Math.floor(onesSum/10);
-    const tensSum=d1.t+d2.t+onesTrade, tensTrade=Math.floor(tensSum/10);
-    const hundredsSum=d1.h+d2.h+tensTrade, hundredsTrade=Math.floor(hundredsSum/10);
-    const hasThousands = correct >= 1000;
-    problems.push({num1,num2,correct,cd,d1,d2,onesSum,onesTrade,tensSum,tensTrade,hundredsSum,hundredsTrade,hasThousands});
+function checkAndScore(i) {
+  const state = problems[i];
+  const { allFilled, allCorrect } = checkAnswerBoxes(i);
+  const fb = document.getElementById(`fb-${i}`);
+
+  if (!allFilled) return;
+
+  if (allCorrect) {
+    if (!state.scored) {
+      state.scored = true;
+      if (state.countedWrong) {
+        scoreCorrect++;
+      } else {
+        scoreTotal++;
+        scoreCorrect++;
+      }
+      document.getElementById('scoreDisplay').textContent = scoreCorrect + ' / ' + scoreTotal;
+    }
+    // Always re-render so jiggle replays on correction
+    fb.innerHTML = '<span class="jiggle">👍</span><span class="jiggle">Correct!</span>';
+  } else {
+    fb.innerHTML = '';
+    if (!state.countedWrong && !state.scored) {
+      state.countedWrong = true;
+      scoreTotal++;
+      document.getElementById('scoreDisplay').textContent = scoreCorrect + ' / ' + scoreTotal;
+    }
+  }
+}
+
+function generateProblems() {
+  problems.length = 0;
+  document.getElementById('problems').innerHTML = '';
+
+  for (let i = 0; i < 4; i++) {
+    const num1 = randInt(100,999);
+    const two = i % 2 !== 0;
+    const num2 = two ? randInt(10,99) : randInt(100,999);
+    const d1 = digs(num1), d2 = digs(num2);
+    const ans = num1 + num2;
+    const cd = digs(ans);
+    const onesSum = d1.o+d2.o, onesTrade = Math.floor(onesSum/10);
+    const tensSum = d1.t+d2.t+onesTrade, tensTrade = Math.floor(tensSum/10);
+    const hundredsSum = d1.h+d2.h+tensTrade, hundredsTrade = Math.floor(hundredsSum/10);
+    const hasThousands = ans >= 1000;
+    problems.push({num1,num2,ans,cd,d1,d2,onesSum,onesTrade,tensSum,tensTrade,hundredsSum,hundredsTrade,hasThousands,scored:false,countedWrong:false});
 
     const thCol    = hasThousands ? `<span class="s"><input class="box" id="tr-th-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
     const thAnsCol = hasThousands ? `<span class="s"><input class="box" id="ath-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
 
-    const card=document.createElement('div');
-    card.className='problem-card';
-    card.innerHTML=`
+    const card = document.createElement('div');
+    card.className = 'problem-card';
+    card.innerHTML = `
       <div class="problem-container">
         <div class="prow">
           <span class="op"></span>
@@ -122,8 +249,7 @@ function generateProblems(){
           <span class="s"></span>
         </div>
         <div class="prow">
-          <span class="op"></span>
-          <span class="s"></span>
+          <span class="op"></span><span class="s"></span>
           <span class="s">${d1.h}</span><span class="s">${d1.t}</span><span class="s">${d1.o}</span>
         </div>
         <div class="prow">
@@ -141,6 +267,9 @@ function generateProblems(){
           <span class="s"><input class="box" id="ao-${i}" maxlength="1" inputmode="numeric"></span>
         </div>
       </div>
+
+      <div class="card-feedback" id="fb-${i}"></div>
+
       <div class="steps">
         <div class="step-row active" id="row-o-${i}">
           <span class="step-label">Ones</span>
@@ -154,12 +283,12 @@ function generateProblems(){
           <span class="step-label">Hundreds</span>
           <span class="step-eq">${guideText(d1.h, d2.h, tensTrade)}</span>
         </div>
-        ${hasThousands ? `<div class="step-row" id="row-th-${i}"><span class="step-label">Thousands</span><span class="step-eq">${guideText(0, 0, hundredsTrade)}</span></div>` : ''}
+        ${hasThousands ? `<div class="step-row" id="row-th-${i}"><span class="step-label">Thousands</span><span class="step-eq">${guideText(0,0,hundredsTrade)}</span></div>` : ''}
       </div>
     `;
     document.getElementById('problems').appendChild(card);
 
-    const p=problems[i];
+    const p = problems[i];
     const ao  = document.getElementById(`ao-${i}`);
     const trt = document.getElementById(`tr-t-${i}`);
     const at_ = document.getElementById(`at-${i}`);
@@ -168,8 +297,8 @@ function generateProblems(){
     const rowO = document.getElementById(`row-o-${i}`);
     const rowT = document.getElementById(`row-t-${i}`);
     const rowH = document.getElementById(`row-h-${i}`);
-
     const allRows = [rowO, rowT, rowH];
+
     let trth, ath, rowTh;
     if (p.hasThousands) {
       trth  = document.getElementById(`tr-th-${i}`);
@@ -183,33 +312,37 @@ function generateProblems(){
       row.classList.add('active');
     }
 
-    ao.addEventListener('focus', () => setActive(rowO));
-    ao.addEventListener('input', () => {
-      updateAns(ao, ao.value, p.cd.o);
-      if (ao.value.length===1) { trt.disabled=false; trt.focus(); }
-    });
+    function wireAns(el, expected, rowEl, onFilled) {
+      el.addEventListener('focus', () => setActive(rowEl));
+      el.addEventListener('input', () => {
+        updateAns(el, el.value, expected);
+        checkAndScore(i);
+        if (el.value.length === 1 && onFilled) onFilled();
+      });
+    }
 
-    tradeFocusFn(trt, p.onesTrade, at_);
-    at_.addEventListener('focus', () => setActive(rowT));
-    at_.addEventListener('input', () => {
-      updateAns(at_, at_.value, p.cd.t);
-      if (at_.value.length===1) { trh.disabled=false; trh.focus(); }
-    });
+    function wireTrade(trEl, expected, nextEl) {
+      tradeFocusFn(trEl, expected, nextEl);
+      trEl.addEventListener('input', () => checkAndScore(i));
+      trEl.addEventListener('blur',  () => checkAndScore(i));
+    }
 
-    tradeFocusFn(trh, p.tensTrade, ah);
-    ah.addEventListener('focus', () => setActive(rowH));
-    ah.addEventListener('input', () => {
-      updateAns(ah, ah.value, p.cd.h);
-      if (ah.value.length===1 && p.hasThousands) { trth.disabled=false; trth.focus(); }
-    });
+    wireAns(ao,  p.cd.o, rowO, () => { trt.disabled = false; trt.focus(); });
+    wireTrade(trt, p.onesTrade, at_);
+    wireAns(at_, p.cd.t, rowT, () => { trh.disabled = false; trh.focus(); });
+    wireTrade(trh, p.tensTrade, ah);
 
     if (p.hasThousands) {
-      tradeFocusFn(trth, p.hundredsTrade, ath);
-      ath.addEventListener('focus', () => setActive(rowTh));
-      ath.addEventListener('input', () => { updateAns(ath, ath.value, p.cd.th); });
+      wireAns(ah,  p.cd.h,  rowH,  () => { trth.disabled = false; trth.focus(); });
+      wireTrade(trth, p.hundredsTrade, ath);
+      wireAns(ath, p.cd.th, rowTh, null);
+    } else {
+      wireAns(ah, p.cd.h, rowH, null);
     }
   }
 }
+
 generateProblems();
 </script>
+</body>
 </html>
