@@ -191,7 +191,7 @@
   <div class="clock-box">
     <canvas id="clockCanvas" width="420" height="420"></canvas>
     <label class="clock-option">
-      <input type="checkbox" id="secondHandToggle" onchange="onSecondHandToggle()">
+      <input type="checkbox" id="secondHandToggle" onchange="onSecondHandToggle()" checked>
       Show second hand (include seconds in quiz)
     </label>
     <label class="clock-option" id="keepItRealLabel" style="opacity: 0.4; cursor: default;">
@@ -229,7 +229,7 @@
   let correctAnswer = '';
   let answered = false;
   let helpVisible = false;
-  let showSeconds = false;
+  let showSeconds = true;
   let keepItReal = false;
   let currentSecond = 0;
   let currentH = 1, currentM = 0;
