@@ -674,7 +674,15 @@
       currentMinAngle = realMinAngle;
       drawClockAt(realHourAngle, realMinAngle, secAngle);
     } else {
-      drawClockAt(currentHourAngle, currentMinAngle, secAngle);
+      // Discrete jumps: minute hand jumps every 60 seconds, hour hand every 3600 seconds
+      const absSeconds = currentH * 3600 + snappedTotal;
+      const snapM = Math.floor(((absSeconds % 3600) + 3600) % 3600 / 60);
+      const snapH = Math.floor(((absSeconds % 43200) + 43200) % 43200 / 3600) || 12;
+      const snapMinAngle  = (snapM / 60) * 2 * Math.PI - Math.PI / 2;
+      const snapHourAngle = (snapH % 12) / 12 * 2 * Math.PI - Math.PI / 2;
+      currentHourAngle = snapHourAngle;
+      currentMinAngle = snapMinAngle;
+      drawClockAt(snapHourAngle, snapMinAngle, secAngle);
     }
   }
   const canvas = document.getElementById('clockCanvas');
