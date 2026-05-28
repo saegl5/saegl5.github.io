@@ -13,9 +13,11 @@
   .container { max-width: 1100px; margin: 0 auto; }
   h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
   .subtitle { font-size: 15px; color: #444; margin-bottom: 24px; }
+
   .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px; }
   .problem-card { background: #fff; border-radius: 12px; padding: 20px; border: 1.5px solid #e0e0d8; }
   .problem-container { width: fit-content; margin-left: auto; font-family: monospace; }
+
   .box {
     display: inline-block; width: 32px; height: 32px; padding: 0;
     border: 1.5px dashed #ccc; border-radius: 6px;
@@ -27,11 +29,14 @@
   .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #28a745 !important; background: #d4edda !important; color: #155724 !important; }
   .incorrect-box { border-style: solid !important; border-color: #dc3545 !important; background: #f8d7da !important; color: #721c24 !important; }
+
   .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 36px; }
   .prow .op { width: 24px; flex-shrink: 0; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
   .divider { border: none; border-top: 2px solid #1a1a1a; margin: 4px 0; }
+
   .card-feedback { height: 36px; display: flex; align-items: center; justify-content: center; margin-top: 8px; }
+
   @keyframes jiggle {
     0%   { transform: rotate(0deg); }
     15%  { transform: rotate(-8deg); }
@@ -43,14 +48,36 @@
     100% { transform: rotate(0deg); }
   }
   .feedback-content { display: inline-flex; align-items: center; gap: 6px; font-size: 22px; font-weight: 600; color: #28a745; animation: jiggle 0.6s ease; }
-  .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+
+  /* Guide hidden by default, shown when help toggled */
+  .steps { display: none; flex-direction: column; gap: 6px; margin-top: 12px; }
+  .steps.visible { display: flex; }
   .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: #f5f5f0; border-radius: 8px; padding: 6px 10px; transition: opacity 0.3s; opacity: 0.3; }
   .step-row.active { opacity: 1; }
   .step-label { font-weight: 600; width: 72px; flex-shrink: 0; color: #555; }
   .step-eq { color: #444; flex: 1; }
+
+  /* Help button — identical style to clock game's btn-help */
+  .btn-help {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px;
+    background: #d6f0e0;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #1a7a45;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-help:hover { background: #c0e8d0; }
+
   .actions { margin-bottom: 20px; }
   .btn-next { padding: 14px 28px; background: #d6e4f7; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a6bb5; font-weight: 500; cursor: pointer; transition: background 0.15s; }
   .btn-next:hover { background: #c2d8f0; }
+
   .score-bar { background: #fff; border: 1.5px solid #e0e0d8; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; font-size: 14px; color: #333; }
   .score-label { font-weight: 500; }
 </style>
@@ -82,22 +109,16 @@ function applyTradeColor(el, val, expected) {
   }
 }
 
-// carriedIn = correct carry value
-// userVal   = what user typed in the trade box (only used when carriedIn === 0)
 function guideText(a, b, carriedIn, userVal) {
   const total = carriedIn + a + b;
   const trade = Math.floor(total / 10);
   const leave = total % 10;
-
   let prefix;
   if (carriedIn === 0) {
-    // No trade expected — show what user typed, or nothing
     prefix = (userVal !== undefined && userVal !== '') ? `${parseInt(userVal)}+${a}+${b}` : `${a}+${b}`;
   } else {
-    // Trade expected — always show correct carry
     prefix = `${carriedIn}+${a}+${b}`;
   }
-
   let eq = prefix + ` = ${total}`;
   if (trade) eq += ` → leave ${leave}, trade ${trade}`;
   return eq;
@@ -223,8 +244,12 @@ function generateProblems() {
           <span class="s"><input class="box" id="ao-${i}" maxlength="1" inputmode="numeric"></span>
         </div>
       </div>
+
       <div class="card-feedback" id="fb-${i}"></div>
-      <div class="steps">
+
+      <button class="btn-help" id="help-btn-${i}" onclick="toggleHelp(${i})">Show Help</button>
+
+      <div class="steps" id="steps-${i}">
         <div class="step-row active" id="row-o-${i}">
           <span class="step-label">Ones</span>
           <span class="step-eq" id="eq-o-${i}">${guideText(d1.o, d2.o, 0, undefined)}</span>
@@ -237,7 +262,7 @@ function generateProblems() {
           <span class="step-label">Hundreds</span>
           <span class="step-eq" id="eq-h-${i}">${guideText(d1.h, d2.h, tensTrade, undefined)}</span>
         </div>
-        ${hasThousands ? `<div class="step-row" id="row-th-${i}"><span class="step-label">Thousands</span><span class="step-eq" id="eq-th-${i}">${guideText(0, 0, hundredsTrade, undefined)}</span></div>` : ''}
+        ${hasThousands ? `<div class="step-row" id="row-th-${i}"><span class="step-label">Thousands</span><span class="step-eq" id="eq-th-${i}">${guideText(0,0,hundredsTrade,undefined)}</span></div>` : ''}
       </div>
     `;
     document.getElementById('problems').appendChild(card);
@@ -260,8 +285,8 @@ function generateProblems() {
 
     let trth, ath, rowTh, eqTh;
     if (p.hasThousands) {
-      trth = document.getElementById(`tr-th-${i}`);
-      ath  = document.getElementById(`ath-${i}`);
+      trth  = document.getElementById(`tr-th-${i}`);
+      ath   = document.getElementById(`ath-${i}`);
       rowTh = document.getElementById(`row-th-${i}`);
       eqTh  = document.getElementById(`eq-th-${i}`);
       allRows.push(rowTh);
@@ -279,13 +304,9 @@ function generateProblems() {
       });
     }
 
-    // tens trade: onesTrade is the expected carry into tens row
-    // only substitute user value into guide when onesTrade === 0
     tradeFocusFn(trt, p.onesTrade, at_, (val) => {
       eqT.textContent = guideText(p.d1.t, p.d2.t, p.onesTrade, p.onesTrade === 0 ? val : undefined);
     });
-
-    // hundreds trade: tensTrade is the expected carry into hundreds row
     tradeFocusFn(trh, p.tensTrade, ah, (val) => {
       eqH.textContent = guideText(p.d1.h, p.d2.h, p.tensTrade, p.tensTrade === 0 ? val : undefined);
     });
@@ -303,6 +324,13 @@ function generateProblems() {
       wireAns(ah, p.cd.h, rowH, null);
     }
   }
+}
+
+function toggleHelp(i) {
+  const steps = document.getElementById(`steps-${i}`);
+  const btn   = document.getElementById(`help-btn-${i}`);
+  const visible = steps.classList.toggle('visible');
+  btn.textContent = visible ? 'Hide Help' : 'Show Help';
 }
 
 generateProblems();
