@@ -9,11 +9,10 @@
     min-height: 100vh;
     padding: 32px 20px;
     color: #1a1a1a;
-    font-size: 125%;
   }
   .container { max-width: 1100px; margin: 0 auto; }
-  h1 { font-size: 35px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
-  .subtitle { font-size: 18.75px; color: #444; margin-bottom: 24px; }
+  h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
+  .subtitle { font-size: 15px; color: #444; margin-bottom: 24px; }
 
   .problem-set {
     display: grid;
@@ -30,24 +29,24 @@
   .problem-container { width: fit-content; margin-left: auto; font-family: monospace; }
 
   .box {
-    display: inline-block; width: 40px; height: 40px; padding: 0;
+    display: inline-block; width: 32px; height: 32px; padding: 0;
     border: 1.5px dashed #ccc; border-radius: 6px;
-    font-size: 27.5px; font-weight: 600; font-family: monospace;
+    font-size: 22px; font-weight: 600; font-family: monospace;
     text-align: center; background: #fafaf8; color: #1a1a1a;
-    vertical-align: middle; line-height: 40px;
+    vertical-align: middle; line-height: 32px;
   }
   .box:focus { outline: 0; border-style: solid; border-color: #888; }
   .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #28a745 !important; background: #d4edda !important; color: #155724 !important; }
   .incorrect-box { border-style: solid !important; border-color: #dc3545 !important; background: #f8d7da !important; color: #721c24 !important; }
 
-  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 27.5px; font-weight: 600; font-family: monospace; line-height: 44px; }
-  .prow .op { width: 30px; flex-shrink: 0; }
-  .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 50px; flex-shrink: 0; }
+  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 36px; }
+  .prow .op { width: 24px; flex-shrink: 0; }
+  .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
   .divider { border: none; border-top: 2px solid #1a1a1a; margin: 4px 0; }
 
   .card-feedback {
-    height: 44px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,7 +67,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 27.5px;
+    font-size: 22px;
     font-weight: 600;
     color: #28a745;
     animation: jiggle 0.6s ease;
@@ -76,20 +75,20 @@
 
   .steps { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
   .step-row {
-    display: flex; align-items: center; gap: 8px; font-size: 16.25px;
+    display: flex; align-items: center; gap: 8px; font-size: 13px;
     background: #f5f5f0; border-radius: 8px; padding: 6px 10px;
     transition: opacity 0.3s; opacity: 0.3;
   }
   .step-row.active { opacity: 1; }
-  .step-label { font-weight: 600; width: 90px; flex-shrink: 0; color: #555; }
+  .step-label { font-weight: 600; width: 72px; flex-shrink: 0; color: #555; }
   .step-eq { color: #444; flex: 1; }
 
   .actions { margin-bottom: 20px; }
   .btn-next {
-    padding: 17.5px 35px;
+    padding: 14px 28px;
     background: #d6e4f7;
     border: none; border-radius: 10px;
-    font-size: 18.75px; font-family: inherit;
+    font-size: 15px; font-family: inherit;
     color: #1a6bb5; font-weight: 500;
     cursor: pointer; transition: background 0.15s;
   }
@@ -99,10 +98,10 @@
     background: #fff;
     border: 1.5px solid #e0e0d8;
     border-radius: 10px;
-    padding: 17.5px 22.5px;
+    padding: 14px 18px;
     display: flex;
     align-items: center;
-    font-size: 17.5px;
+    font-size: 14px;
     color: #333;
   }
   .score-label { font-weight: 500; }
