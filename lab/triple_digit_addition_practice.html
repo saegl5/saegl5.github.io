@@ -13,25 +13,31 @@
   .container { max-width: 1100px; margin: 0 auto; }
   h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
   .subtitle { font-size: 15px; color: #444; margin-bottom: 24px; }
-  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px; }
-  .problem-card { background: #fff; border-radius: 12px; padding: 20px; border: 1.5px solid #e0e0d8; }
+  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .problem-card { background: #fff; border-radius: 12px; padding: 24px; border: 1.5px solid #e0e0d8; }
   .problem-container { width: fit-content; margin-left: auto; font-family: monospace; }
+
+  /* 1.25x: box 32→40, font 22→27.5 */
   .box {
-    display: inline-block; width: 32px; height: 32px; padding: 0;
+    display: inline-block; width: 40px; height: 40px; padding: 0;
     border: 1.5px dashed #ccc; border-radius: 6px;
-    font-size: 22px; font-weight: 600; font-family: monospace;
+    font-size: 27.5px; font-weight: 600; font-family: monospace;
     text-align: center; background: #fafaf8; color: #1a1a1a;
-    vertical-align: middle; line-height: 32px;
+    vertical-align: middle; line-height: 40px;
   }
   .box:focus { outline: 0; border-style: solid; border-color: #888; }
   .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #28a745 !important; background: #d4edda !important; color: #155724 !important; }
   .incorrect-box { border-style: solid !important; border-color: #dc3545 !important; background: #f8d7da !important; color: #721c24 !important; }
-  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 22px; font-weight: 600; font-family: monospace; line-height: 36px; }
-  .prow .op { width: 24px; flex-shrink: 0; }
-  .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 40px; flex-shrink: 0; }
+
+  /* 1.25x: font 22→27.5, slot 40→50 */
+  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 27.5px; font-weight: 600; font-family: monospace; line-height: 44px; }
+  .prow .op { width: 30px; flex-shrink: 0; }
+  .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 50px; flex-shrink: 0; }
   .divider { border: none; border-top: 2px solid #1a1a1a; margin: 4px 0; }
-  .card-feedback { height: 36px; display: flex; align-items: center; justify-content: center; margin-top: 8px; }
+
+  /* 1.25x: height 36→45, font 22→27.5 */
+  .card-feedback { height: 45px; display: flex; align-items: center; justify-content: center; margin-top: 10px; }
   @keyframes jiggle {
     0%   { transform: rotate(0deg); }
     15%  { transform: rotate(-8deg); }
@@ -42,15 +48,19 @@
     90%  { transform: rotate(3deg); }
     100% { transform: rotate(0deg); }
   }
-  .feedback-content { display: inline-flex; align-items: center; gap: 6px; font-size: 22px; font-weight: 600; color: #28a745; animation: jiggle 0.6s ease; }
+  .feedback-content { display: inline-flex; align-items: center; gap: 6px; font-size: 27.5px; font-weight: 600; color: #28a745; animation: jiggle 0.6s ease; }
+
+  /* guides: 1.25x font 13→16.25, label width 72→90 */
   .steps { display: none; flex-direction: column; gap: 6px; margin-top: 12px; }
   .steps.visible { display: flex; }
-  .step-row { display: flex; align-items: center; gap: 8px; font-size: 13px; background: #f5f5f0; border-radius: 8px; padding: 6px 10px; transition: opacity 0.3s; opacity: 0.3; }
+  .step-row { display: flex; align-items: center; gap: 8px; font-size: 16.25px; background: #f5f5f0; border-radius: 8px; padding: 7px 12px; transition: opacity 0.3s; opacity: 0.3; }
   .step-row.active { opacity: 1; }
-  .step-label { font-weight: 600; width: 72px; flex-shrink: 0; color: #555; }
+  .step-label { font-weight: 600; width: 90px; flex-shrink: 0; color: #555; }
   .step-eq { color: #444; flex: 1; }
-  .btn-help { width: 100%; margin-top: 12px; padding: 14px; background: #d6f0e0; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a7a45; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+
+  .btn-help { width: 100%; margin-top: 14px; padding: 14px; background: #d6f0e0; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a7a45; font-weight: 500; cursor: pointer; transition: background 0.15s; }
   .btn-help:hover { background: #c0e8d0; }
+
   .actions { margin-bottom: 20px; }
   .btn-next { padding: 14px 28px; background: #d6e4f7; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a6bb5; font-weight: 500; cursor: pointer; transition: background 0.15s; }
   .btn-next:hover { background: #c2d8f0; }
@@ -85,27 +95,18 @@ function applyTradeColor(el, val, expected) {
   }
 }
 
-// a, b = digits from the problem; aPresent/bPresent = whether that place exists in the number
-// carriedIn = correct carry; userVal = what user typed in trade box (only substituted when carriedIn===0)
 function guideText(a, aPresent, b, bPresent, carriedIn, userVal) {
   const total = carriedIn + a + b;
   const trade = Math.floor(total / 10);
   const leave = total % 10;
-
   const terms = [];
-
   if (carriedIn === 0) {
-    // Show user's value only if they've typed something (including 0)
-    if (userVal !== undefined && userVal !== '') {
-      terms.push(parseInt(userVal));
-    }
+    if (userVal !== undefined && userVal !== '') terms.push(parseInt(userVal));
   } else {
     terms.push(carriedIn);
   }
-
   if (aPresent) terms.push(a);
   if (bPresent) terms.push(b);
-
   const prefix = terms.length > 0 ? terms.join('+') : String(total);
   let eq = prefix + ` = ${total}`;
   if (trade) eq += ` → leave ${leave}, trade ${trade}`;
@@ -189,7 +190,7 @@ function generateProblems() {
   problems.length = 0;
   document.getElementById('problems').innerHTML = '';
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 4; i++) {
     const num1 = randInt(100,999);
     const two = i % 2 !== 0;
     const num2 = two ? randInt(10,99) : randInt(100,999);
@@ -201,7 +202,6 @@ function generateProblems() {
     const hundredsSum = d1.h+d2.h+tensTrade, hundredsTrade = Math.floor(hundredsSum/10);
     const hasThousands = ans >= 1000;
     const d2hPresent = !two;
-
     problems.push({num1,num2,ans,cd,d1,d2,onesSum,onesTrade,tensSum,tensTrade,hundredsSum,hundredsTrade,hasThousands,d2hPresent,scored:false,countedWrong:false});
 
     const thCol    = hasThousands ? `<span class="s"><input class="box" id="tr-th-${i}" maxlength="1" inputmode="numeric" disabled></span>` : `<span class="s"></span>`;
@@ -267,13 +267,12 @@ function generateProblems() {
     const eqH  = document.getElementById(`eq-h-${i}`);
     const allRows = [rowO, rowT, rowH];
 
-    trt._problemIdx = i;
-    trh._problemIdx = i;
+    trt._problemIdx = i; trh._problemIdx = i;
 
     let trth, ath, rowTh, eqTh;
     if (p.hasThousands) {
-      trth  = document.getElementById(`tr-th-${i}`);
-      ath   = document.getElementById(`ath-${i}`);
+      trth = document.getElementById(`tr-th-${i}`);
+      ath  = document.getElementById(`ath-${i}`);
       rowTh = document.getElementById(`row-th-${i}`);
       eqTh  = document.getElementById(`eq-th-${i}`);
       allRows.push(rowTh);
