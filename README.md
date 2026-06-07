@@ -29,6 +29,9 @@ Enjoy!
 
 ## Current Projects {#current_projects}
 
+### Automations
+
+
 ### Terminal Scripts
 
 #### Transcribe Podcast Episodes
@@ -107,6 +110,8 @@ _Note: Meant for broad, external use. Requires permission to see, edit, share, a
 <hr>
 
 
+## Recent Projects {#recent_projects}
+
 ### Python Scripts
 
 #### Sprite Template
@@ -116,12 +121,6 @@ Python script for creating a sprite. It is a starter for Python game development
 <img src="https://github.com/saegl5/sprite_template/raw/main/screenshots/sprite_keyboard_input.gif" alt="screenshot of sprite moving in response to keyboard input" width="500" style="display: block; margin-left: 0; margin-right: auto;"/>
 
 [Get Python Script &#128279;](https://github.com/saegl5/sprite_template)
-
-<br>
-
-## Recent Projects {#recent_projects}
-
-### Python Scripts
 
 #### Drawings, Animations, and Games
 
