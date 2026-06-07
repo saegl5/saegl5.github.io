@@ -31,6 +31,7 @@ Enjoy!
 
 ### Automations
 
+Automating high school visit tracking at a Pre-K through 8 Mandarin immersion school by querying attendance data from a student information system via its REST API, filtering records with regular expressions and Claude.ai, and generating weekly teacher notifications and a counselor dashboard. (These projects are private.) 
 
 ### Terminal Scripts
 
