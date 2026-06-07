@@ -10,34 +10,34 @@
     padding: 32px 20px;
     color: #1a1a1a;
   }
-  .container { max-width: 1100px; margin: 0 auto; }
+  .container { max-width: 1200px; margin: 0 auto; }
   h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
   .subtitle { font-size: 15px; color: #444; margin-bottom: 24px; }
-  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px; }
-  .problem-card { background: #fff; border-radius: 12px; padding: 24px; border: 1.5px solid #e0e0d8; }
+  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px; }
+  .problem-card { background: #fff; border-radius: 12px; padding: 28px; border: 1.5px solid #e0e0d8; }
   .problem-container { width: fit-content; margin-left: auto; font-family: monospace; }
 
-  /* 1.25x: box 32→40, font 22→27.5 */
+  /* 1.25 × 1.25 = 1.5625× original: box 32→50, font 22→34.375 */
   .box {
-    display: inline-block; width: 40px; height: 40px; padding: 0;
+    display: inline-block; width: 50px; height: 50px; padding: 0;
     border: 1.5px dashed #ccc; border-radius: 6px;
-    font-size: 27.5px; font-weight: 600; font-family: monospace;
+    font-size: 34px; font-weight: 600; font-family: monospace;
     text-align: center; background: #fafaf8; color: #1a1a1a;
-    vertical-align: middle; line-height: 40px;
+    vertical-align: middle; line-height: 50px;
   }
   .box:focus { outline: 0; border-style: solid; border-color: #888; }
   .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #28a745 !important; background: #d4edda !important; color: #155724 !important; }
   .incorrect-box { border-style: solid !important; border-color: #dc3545 !important; background: #f8d7da !important; color: #721c24 !important; }
 
-  /* 1.25x: font 22→27.5, slot 40→50 */
-  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 27.5px; font-weight: 600; font-family: monospace; line-height: 44px; }
-  .prow .op { width: 30px; flex-shrink: 0; }
-  .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 50px; flex-shrink: 0; }
+  /* slot 40→62.5, font 22→34, op 24→37.5 */
+  .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 34px; font-weight: 600; font-family: monospace; line-height: 55px; }
+  .prow .op { width: 38px; flex-shrink: 0; }
+  .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 62px; flex-shrink: 0; }
   .divider { border: none; border-top: 2px solid #1a1a1a; margin: 4px 0; }
 
-  /* 1.25x: height 36→45, font 22→27.5 */
-  .card-feedback { height: 45px; display: flex; align-items: center; justify-content: center; margin-top: 10px; }
+  /* feedback: height 36→56, font 22→34 */
+  .card-feedback { height: 56px; display: flex; align-items: center; justify-content: center; margin-top: 12px; }
   @keyframes jiggle {
     0%   { transform: rotate(0deg); }
     15%  { transform: rotate(-8deg); }
@@ -48,17 +48,17 @@
     90%  { transform: rotate(3deg); }
     100% { transform: rotate(0deg); }
   }
-  .feedback-content { display: inline-flex; align-items: center; gap: 6px; font-size: 27.5px; font-weight: 600; color: #28a745; animation: jiggle 0.6s ease; }
+  .feedback-content { display: inline-flex; align-items: center; gap: 6px; font-size: 34px; font-weight: 600; color: #28a745; animation: jiggle 0.6s ease; }
 
-  /* guides: 1.25x font 13→16.25, label width 72→90 */
-  .steps { display: none; flex-direction: column; gap: 6px; margin-top: 12px; }
+  /* guide: font 13→20.3, label 72→112 */
+  .steps { display: none; flex-direction: column; gap: 6px; margin-top: 14px; }
   .steps.visible { display: flex; }
-  .step-row { display: flex; align-items: center; gap: 8px; font-size: 16.25px; background: #f5f5f0; border-radius: 8px; padding: 7px 12px; transition: opacity 0.3s; opacity: 0.3; }
+  .step-row { display: flex; align-items: center; gap: 8px; font-size: 20px; background: #f5f5f0; border-radius: 8px; padding: 8px 14px; transition: opacity 0.3s; opacity: 0.3; }
   .step-row.active { opacity: 1; }
-  .step-label { font-weight: 600; width: 90px; flex-shrink: 0; color: #555; }
+  .step-label { font-weight: 600; width: 112px; flex-shrink: 0; color: #555; }
   .step-eq { color: #444; flex: 1; }
 
-  .btn-help { width: 100%; margin-top: 14px; padding: 14px; background: #d6f0e0; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a7a45; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+  .btn-help { width: 100%; margin-top: 16px; padding: 14px; background: #d6f0e0; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a7a45; font-weight: 500; cursor: pointer; transition: background 0.15s; }
   .btn-help:hover { background: #c0e8d0; }
 
   .actions { margin-bottom: 20px; }
