@@ -13,28 +13,10 @@
   .container { max-width: 1200px; margin: 0 auto; }
   h1 { font-size: 28px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
   .subtitle { font-size: 15px; color: #444; margin-bottom: 24px; }
-
-  .problem-set {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-  .problem-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 28px;
-    border: 1.5px solid #e0e0d8;
-    min-width: 0; /* prevent grid blowout */
-    overflow: hidden;
-  }
-  /* scroll only the math area if it's wider than the card */
-  .problem-scroll {
-    overflow-x: auto;
-    overflow-y: visible;
-  }
+  .problem-set { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 16px; margin-bottom: 20px; }
+  .problem-card { background: #fff; border-radius: 12px; padding: 28px; border: 1.5px solid #e0e0d8; min-width: 0; overflow: hidden; }
+  .problem-scroll { overflow-x: auto; overflow-y: visible; }
   .problem-container { width: fit-content; margin-left: auto; font-family: monospace; }
-
   .box {
     display: inline-block; width: 50px; height: 50px; padding: 0;
     border: 1.5px dashed #ccc; border-radius: 6px;
@@ -46,12 +28,10 @@
   .box:disabled { background: #eee; color: #bbb; border-color: #ddd; cursor: not-allowed; }
   .correct-box   { border-style: solid !important; border-color: #28a745 !important; background: #d4edda !important; color: #155724 !important; }
   .incorrect-box { border-style: solid !important; border-color: #dc3545 !important; background: #f8d7da !important; color: #721c24 !important; }
-
   .prow { display: flex; align-items: center; justify-content: flex-end; font-size: 34px; font-weight: 600; font-family: monospace; line-height: 55px; }
   .prow .op { width: 38px; flex-shrink: 0; }
   .prow .s  { display: inline-flex; align-items: center; justify-content: center; width: 62px; flex-shrink: 0; }
   .divider { border: none; border-top: 2px solid #1a1a1a; margin: 4px 0; }
-
   .card-feedback { height: 56px; display: flex; align-items: center; justify-content: center; margin-top: 12px; }
   @keyframes jiggle {
     0%   { transform: rotate(0deg); }
@@ -64,17 +44,14 @@
     100% { transform: rotate(0deg); }
   }
   .feedback-content { display: inline-flex; align-items: center; gap: 6px; font-size: 34px; font-weight: 600; color: #28a745; animation: jiggle 0.6s ease; }
-
   .steps { display: none; flex-direction: column; gap: 6px; margin-top: 14px; }
   .steps.visible { display: flex; }
   .step-row { display: flex; align-items: center; gap: 8px; font-size: 20px; background: #f5f5f0; border-radius: 8px; padding: 8px 14px; transition: opacity 0.3s; opacity: 0.3; }
   .step-row.active { opacity: 1; }
   .step-label { font-weight: 600; width: 112px; flex-shrink: 0; color: #555; }
   .step-eq { color: #444; flex: 1; }
-
   .btn-help { width: 100%; margin-top: 16px; padding: 14px; background: #d6f0e0; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a7a45; font-weight: 500; cursor: pointer; transition: background 0.15s; }
   .btn-help:hover { background: #c0e8d0; }
-
   .actions { margin-bottom: 20px; }
   .btn-next { padding: 14px 28px; background: #d6e4f7; border: none; border-radius: 10px; font-size: 15px; font-family: inherit; color: #1a6bb5; font-weight: 500; cursor: pointer; transition: background 0.15s; }
   .btn-next:hover { background: #c2d8f0; }
@@ -97,6 +74,11 @@ const problems = [];
 
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function digs(n){return{th:Math.floor(n/1000),h:Math.floor(n/100)%10,t:Math.floor(n/10)%10,o:n%10};}
+
+// Select all text when a box is focused (single click)
+function selectOnFocus(el) {
+  el.addEventListener('focus', () => setTimeout(() => el.select(), 0));
+}
 
 function applyTradeColor(el, val, expected) {
   el.classList.remove('correct-box','incorrect-box');
@@ -128,6 +110,7 @@ function guideText(a, aPresent, b, bPresent, carriedIn, userVal) {
 }
 
 function tradeFocusFn(trEl, expected, nextEl, onUpdate) {
+  selectOnFocus(trEl);
   let nextUnlocked = false;
   function unlockNext() {
     if (!nextUnlocked) { nextUnlocked = true; nextEl.disabled = false; }
@@ -285,6 +268,9 @@ function generateProblems() {
 
     trt._problemIdx = i; trh._problemIdx = i;
 
+    // Wire select-on-focus for all answer boxes
+    [ao, at_, ah].forEach(selectOnFocus);
+
     let trth, ath, rowTh, eqTh;
     if (p.hasThousands) {
       trth = document.getElementById(`tr-th-${i}`);
@@ -293,6 +279,7 @@ function generateProblems() {
       eqTh  = document.getElementById(`eq-th-${i}`);
       allRows.push(rowTh);
       trth._problemIdx = i;
+      selectOnFocus(ath);
     }
 
     function setActive(row) { allRows.forEach(r => r.classList.remove('active')); row.classList.add('active'); }
