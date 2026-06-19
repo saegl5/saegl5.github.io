@@ -390,53 +390,85 @@
   }
 
   function animateToTime(targetHour, targetMinute, targetSecond, onDone) {
-    const sec = targetSecond || 0;
-    const targetHourAngle = keepItReal
-      ? ((targetHour % 12 + targetMinute / 60 + sec / 3600) / 12) * 2 * Math.PI - Math.PI / 2
-      : (targetHour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
-    const targetMinAngle = keepItReal
-      ? ((targetMinute + sec / 60) / 60) * 2 * Math.PI - Math.PI / 2
-      : (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
-    const targetSecAngle = targetSecond !== undefined ? (targetSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
-
-    function forwardDelta(from, to) {
-      let delta = (to - from) % (2 * Math.PI);
-      if (delta <= 0) delta += 2 * Math.PI;
-      return delta;
-    }
-
-    const hDelta = forwardDelta(currentHourAngle, targetHourAngle);
-    const mDelta = forwardDelta(currentMinAngle, targetMinAngle);
-    const startSecAngle = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
-    const sDelta = (targetSecAngle !== undefined && startSecAngle !== undefined)
-      ? forwardDelta(startSecAngle, targetSecAngle) : undefined;
-
+    const sec = targetSecond !== undefined ? targetSecond : 0;
     const duration = 700;
     const start = performance.now();
-    const startH = currentHourAngle;
-    const startM = currentMinAngle;
-
     function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
 
-    function frame(now) {
-      const t = Math.min((now - start) / duration, 1);
-      const e = easeInOut(t);
-      const h = startH + hDelta * e;
-      const m = startM + mDelta * e;
-      const sec = (sDelta !== undefined) ? startSecAngle + sDelta * e : undefined;
-      drawClockAt(h, m, sec);
-      if (t < 1) {
-        requestAnimationFrame(frame);
-      } else {
-        currentHourAngle = targetHourAngle;
-        currentMinAngle = targetMinAngle;
-        currentH = targetHour; currentM = targetMinute;
-        if (targetSecond !== undefined) currentSecond = targetSecond;
-        animating = false;
-        onDone();
+    if (keepItReal) {
+      // Smooth continuous sweep — hour/minute hands drift with seconds
+      const targetHourAngle = ((targetHour % 12 + targetMinute / 60 + sec / 3600) / 12) * 2 * Math.PI - Math.PI / 2;
+      const targetMinAngle = ((targetMinute + sec / 60) / 60) * 2 * Math.PI - Math.PI / 2;
+      const targetSecAngle = targetSecond !== undefined ? (sec / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+
+      function forwardDelta(from, to) {
+        let delta = (to - from) % (2 * Math.PI);
+        if (delta <= 0) delta += 2 * Math.PI;
+        return delta;
       }
+
+      const hDelta = forwardDelta(currentHourAngle, targetHourAngle);
+      const mDelta = forwardDelta(currentMinAngle, targetMinAngle);
+      const startSecAngle = showSeconds ? (currentSecond / 60) * 2 * Math.PI - Math.PI / 2 : undefined;
+      const sDelta = (targetSecAngle !== undefined && startSecAngle !== undefined)
+        ? forwardDelta(startSecAngle, targetSecAngle) : undefined;
+
+      const startH = currentHourAngle;
+      const startM = currentMinAngle;
+
+      function frame(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const e = easeInOut(t);
+        const h = startH + hDelta * e;
+        const m = startM + mDelta * e;
+        const secA = (sDelta !== undefined) ? startSecAngle + sDelta * e : undefined;
+        drawClockAt(h, m, secA);
+        if (t < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          currentHourAngle = targetHourAngle;
+          currentMinAngle = targetMinAngle;
+          currentH = targetHour; currentM = targetMinute;
+          if (targetSecond !== undefined) currentSecond = sec;
+          animating = false;
+          onDone();
+        }
+      }
+      requestAnimationFrame(frame);
+    } else {
+      // Discrete-jump sweep — same style as dragging the second hand:
+      // minute hand jumps each time the (virtual) second hand completes a lap,
+      // hour hand jumps each time the minute hand completes a lap.
+      const startAbs = currentH * 3600 + currentM * 60 + currentSecond;
+      const targetAbs = targetHour * 3600 + targetMinute * 60 + sec;
+      let deltaAbs = (targetAbs - startAbs) % 43200;
+      if (deltaAbs <= 0) deltaAbs += 43200;
+
+      function frame(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const e = easeInOut(t);
+        const absNow = startAbs + deltaAbs * e;
+        const wrapped = ((absNow % 43200) + 43200) % 43200;
+        const secVal = Math.floor(wrapped) % 60;
+        const minVal = Math.floor((wrapped % 3600) / 60);
+        const hourVal = Math.floor(wrapped / 3600) || 12;
+        const secAngle = (secVal / 60) * 2 * Math.PI - Math.PI / 2;
+        const minAngle = (minVal / 60) * 2 * Math.PI - Math.PI / 2;
+        const hourAngle = (hourVal % 12) / 12 * 2 * Math.PI - Math.PI / 2;
+        drawClockAt(hourAngle, minAngle, showSeconds ? secAngle : undefined);
+        if (t < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          currentHourAngle = (targetHour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
+          currentMinAngle = (targetMinute / 60) * 2 * Math.PI - Math.PI / 2;
+          currentH = targetHour; currentM = targetMinute;
+          if (targetSecond !== undefined) currentSecond = sec;
+          animating = false;
+          onDone();
+        }
+      }
+      requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
   }
 
   function drawHand(ctx, cx, cy, angle, length, width, color) {
