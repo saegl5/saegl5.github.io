@@ -436,18 +436,27 @@
       }
       requestAnimationFrame(frame);
     } else {
-      // Discrete-jump sweep — same style as dragging the second hand:
-      // minute hand jumps each time the (virtual) second hand completes a lap,
-      // hour hand jumps each time the minute hand completes a lap.
+      // Discrete-jump sweep — same style as dragging the second hand.
+      // Always shows a fixed number of clearly-separated jumps, regardless
+      // of how large the time gap is, so it never blurs into smooth motion.
       const startAbs = currentH * 3600 + currentM * 60 + currentSecond;
       const targetAbs = targetHour * 3600 + targetMinute * 60 + sec;
       let deltaAbs = (targetAbs - startAbs) % 43200;
       if (deltaAbs <= 0) deltaAbs += 43200;
 
+      const totalSeconds = Math.round(deltaAbs);
+      const maxTicks = 12;
+      const tickCount = Math.max(1, Math.min(totalSeconds, maxTicks));
+      const tickMs = 90; // fixed time per tick — keeps jumps clearly discrete
+      const batchSize = Math.ceil(totalSeconds / tickCount) || 1;
+      const tickStart = performance.now();
+
       function frame(now) {
-        const t = Math.min((now - start) / duration, 1);
-        const e = easeInOut(t);
-        const absNow = startAbs + deltaAbs * e;
+        const elapsed = now - tickStart;
+        let tickIndex = Math.floor(elapsed / tickMs);
+        if (tickIndex > tickCount) tickIndex = tickCount;
+        const advanced = Math.min(tickIndex * batchSize, totalSeconds);
+        const absNow = startAbs + advanced;
         const wrapped = ((absNow % 43200) + 43200) % 43200;
         const secVal = Math.floor(wrapped) % 60;
         const minVal = Math.floor((wrapped % 3600) / 60);
@@ -456,7 +465,7 @@
         const minAngle = (minVal / 60) * 2 * Math.PI - Math.PI / 2;
         const hourAngle = (hourVal % 12) / 12 * 2 * Math.PI - Math.PI / 2;
         drawClockAt(hourAngle, minAngle, showSeconds ? secAngle : undefined);
-        if (t < 1) {
+        if (tickIndex < tickCount) {
           requestAnimationFrame(frame);
         } else {
           currentHourAngle = (targetHour % 12) / 12 * 2 * Math.PI - Math.PI / 2;
